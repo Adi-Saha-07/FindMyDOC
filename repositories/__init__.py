@@ -25,6 +25,7 @@ if not backend_choice:
 backend_choice = backend_choice.strip().lower()
 
 use_mongo = False
+mongo_connection_error = None
 if backend_choice == "mongodb":
     try:
         from repositories.mongo_repository import (
@@ -45,6 +46,7 @@ if backend_choice == "mongodb":
         use_mongo = True
         print("[FindMyDOC] Connected to MongoDB repository backend.")
     except Exception as e:
+        mongo_connection_error = str(e)
         print(f"[FindMyDOC] Notice: MongoDB connection failed ({e}). Falling back to In-Memory repository.")
         use_mongo = False
 
@@ -59,5 +61,7 @@ __all__ = [
     "doctor_repo",
     "patient_repo",
     "appointment_repo",
-    "get_datastore"
+    "get_datastore",
+    "use_mongo",
+    "mongo_connection_error"
 ]

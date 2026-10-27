@@ -94,14 +94,21 @@ def api_cities():
 @main_bp.route('/api/health')
 def api_health():
     """Diagnostic health-check endpoint for database and backend configuration."""
-    import os
-    from repositories import user_repo, use_mongo
+    import os, re
+    from repositories import user_repo, use_mongo, mongo_connection_error
+    
+    raw_uri = os.environ.get("MONGO_URI", "")
+    sanitized_uri = re.sub(r'://([^:]+):([^@]+)@', r'://\1:****@', raw_uri) if raw_uri else None
+
     info = {
         "status": "online",
-        "backend": os.environ.get("DATA_BACKEND", "memory"),
+        "backend_env": os.environ.get("DATA_BACKEND", "not_set"),
         "use_mongo": use_mongo,
         "repo_type": type(user_repo).__name__,
-        "has_mongo_uri": bool(os.environ.get("MONGO_URI")),
+        "has_mongo_uri": bool(raw_uri),
+        "mongo_target": sanitized_uri,
+        "database_name": os.environ.get("DATABASE_NAME", "findmydoc"),
+        "mongo_connection_error": mongo_connection_error
     }
     if use_mongo:
         try:
