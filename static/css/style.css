@@ -110,6 +110,11 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -1030,7 +1035,7 @@ select.form-control {
 
   /* Desktop auth buttons hidden on mobile */
   .nav-user-buttons {
-    display: none;
+    display: none !important;
   }
 
   /* Nav links become a vertical drawer from the left */

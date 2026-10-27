@@ -27,9 +27,10 @@ class MongoDatabaseClient:
         self.db_name = db_name or os.environ.get("DATABASE_NAME", "findmydoc")
         
         client_options: Dict[str, Any] = {
-            "serverSelectionTimeoutMS": 5000,
-            "connectTimeoutMS": 5000,
-            "socketTimeoutMS": 5000,
+            "serverSelectionTimeoutMS": 3000,
+            "connectTimeoutMS": 3000,
+            "socketTimeoutMS": 3000,
+            "retryWrites": True,
         }
         try:
             import certifi

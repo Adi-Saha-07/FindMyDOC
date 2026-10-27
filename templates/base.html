@@ -28,6 +28,15 @@
   <!-- Header / Navigation -->
   {% include 'partials/navbar.html' %}
 
+  <!-- MongoDB Atlas Connection Status Banner (only shown if MONGO_URI is configured but connection is not established) -->
+  {% if has_mongo_uri and not use_mongo %}
+    <div style="background: #2a1f07; border-bottom: 1px solid #78350f; color: #fbbf24; padding: 0.5rem 1rem; font-size: 0.84rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      <span><strong>MongoDB Atlas Notice:</strong> IP whitelist (<code>0.0.0.0/0</code>) required in Atlas Network Access. Running in temporary fallback mode until enabled.</span>
+      <a href="/api/health" target="_blank" style="color: #60a5fa; text-decoration: underline; font-weight: 500;">Check Status</a>
+    </div>
+  {% endif %}
+
   <!-- Main View Content -->
   <main id="mainContent">
     {% block content %}{% endblock %}

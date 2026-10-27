@@ -4,7 +4,7 @@ from flask import Flask, render_template, session
 from flask_wtf.csrf import CSRFProtect
 
 from config import config_by_name
-from repositories import user_repo, get_datastore
+from repositories import user_repo, get_datastore, use_mongo
 from blueprints.main import main_bp
 from blueprints.auth import auth_bp
 from blueprints.patient import patient_bp
@@ -49,7 +49,9 @@ def create_app(config_name=None):
             'current_user': current_user,
             'current_year': datetime.utcnow().year,
             'user_role': session.get('user_role'),
-            'user_name': session.get('user_name')
+            'user_name': session.get('user_name'),
+            'use_mongo': use_mongo,
+            'has_mongo_uri': bool(os.environ.get('MONGO_URI'))
         }
 
     # Custom template filters
