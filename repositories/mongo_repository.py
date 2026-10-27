@@ -176,12 +176,21 @@ class MongoDoctorRepository(BaseDoctorRepository):
         return [_clean_doc(d) for d in cursor]
 
     def get_all_cities(self) -> List[str]:
-        cities = self.col.distinct("city")
-        # Merge with default known cities if any
+        default_cities = [
+            "Mumbai", "Delhi", "Bangalore", "Chennai", "Hyderabad",
+            "Kolkata", "Pune", "Ahmedabad", "Jaipur", "Surat"
+        ]
+        cities = set(self.col.distinct("city"))
+        cities.update(default_cities)
         return sorted([c for c in cities if c])
 
     def get_all_specializations(self) -> List[str]:
-        specs = self.col.distinct("specialization")
+        default_specs = [
+            "Cardiology", "Dermatology", "Pediatrics", "Orthopedics",
+            "Neurology", "General Medicine", "Gynecology", "Gastroenterology"
+        ]
+        specs = set(self.col.distinct("specialization"))
+        specs.update(default_specs)
         return sorted([s for s in specs if s])
 
     def create(self, doctor_data: Dict[str, Any]) -> Dict[str, Any]:

@@ -180,9 +180,13 @@ class InMemoryDoctorRepository(BaseDoctorRepository):
             return [dict(d) for d in results]
 
     def get_all_cities(self) -> List[str]:
+        default_cities = [
+            "Mumbai", "Delhi", "Bangalore", "Chennai", "Hyderabad",
+            "Kolkata", "Pune", "Ahmedabad", "Jaipur", "Surat"
+        ]
         with self.ds._lock:
             # Union of known cities list and doctor cities
-            cities_set = set(self.ds.cities)
+            cities_set = set(self.ds.cities) if self.ds.cities else set(default_cities)
             for doc in self.ds.doctors.values():
                 c = doc.get("city")
                 if c:
@@ -190,8 +194,12 @@ class InMemoryDoctorRepository(BaseDoctorRepository):
             return sorted(list(cities_set))
 
     def get_all_specializations(self) -> List[str]:
+        default_specs = [
+            "Cardiology", "Dermatology", "Pediatrics", "Orthopedics",
+            "Neurology", "General Medicine", "Gynecology", "Gastroenterology"
+        ]
         with self.ds._lock:
-            specs = set(self.ds.specializations)
+            specs = set(self.ds.specializations) if self.ds.specializations else set(default_specs)
             for doc in self.ds.doctors.values():
                 s = doc.get("specialization")
                 if s:

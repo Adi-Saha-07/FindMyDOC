@@ -85,4 +85,8 @@ def api_cities():
         matched = [c for c in cities if q in c.lower()]
     else:
         matched = cities
-    return jsonify({"cities": matched})
+    resp = jsonify({"cities": matched})
+    resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    return resp
