@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}System Error &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 5rem 0; text-align: center;">
+  <div class="card" style="max-width: 520px; margin: 0 auto; padding: 2.5rem;">
+    <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--status-rejected-bg); color: var(--status-rejected-text); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    </div>
+    <h1 style="font-size: 1.85rem; margin-bottom: 0.5rem;">500 - Server Error</h1>
+    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.75rem;">
+      {{ message or "An unexpected server condition was encountered. Please try again later." }}
+    </p>
+    <div style="display: flex; gap: 0.75rem; justify-content: center;">
+      <a href="{{ url_for('main.index') }}" class="btn btn-primary">
+        Return Home
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+
+{% block title %}Create an Account &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card auth-wrapper" style="max-width: 620px;">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Create FindMyDOC Account</h1>
+      <p style="color: var(--text-secondary); font-size: 0.88rem;">
+        Choose whether you are registering as a patient or a doctor.
+      </p>
+    </div>
+
+    <!-- Role Selection Tabs -->
+    <div class="auth-tabs">
+      <button 
+        type="button" 
+        class="auth-tab-btn {% if active_tab == 'patient' %}active{% endif %}" 
+        id="tabPatientBtn" 
+        onclick="switchRegisterTab('patient')"
+      >
+        Patient Registration
+      </button>
+      <button 
+        type="button" 
+        class="auth-tab-btn {% if active_tab == 'doctor' %}active{% endif %}" 
+        id="tabDoctorBtn" 
+        onclick="switchRegisterTab('doctor')"
+      >
+        Doctor / Specialist Registration
+      </button>
+    </div>
+
+    <!-- PATIENT REGISTRATION FORM -->
+    <div id="patientFormContainer" style="display: {% if active_tab == 'patient' %}block{% else %}none{% endif %};">
+      <form method="POST" id="registerPatientForm">
+        {{ patient_form.hidden_tag() }}
+        <input type="hidden" name="register_role" value="patient">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="pat-name">Full Name *</label>
+            {{ patient_form.name(class="form-control", id="pat-name", placeholder="Full name") }}
+            {% if patient_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.name.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pat-email">Email Address *</label>
+            {{ patient_form.email(class="form-control", id="pat-email", placeholder="email@example.com") }}
+            {% if patient_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.email.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="pat-phone">Phone Number *</label>
+            {{ patient_form.phone(class="form-control", id="pat-phone", placeholder="+1 (555) 000-0000") }}
+            {% if patient_form.phone.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.phone.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group autocomplete-wrapper">
+            <label class="form-label" for="pat-city">City *</label>
+            <input 
+              type="text" 
+              name="pat-city" 
+              id="pat-city" 
+              class="form-control" 
+              placeholder="e.g. New York, Chicago" 
+              value="{{ patient_form.city.data or '' }}"
+              data-city-autocomplete="true"
+              autocomplete="off"
+              required
+            >
+            {% if patient_form.city.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.city.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="pat-password">Password (min 6 characters) *</label>
+            {{ patient_form.password(class="form-control", id="pat-password") }}
+            {% if patient_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.password.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pat-confirm_password">Confirm Password *</label>
+            {{ patient_form.confirm_password(class="form-control", id="pat-confirm_password") }}
+            {% if patient_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.confirm_password.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitPatientRegBtn" style="margin-top: 0.85rem;">
+          Create Patient Account
+        </button>
+      </form>
+    </div>
+
+    <!-- DOCTOR REGISTRATION FORM -->
+    <div id="doctorFormContainer" style="display: {% if active_tab == 'doctor' %}block{% else %}none{% endif %};">
+      <form method="POST" id="registerDoctorForm">
+        {{ doctor_form.hidden_tag() }}
+        <input type="hidden" name="register_role" value="doctor">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-name">Doctor Full Name *</label>
+            {{ doctor_form.name(class="form-control", id="doc-name", placeholder="Dr. John Smith") }}
+            {% if doctor_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.name.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doc-email">Professional Email *</label>
+            {{ doctor_form.email(class="form-control", id="doc-email", placeholder="dr.smith@clinic.com") }}
+            {% if doctor_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.email.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-phone">Phone Number *</label>
+            {{ doctor_form.phone(class="form-control", id="doc-phone") }}
+          </div>
+
+          <div class="form-group autocomplete-wrapper">
+            <label class="form-label" for="doc-city">City *</label>
+            <input 
+              type="text" 
+              name="doc-city" 
+              id="doc-city" 
+              class="form-control" 
+              placeholder="City" 
+              value="{{ doctor_form.city.data or '' }}"
+              data-city-autocomplete="true"
+              autocomplete="off"
+              required
+            >
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-specialization">Specialization *</label>
+            {{ doctor_form.specialization(class="form-control", id="doc-specialization") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doc-doctor_type">Practice Type *</label>
+            {{ doctor_form.doctor_type(class="form-control", id="doc-doctor_type") }}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-hospital_or_clinic_name">Hospital / Clinic Name *</label>
+            {{ doctor_form.hospital_or_clinic_name(class="form-control", id="doc-hospital_or_clinic_name") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doc-consultation_fee">Fee ($) *</label>
+            {{ doctor_form.consultation_fee(class="form-control", id="doc-consultation_fee") }}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-qualifications">Qualifications *</label>
+            {{ doctor_form.qualifications(class="form-control", id="doc-qualifications", placeholder="e.g. MD, FACP") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doc-experience_years">Years Exp *</label>
+            {{ doctor_form.experience_years(class="form-control", id="doc-experience_years") }}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="doc-password">Password *</label>
+            {{ doctor_form.password(class="form-control", id="doc-password") }}
+            {% if doctor_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.password.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doc-confirm_password">Confirm Password *</label>
+            {{ doctor_form.confirm_password(class="form-control", id="doc-confirm_password") }}
+            {% if doctor_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.confirm_password.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitDoctorRegBtn" style="margin-top: 0.85rem;">
+          Register as Doctor
+        </button>
+      </form>
+    </div>
+
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-secondary);">
+      Already have an account?
+      <a href="{{ url_for('auth.login') }}" style="font-weight: 600;">Sign In &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function switchRegisterTab(role) {
+  const patBtn = document.getElementById('tabPatientBtn');
+  const docBtn = document.getElementById('tabDoctorBtn');
+  const patForm = document.getElementById('patientFormContainer');
+  const docForm = document.getElementById('doctorFormContainer');
+
+  if (role === 'patient') {
+    patBtn.classList.add('active');
+    docBtn.classList.remove('active');
+    patForm.style.display = 'block';
+    docForm.style.display = 'none';
+  } else {
+    docBtn.classList.add('active');
+    patBtn.classList.remove('active');
+    docForm.style.display = 'block';
+    patForm.style.display = 'none';
+  }
+}
+</script>
+{% endblock %}

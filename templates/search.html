@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Doctors &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Top Search Filter Bar -->
+  <div style="padding: 2rem 0 1rem;">
+    <div class="card" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+      <form action="{{ url_for('main.search') }}" method="GET" class="search-bar-form" id="searchFilterTopForm">
+        <div class="search-input-group autocomplete-wrapper">
+          <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <input 
+            type="text" 
+            name="city" 
+            id="searchCityInput"
+            class="form-control" 
+            placeholder="Search by city..." 
+            value="{{ selected_city }}"
+            data-city-autocomplete="true"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="search-input-group">
+          <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            name="q" 
+            class="form-control" 
+            placeholder="Doctor name, clinic, or keyword..." 
+            value="{{ query }}"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="searchSubmitBtn">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Search Layout with Sidebar and Grid -->
+  <div class="search-layout">
+    <!-- Filter Sidebar -->
+    <aside class="card filter-sidebar">
+      <div class="sidebar-title">
+        <span>Filters</span>
+        <a href="{{ url_for('main.search') }}" style="font-size: 0.82rem; color: var(--text-muted);">
+          Reset
+        </a>
+      </div>
+
+      <form action="{{ url_for('main.search') }}" method="GET" id="sidebarFilterForm">
+        <input type="hidden" name="city" value="{{ selected_city }}">
+        <input type="hidden" name="q" value="{{ query }}">
+
+        <!-- Specialization Filter -->
+        <div class="form-group">
+          <label class="form-label" for="filterSpec">Specialization</label>
+          <select name="specialization" id="filterSpec" class="form-control" onchange="this.form.submit()">
+            <option value="">All Specializations</option>
+            {% for s in specializations %}
+              <option value="{{ s }}" {% if selected_spec == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Doctor Type Filter -->
+        <div class="form-group">
+          <label class="form-label" for="filterType">Practice Type</label>
+          <select name="doctor_type" id="filterType" class="form-control" onchange="this.form.submit()">
+            <option value="">All Practices</option>
+            <option value="Hospital" {% if selected_type == 'Hospital' %}selected{% endif %}>Hospital-Affiliated</option>
+            <option value="Private" {% if selected_type == 'Private' %}selected{% endif %}>Private Practice</option>
+          </select>
+        </div>
+
+        <!-- Sort By -->
+        <div class="form-group">
+          <label class="form-label" for="filterSort">Sort By</label>
+          <select name="sort_by" id="filterSort" class="form-control" onchange="this.form.submit()">
+            <option value="rating" {% if selected_sort == 'rating' %}selected{% endif %}>Rating</option>
+            <option value="experience" {% if selected_sort == 'experience' %}selected{% endif %}>Experience</option>
+            <option value="fee_asc" {% if selected_sort == 'fee_asc' %}selected{% endif %}>Fee: Low to High</option>
+            <option value="fee_desc" {% if selected_sort == 'fee_desc' %}selected{% endif %}>Fee: High to Low</option>
+          </select>
+        </div>
+
+        <!-- Fee Range -->
+        <div class="form-group">
+          <label class="form-label">Consultation Fee ($)</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+            <input 
+              type="number" 
+              name="min_fee" 
+              placeholder="Min" 
+              class="form-control" 
+              value="{{ selected_min_fee }}" 
+              min="0"
+            >
+            <input 
+              type="number" 
+              name="max_fee" 
+              placeholder="Max" 
+              class="form-control" 
+              value="{{ selected_max_fee }}" 
+              min="0"
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-outline btn-block btn-sm" style="margin-top: 0.75rem;">
+          Apply Filters
+        </button>
+      </form>
+    </aside>
+
+    <!-- Main Results Column -->
+    <main>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h2 style="font-size: 1.4rem;">
+            {% if selected_city %}Doctors in {{ selected_city }}{% else %}All Doctors{% endif %}
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.88rem;">
+            Found <strong>{{ total_results }}</strong> doctor{% if total_results != 1 %}s{% endif %}
+          </p>
+        </div>
+
+        <!-- Active Filter Tags -->
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+          {% if selected_city %}
+            <span class="badge badge-hospital">City: {{ selected_city }}</span>
+          {% endif %}
+          {% if selected_spec %}
+            <span class="badge badge-private">{{ selected_spec }}</span>
+          {% endif %}
+          {% if selected_type %}
+            <span class="badge badge-hospital">{{ selected_type }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Doctors Grid -->
+      {% if doctors %}
+        <div class="doctors-grid">
+          {% for doc in doctors %}
+            <div class="card doctor-card">
+              <div>
+                <div class="doc-card-header">
+                  <div class="doc-avatar-wrap">
+                    <img src="{{ doc.avatar }}" alt="{{ doc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
+                  </div>
+                  <div class="doc-info">
+                    <h3 class="doc-name">
+                      <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" style="color: inherit;">
+                        {{ doc.name }}
+                      </a>
+                    </h3>
+                    <div class="doc-spec">{{ doc.specialization }}</div>
+                    <div class="doc-badges-row">
+                      {% if doc.doctor_type == 'Hospital' %}
+                        <span class="badge badge-hospital">Hospital</span>
+                      {% else %}
+                        <span class="badge badge-private">Private</span>
+                      {% endif %}
+                      <span class="badge" style="background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-color);">
+                        {{ doc.rating }} ({{ doc.review_count }})
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.45rem;">
+                  {{ doc.qualifications }}
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 0.65rem;">
+                  {{ doc.about[:100] }}...
+                </p>
+
+                <div class="doc-meta-grid">
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+                    <span>{{ doc.city }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>{{ doc.experience_years }} yrs exp</span>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                  {{ doc.hospital_or_clinic_name }}
+                </div>
+              </div>
+
+              <div class="doc-card-footer">
+                <div>
+                  <div class="fee-tag">Fee</div>
+                  <div class="fee-amount">{{ doc.consultation_fee | currency }}</div>
+                </div>
+                <div style="display: flex; gap: 0.4rem;">
+                  <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="btn btn-outline btn-sm">
+                    Profile
+                  </a>
+                  <a href="{{ url_for('appointments.request_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm">
+                    Book Visit
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <!-- Empty State -->
+        <div class="card" style="padding: 3.5rem 1.5rem; text-align: center;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.35rem;">No Doctors Found</h3>
+          <p style="color: var(--text-secondary); max-width: 440px; margin: 0 auto 1.25rem; font-size: 0.92rem;">
+            No doctors matched your current search filters. Try adjusting your filters or resetting them.
+          </p>
+          <a href="{{ url_for('main.search') }}" class="btn btn-primary btn-sm">
+            Reset Filters
+          </a>
+        </div>
+      {% endif %}
+    </main>
+  </div>
+</div>
+{% endblock %}

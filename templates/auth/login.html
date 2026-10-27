@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card auth-wrapper">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div class="brand-icon" style="margin: 0 auto 0.75rem; width: 40px; height: 40px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Sign In to FindMyDOC</h1>
+      <p style="color: var(--text-secondary); font-size: 0.88rem;">
+        Access your patient or doctor portal.
+      </p>
+    </div>
+
+    <!-- Quick Demo Logins -->
+    <div class="card" style="padding: 0.85rem; background: var(--bg-surface); margin-bottom: 1.25rem; font-size: 0.82rem;">
+      <div style="font-weight: 600; margin-bottom: 0.4rem; color: var(--text-primary);">
+        Demo Accounts (Click to Fill):
+      </div>
+      <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="fillLogin('mariz@mediconnect.com', 'Patient@123', 'patient')">
+          Patient: Mariz
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fillLogin('dr.sarah@mediconnect.com', 'Doctor@123', 'doctor')">
+          Doctor: Dr. Sarah
+        </button>
+      </div>
+    </div>
+
+    <form method="POST" id="loginForm">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        {{ form.email(class="form-control", id="email", placeholder="name@example.com", autofocus=true) }}
+        {% if form.email.errors %}
+          <div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ form.email.errors[0] }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        {{ form.password(class="form-control", id="password", placeholder="Enter your password") }}
+        {% if form.password.errors %}
+          <div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ form.password.errors[0] }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="role">Role</label>
+        {{ form.role(class="form-control", id="role") }}
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginSubmitBtn" style="margin-top: 1.25rem;">
+        Sign In
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-secondary);">
+      Don't have an account?
+      <a href="{{ url_for('auth.register') }}" style="font-weight: 600;">Register &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function fillLogin(email, password, role) {
+  document.getElementById('email').value = email;
+  document.getElementById('password').value = password;
+  document.getElementById('role').value = role;
+}
+</script>
+{% endblock %}

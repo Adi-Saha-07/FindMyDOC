@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>{% block title %}FindMyDOC &bull; Doctor Appointments{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Find local hospital doctors and private physicians in your city and book confirmed appointments with FindMyDOC.{% endblock %}">
+  
+  <!-- Clean SVG Favicon in Sage Green -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23476f55' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 12h-4l-3 9L9 3l-3 9H2'/%3E%3C/svg%3E">
+
+  <!-- Core Professional Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Flash Toast Notifications -->
+  {% include 'partials/flash_messages.html' %}
+
+  <!-- Header / Navigation -->
+  {% include 'partials/navbar.html' %}
+
+  <!-- Main View Content -->
+  <main id="mainContent">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% include 'partials/footer.html' %}
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

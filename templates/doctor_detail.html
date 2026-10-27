@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ doctor.name }} &bull; {{ doctor.specialization }} &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2.5rem 0 4rem;">
+  <!-- Breadcrumb -->
+  <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+    <a href="{{ url_for('main.index') }}">Home</a>
+    <span>&rsaquo;</span>
+    <a href="{{ url_for('main.search', city=doctor.city) }}">{{ doctor.city }}</a>
+    <span>&rsaquo;</span>
+    <span style="color: var(--text-primary); font-weight: 500;">{{ doctor.name }}</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 320px; gap: 1.75rem; align-items: start;">
+    <!-- Main Left Column -->
+    <div>
+      <!-- Doctor Hero Card -->
+      <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+          <div style="width: 100px; height: 100px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
+            <img src="{{ doctor.avatar }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
+          </div>
+
+          <div style="flex-grow: 1;">
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.35rem;">
+              {% if doctor.doctor_type == 'Hospital' %}
+                <span class="badge badge-hospital">Hospital-Affiliated</span>
+              {% else %}
+                <span class="badge badge-private">Private Practice</span>
+              {% endif %}
+              <span class="badge" style="background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-color);">
+                Rating: {{ doctor.rating }} ({{ doctor.review_count }} reviews)
+              </span>
+            </div>
+
+            <h1 style="font-size: 1.75rem; margin-bottom: 0.2rem;">{{ doctor.name }}</h1>
+            <p style="color: var(--brand-green); font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem;">
+              {{ doctor.specialization }} Specialist
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.5rem;">
+              {{ doctor.qualifications }} &bull; {{ doctor.experience_years }} Years Clinical Practice
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+              Location: {{ doctor.hospital_or_clinic_name }} &bull; {{ doctor.address }}, {{ doctor.city }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.25rem; margin-bottom: 0.85rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+          Clinical Background
+        </h2>
+        <p style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.7; white-space: pre-line;">
+          {{ doctor.about }}
+        </p>
+      </div>
+
+      <!-- Practice Schedule & Consultation -->
+      <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.25rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+          Schedule &amp; Availability
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.2rem;">
+              Working Days
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">
+              {{ doctor.working_days }}
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.2rem;">
+              Daily Hours
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">
+              {{ doctor.timings }}
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.2rem;">
+              City
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">
+              {{ doctor.city }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar Booking Card -->
+    <aside style="position: sticky; top: 80px;">
+      <div class="card" style="padding: 1.5rem;">
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.82rem; color: var(--text-secondary);">Consultation Fee</div>
+          <div style="display: flex; align-items: baseline; gap: 0.35rem; margin-top: 0.2rem;">
+            <span style="font-size: 1.85rem; font-weight: 700; color: var(--text-primary);">
+              {{ doctor.consultation_fee | currency }}
+            </span>
+            <span style="color: var(--text-muted); font-size: 0.85rem;">/ visit</span>
+          </div>
+        </div>
+
+        <div class="card" style="padding: 0.85rem; background: var(--bg-surface); margin-bottom: 1.25rem; font-size: 0.85rem;">
+          <div style="font-weight: 600; color: var(--brand-green); margin-bottom: 0.25rem;">
+            Direct Scheduling
+          </div>
+          <p style="color: var(--text-secondary); line-height: 1.45;">
+            Submit your medical concern. Dr. {{ doctor.name.split(' ')[-1] }} will review and assign an exact date and confirmed time slot.
+          </p>
+        </div>
+
+        <a href="{{ url_for('appointments.request_appointment', doctor_id=doctor.id) }}" class="btn btn-primary btn-block btn-lg" id="detailBookBtn">
+          Request Appointment
+        </a>
+
+        <div style="margin-top: 0.85rem; text-align: center;">
+          <span style="font-size: 0.78rem; color: var(--text-muted);">
+            Guaranteed slot with zero double-booking
+          </span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Similar Doctors in City -->
+  {% if similar_doctors %}
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.3rem; margin-bottom: 1.25rem;">Other Doctors in {{ doctor.city }}</h3>
+      <div class="doctors-grid">
+        {% for sdoc in similar_doctors %}
+          <div class="card doctor-card">
+            <div class="doc-card-header">
+              <div class="doc-avatar-wrap" style="width: 52px; height: 52px;">
+                <img src="{{ sdoc.avatar }}" alt="{{ sdoc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
+              </div>
+              <div class="doc-info">
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.15rem;">
+                  <a href="{{ url_for('main.doctor_detail', doctor_id=sdoc.id) }}" style="color: inherit;">
+                    {{ sdoc.name }}
+                  </a>
+                </h4>
+                <div style="color: var(--brand-green); font-size: 0.82rem; font-weight: 500;">{{ sdoc.specialization }}</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Rating: {{ sdoc.rating }} &bull; {{ sdoc.consultation_fee | currency }}
+                </div>
+              </div>
+            </div>
+            <a href="{{ url_for('main.doctor_detail', doctor_id=sdoc.id) }}" class="btn btn-outline btn-sm btn-block">
+              View Profile
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

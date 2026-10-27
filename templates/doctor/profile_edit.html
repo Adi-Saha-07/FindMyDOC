@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Doctor Profile &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2.5rem 0 4rem;">
+  <div style="max-width: 760px; margin: 0 auto;">
+    <!-- Breadcrumb -->
+    <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+      <a href="{{ url_for('doctor.dashboard') }}">Doctor Portal</a>
+      <span>&rsaquo;</span>
+      <span style="color: var(--text-primary); font-weight: 500;">Edit Profile</span>
+    </div>
+
+    <div class="card" style="padding: 2rem;">
+      <div style="margin-bottom: 1.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+        <span class="badge badge-hospital" style="margin-bottom: 0.35rem;">Medical Profile</span>
+        <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Edit Doctor Profile &amp; Availability</h1>
+        <p style="color: var(--text-secondary); font-size: 0.88rem;">
+          Keep your medical credentials, clinic location, and operating hours updated.
+        </p>
+      </div>
+
+      <form method="POST" enctype="multipart/form-data" id="doctorProfileForm">
+        {{ form.hidden_tag() }}
+
+        <!-- Current Avatar Preview & Upload -->
+        <div class="card" style="padding: 1.25rem; background: var(--bg-surface); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;">
+          <div style="width: 72px; height: 72px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
+            <img src="{{ doctor.avatar }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
+          </div>
+          <div style="flex-grow: 1;">
+            <label class="form-label" for="avatar_file" style="margin-bottom: 0.25rem;">Profile Photo</label>
+            <input type="file" name="avatar_file" id="avatar_file" class="form-control" accept="image/*">
+            <small style="color: var(--text-muted); font-size: 0.78rem;">
+              Upload JPG, PNG, or WebP. Saved locally to <code>/static/uploads</code>.
+            </small>
+          </div>
+        </div>
+
+        <!-- Basic Info Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="name">Doctor Full Name *</label>
+            {{ form.name(class="form-control", id="name") }}
+            {% if form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ form.name.errors[0] }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone *</label>
+            {{ form.phone(class="form-control", id="phone") }}
+            {% if form.phone.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ form.phone.errors[0] }}</div>{% endif %}
+          </div>
+        </div>
+
+        <!-- Specialty and Practice Type -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="specialization">Specialization *</label>
+            {{ form.specialization(class="form-control", id="specialization") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="doctor_type">Practice Type *</label>
+            {{ form.doctor_type(class="form-control", id="doctor_type") }}
+          </div>
+        </div>
+
+        <!-- Qualifications & Experience -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="qualifications">Degrees &amp; Qualifications *</label>
+            {{ form.qualifications(class="form-control", id="qualifications") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="experience_years">Years Experience *</label>
+            {{ form.experience_years(class="form-control", id="experience_years") }}
+          </div>
+        </div>
+
+        <!-- Hospital / Clinic and Fee -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="hospital_or_clinic_name">Hospital / Clinic Name *</label>
+            {{ form.hospital_or_clinic_name(class="form-control", id="hospital_or_clinic_name") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="consultation_fee">Consultation Fee ($) *</label>
+            {{ form.consultation_fee(class="form-control", id="consultation_fee") }}
+          </div>
+        </div>
+
+        <!-- Location: City and Address -->
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+          <div class="form-group autocomplete-wrapper">
+            <label class="form-label" for="city">City *</label>
+            <input 
+              type="text" 
+              name="city" 
+              id="city" 
+              class="form-control" 
+              value="{{ form.city.data or '' }}"
+              data-city-autocomplete="true"
+              autocomplete="off"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="address">Address *</label>
+            {{ form.address(class="form-control", id="address") }}
+          </div>
+        </div>
+
+        <!-- Schedule: Working Days and Hours -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="working_days">Working Days *</label>
+            {{ form.working_days(class="form-control", id="working_days") }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="timings">Daily Hours *</label>
+            {{ form.timings(class="form-control", id="timings") }}
+          </div>
+        </div>
+
+        <!-- About / Bio -->
+        <div class="form-group">
+          <label class="form-label" for="about">Clinical Background *</label>
+          {{ form.about(class="form-control", id="about") }}
+          {% if form.about.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ form.about.errors[0] }}</div>{% endif %}
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem;">
+          <a href="{{ url_for('doctor.dashboard') }}" class="btn btn-outline">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary btn-lg" id="saveDoctorProfileBtn">
+            Save Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

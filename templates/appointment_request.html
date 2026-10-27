@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Appointment &bull; {{ doctor.name }} &bull; FindMyDOC{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2.5rem 0 4rem;">
+  <div style="max-width: 640px; margin: 0 auto;">
+    <!-- Doctor Summary Banner -->
+    <div class="card" style="padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
+      <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
+        <img src="{{ doctor.avatar }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
+      </div>
+      <div style="flex-grow: 1;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+          <h2 style="font-size: 1.2rem;">{{ doctor.name }}</h2>
+          <span class="badge badge-hospital">{{ doctor.doctor_type }}</span>
+        </div>
+        <div style="color: var(--brand-green); font-weight: 500; font-size: 0.88rem;">
+          {{ doctor.specialization }} &bull; {{ doctor.hospital_or_clinic_name }}
+        </div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+          {{ doctor.city }} &bull; Fee: <strong>{{ doctor.consultation_fee | currency }}</strong> &bull; Timings: {{ doctor.timings }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Form Card -->
+    <div class="card" style="padding: 1.75rem;">
+      <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+        <h1 style="font-size: 1.45rem; margin-bottom: 0.25rem;">Request an Appointment</h1>
+        <p style="color: var(--text-secondary); font-size: 0.88rem;">
+          Provide your visit reason and preferred date. The doctor will review your request and confirm with an exact appointment time.
+        </p>
+      </div>
+
+      <form method="POST" id="appointmentRequestForm">
+        {{ form.hidden_tag() }}
+
+        <!-- Patient Info Preview -->
+        <div class="card" style="padding: 0.85rem 1rem; background: var(--bg-surface); margin-bottom: 1.25rem; font-size: 0.88rem;">
+          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem;">
+            Patient: {{ patient.name }}
+          </div>
+          <div style="color: var(--text-secondary); font-size: 0.82rem;">
+            Email: {{ patient.email }} &bull; Phone: {{ patient.phone }}
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <!-- Preferred Date -->
+          <div class="form-group">
+            <label class="form-label" for="preferred_date">Preferred Date (Optional)</label>
+            <input 
+              type="date" 
+              name="preferred_date" 
+              id="preferred_date" 
+              class="form-control"
+              value="{{ form.preferred_date.data or '' }}"
+            >
+          </div>
+
+          <!-- Preferred Time -->
+          <div class="form-group">
+            <label class="form-label" for="preferred_time">Preferred Time Window</label>
+            {{ form.preferred_time(class="form-control", id="preferred_time") }}
+          </div>
+        </div>
+
+        <!-- Reason for visit -->
+        <div class="form-group">
+          <label class="form-label" for="reason">Reason for Visit / Symptoms *</label>
+          {{ form.reason(class="form-control", id="reason", placeholder="Describe your symptoms or reason for consulting the doctor...") }}
+          {% if form.reason.errors %}
+            <div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">
+              {% for error in form.reason.errors %}{{ error }}<br>{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem;">
+          <a href="{{ url_for('main.doctor_detail', doctor_id=doctor.id) }}" class="btn btn-outline">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary btn-lg" id="submitRequestBtn">
+            Submit Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
