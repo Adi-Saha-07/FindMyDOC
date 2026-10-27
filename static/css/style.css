@@ -952,3 +952,328 @@ select.form-control {
 .fluid-blob-container, .grain-overlay {
   display: none !important;
 }
+
+/* ==========================================================================
+   MOBILE NAVIGATION — HAMBURGER & DRAWER
+   ========================================================================== */
+
+/* Hamburger button — hidden on desktop */
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  width: 38px;
+  height: 38px;
+  padding: 0.4rem;
+  cursor: pointer;
+  align-items: center;
+}
+
+.hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+/* Animate to X when open */
+.mobile-nav-toggle.open .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.mobile-nav-toggle.open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+.mobile-nav-toggle.open .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav backdrop */
+.mobile-nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+}
+.mobile-nav-backdrop.show {
+  display: block;
+}
+
+/* Mobile auth links — hidden on desktop */
+.nav-mobile-auth {
+  display: none;
+}
+
+/* nav-user-buttons wraps desktop auth buttons */
+.nav-user-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+/* ---- Tablet and below (≤ 900px) ---- */
+@media (max-width: 900px) {
+  /* Hamburger visible */
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  /* Desktop auth buttons hidden on mobile */
+  .nav-user-buttons {
+    display: none;
+  }
+
+  /* Nav links become a vertical drawer from the left */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100dvh;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 5rem 0 2rem;
+    overflow-y: auto;
+    list-style: none;
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-links.show-mobile {
+    left: 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background: var(--brand-green-light);
+    color: var(--brand-green);
+  }
+
+  /* Show mobile auth in drawer */
+  .nav-mobile-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Hero section */
+  .hero-section {
+    padding: 2.5rem 0 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Search bar stacks vertically */
+  .search-bar-form {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stats grid — 2 columns on tablet */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Doctor cards grid — 1 column */
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Search layout — sidebar collapses above content */
+  .search-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer grid */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem;
+  }
+
+  /* Dashboard header stacks */
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---- Mobile (≤ 600px) ---- */
+@media (max-width: 600px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* Tighter hero */
+  .hero-section {
+    padding: 2rem 0 1.75rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.4rem, 7vw, 1.9rem);
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-search-card {
+    padding: 1rem;
+  }
+
+  /* Stats grid — 1 column on small mobile */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Doctor card tweaks */
+  .doc-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .doc-card-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Appointment item stacks */
+  .appointment-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Auth wrapper tighter */
+  .auth-wrapper {
+    margin: 1.5rem auto;
+    padding: 1.25rem 1rem;
+  }
+
+  /* Modal full-width on small screens */
+  .glass-modal {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+  }
+
+  /* Popular cities wrap nicely */
+  .popular-cities-pills {
+    gap: 0.35rem;
+    justify-content: flex-start;
+  }
+
+  /* Footer single column */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  /* Dashboard header */
+  .dashboard-header {
+    padding: 1rem;
+  }
+
+  /* Filter sidebar horizontal scroll on mobile */
+  .filter-sidebar {
+    padding: 1rem;
+  }
+
+  /* Tables inside dashboard scroll horizontally */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Search layout — no gap waste */
+  .search-layout {
+    gap: 1rem;
+    padding: 1.25rem 0 2rem;
+  }
+
+  /* Stat cards compact */
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-val {
+    font-size: 1.3rem;
+  }
+
+  /* Flash toasts full-width on mobile */
+  .flash-container {
+    right: 12px;
+    left: 12px;
+    max-width: 100%;
+    width: auto;
+  }
+
+  /* Buttons in small screens */
+  .btn-lg {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* ---- Extra small (≤ 400px) ---- */
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .doc-avatar-wrap {
+    width: 52px;
+    height: 52px;
+  }
+}

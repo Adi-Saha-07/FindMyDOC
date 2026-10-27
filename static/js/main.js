@@ -264,12 +264,46 @@ function initModals() {
    MOBILE NAVIGATION
    ========================================================================== */
 function initMobileNav() {
-  const toggle = document.querySelector('.mobile-nav-toggle');
-  const links = document.querySelector('.nav-links');
+  const toggle = document.getElementById('mobileNavToggle');
+  const links = document.getElementById('mainNavLinks');
+  const backdrop = document.getElementById('mobileNavBackdrop');
 
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      links.classList.toggle('show-mobile');
-    });
+  if (!toggle || !links) return;
+
+  function openNav() {
+    links.classList.add('show-mobile');
+    toggle.classList.add('open');
+    if (backdrop) backdrop.classList.add('show');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeNav() {
+    links.classList.remove('show-mobile');
+    toggle.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', () => {
+    if (links.classList.contains('show-mobile')) {
+      closeNav();
+    } else {
+      openNav();
+    }
+  });
+
+  // Close on backdrop click
+  if (backdrop) {
+    backdrop.addEventListener('click', closeNav);
+  }
+
+  // Close when a nav link is clicked
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeNav);
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
+  });
 }
