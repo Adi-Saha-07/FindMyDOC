@@ -19,7 +19,10 @@ from repositories.in_memory import (
     get_datastore
 )
 
-backend_choice = os.environ.get("DATA_BACKEND", "memory").strip().lower()
+backend_choice = os.environ.get("DATA_BACKEND")
+if not backend_choice:
+    backend_choice = "mongodb" if os.environ.get("MONGO_URI") else "memory"
+backend_choice = backend_choice.strip().lower()
 
 use_mongo = False
 if backend_choice == "mongodb":

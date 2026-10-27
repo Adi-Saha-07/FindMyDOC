@@ -4,7 +4,15 @@ from wtforms import (
     StringField, PasswordField, TextAreaField, SelectField,
     IntegerField, FloatField, HiddenField, SubmitField
 )
-from wtforms.validators import DataRequired, Email, Length, EqualTo, NumberRange, Optional
+from wtforms.validators import DataRequired, Email, Length, EqualTo, NumberRange, Optional, Regexp
+
+def SafeEmail(message="Invalid email address."):
+    """Safe email validator that falls back to robust regex if email-validator is not installed."""
+    try:
+        import email_validator
+        return Email(message=message)
+    except ImportError:
+        return Regexp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', message=message)
 
 SPECIALIZATION_CHOICES = [
     ("Cardiology", "Cardiology"),
@@ -27,7 +35,7 @@ DOCTOR_TYPE_CHOICES = [
 ]
 
 class LoginForm(FlaskForm):
-    email = StringField('Email Address', validators=[DataRequired(), Email()])
+    email = StringField('Email Address', validators=[DataRequired(), SafeEmail()])
     password = PasswordField('Password', validators=[DataRequired()])
     role = SelectField('Login As', choices=[
         ('auto', 'Auto-Detect Role'),
@@ -39,7 +47,7 @@ class LoginForm(FlaskForm):
 
 class RegisterPatientForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
-    email = StringField('Email Address', validators=[DataRequired(), Email()])
+    email = StringField('Email Address', validators=[DataRequired(), SafeEmail()])
     phone = StringField('Phone Number', validators=[DataRequired(), Length(min=7, max=20)])
     city = StringField('City', validators=[DataRequired(), Length(min=2, max=60)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, message="Password must be at least 6 characters")])
@@ -49,7 +57,7 @@ class RegisterPatientForm(FlaskForm):
 
 class RegisterDoctorForm(FlaskForm):
     name = StringField('Doctor Full Name', validators=[DataRequired(), Length(min=2, max=100)])
-    email = StringField('Professional Email', validators=[DataRequired(), Email()])
+    email = StringField('Professional Email', validators=[DataRequired(), SafeEmail()])
     phone = StringField('Phone Number', validators=[DataRequired(), Length(min=7, max=20)])
     city = StringField('City', validators=[DataRequired(), Length(min=2, max=60)])
     specialization = SelectField('Specialization', choices=SPECIALIZATION_CHOICES, validators=[DataRequired()])
