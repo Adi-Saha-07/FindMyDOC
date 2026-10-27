@@ -56,9 +56,9 @@ def create_app(config_name=None):
     @app.template_filter('currency')
     def currency_filter(val):
         try:
-            return f"${float(val):,.2f}".replace('.00', '')
+            return f"\u20b9{float(val):,.0f}"
         except (ValueError, TypeError):
-            return f"${val}"
+            return f"\u20b9{val}"
 
     # Error handlers
     @app.errorhandler(404)

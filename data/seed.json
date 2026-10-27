@@ -1,11 +1,15 @@
 {
   "cities": [
-    "New York",
-    "San Francisco",
-    "Chicago",
-    "Houston",
-    "Boston",
-    "Los Angeles"
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Hyderabad",
+    "Kolkata",
+    "Pune",
+    "Ahmedabad",
+    "Jaipur",
+    "Surat"
   ],
   "specializations": [
     "Cardiology",
