@@ -90,3 +90,25 @@ def api_cities():
     resp.headers["Pragma"] = "no-cache"
     resp.headers["Expires"] = "0"
     return resp
+
+@main_bp.route('/api/health')
+def api_health():
+    """Diagnostic health-check endpoint for database and backend configuration."""
+    import os
+    from repositories import user_repo, use_mongo
+    info = {
+        "status": "online",
+        "backend": os.environ.get("DATA_BACKEND", "memory"),
+        "use_mongo": use_mongo,
+        "repo_type": type(user_repo).__name__,
+        "has_mongo_uri": bool(os.environ.get("MONGO_URI")),
+    }
+    if use_mongo:
+        try:
+            from repositories.mongo_repository import MongoDatabaseClient
+            client = MongoDatabaseClient.get_instance()
+            client.db.command('ping')
+            info["mongodb_ping"] = "ok"
+        except Exception as e:
+            info["mongodb_ping"] = f"error: {str(e)}"
+    return jsonify(info)

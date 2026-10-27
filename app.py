@@ -77,6 +77,13 @@ def create_app(config_name=None):
     def request_entity_too_large(e):
         return render_template('errors/500.html', message="Uploaded image is too large. Max file size is 5MB."), 413
 
+    @app.errorhandler(Exception)
+    def unhandled_exception(e):
+        import traceback
+        err_msg = f"{type(e).__name__}: {str(e)}"
+        print(f"[Unhandled App Exception] {err_msg}\n{traceback.format_exc()}")
+        return render_template('errors/500.html', message=err_msg), 500
+
     return app
 
 app = create_app()

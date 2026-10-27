@@ -25,7 +25,19 @@ class MongoDatabaseClient:
     def __init__(self, uri: Optional[str] = None, db_name: Optional[str] = None):
         self.uri = uri or os.environ.get("MONGO_URI", "mongodb://localhost:27017/findmydoc")
         self.db_name = db_name or os.environ.get("DATABASE_NAME", "findmydoc")
-        self.client = MongoClient(self.uri, serverSelectionTimeoutMS=5000)
+        
+        client_options: Dict[str, Any] = {
+            "serverSelectionTimeoutMS": 5000,
+            "connectTimeoutMS": 5000,
+            "socketTimeoutMS": 5000,
+        }
+        try:
+            import certifi
+            client_options["tlsCAFile"] = certifi.where()
+        except Exception:
+            pass
+
+        self.client = MongoClient(self.uri, **client_options)
         self.db = self.client[self.db_name]
         self._ensure_indexes()
 
