@@ -30,8 +30,11 @@ def create_app(config_name=None):
     # Initialize extensions
     csrf.init_app(app)
 
-    # Ensure uploads folder exists
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    # Ensure uploads folder exists (safely catch read-only serverless filesystem)
+    try:
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    except OSError:
+        pass
 
     # Initialize data store from seed data
     get_datastore(app.config['SEED_DATA_PATH'])

@@ -1,27 +1,10 @@
-import os
-import uuid
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.utils import secure_filename
 from repositories import user_repo, doctor_repo, patient_repo
 from forms import LoginForm, RegisterPatientForm, RegisterDoctorForm
+from utils.image_utils import process_avatar_image
 
 auth_bp = Blueprint('auth', __name__)
-
-def save_avatar_file(file_storage, prefix="user"):
-    """Safely save uploaded avatar image to static/uploads and return relative web URL."""
-    if not file_storage or not getattr(file_storage, 'filename', None):
-        return None
-    filename = secure_filename(file_storage.filename)
-    if not filename:
-        return None
-    ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'jpg'
-    saved_filename = f"{prefix}_{uuid.uuid4().hex[:10]}.{ext}"
-    upload_dir = current_app.config.get('UPLOAD_FOLDER', os.path.join(current_app.root_path, 'static', 'uploads'))
-    os.makedirs(upload_dir, exist_ok=True)
-    file_path = os.path.join(upload_dir, saved_filename)
-    file_storage.save(file_path)
-    return f"/static/uploads/{saved_filename}"
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -98,8 +81,8 @@ def register():
                     flash('An account with this email address already exists. Please log in.', 'danger')
                     return render_template('auth/register.html', active_tab=tab, patient_form=patient_form, doctor_form=doctor_form)
 
-                # Save optional uploaded avatar or fallback to default
-                uploaded_avatar = save_avatar_file(patient_form.avatar_file.data, prefix="pat")
+                # Process optional uploaded avatar directly in-memory or fallback to default
+                uploaded_avatar = process_avatar_image(patient_form.avatar_file.data)
                 avatar_url = uploaded_avatar or "/static/uploads/default_patient.png"
 
                 # Create User
@@ -153,8 +136,8 @@ def register():
                     flash('A doctor account with this email address already exists. Please log in.', 'danger')
                     return render_template('auth/register.html', active_tab=tab, patient_form=patient_form, doctor_form=doctor_form)
 
-                # Save optional uploaded avatar or fallback to default
-                uploaded_avatar = save_avatar_file(doctor_form.avatar_file.data, prefix="doc")
+                # Process optional uploaded avatar directly in-memory or fallback to default
+                uploaded_avatar = process_avatar_image(doctor_form.avatar_file.data)
                 avatar_url = uploaded_avatar or "/static/uploads/default_doctor.png"
 
                 # Create User

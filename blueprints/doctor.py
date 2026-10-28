@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request, current_app
 from werkzeug.utils import secure_filename
 from utils.auth_decorators import role_required, get_current_user
+from utils.image_utils import process_avatar_image
 from repositories import doctor_repo, appointment_repo, user_repo
 from forms import DoctorProfileEditForm, DoctorAppointmentResponseForm
 
@@ -100,17 +101,11 @@ def profile_edit():
             "about": form.about.data.strip()
         }
 
-        # Check for uploaded avatar
+        # Check for uploaded avatar (serverless-safe in-memory base64 processing)
         if form.avatar_file.data:
-            file = form.avatar_file.data
-            if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'jpg'
-                saved_filename = f"doc_{doctor['id']}_{os.urandom(4).hex()}.{ext}"
-                upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], saved_filename)
-                os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
-                file.save(upload_path)
-                updates["avatar"] = f"/static/uploads/{saved_filename}"
+            avatar_data = process_avatar_image(form.avatar_file.data)
+            if avatar_data:
+                updates["avatar"] = avatar_data
 
         # Update Doctor repository
         doctor_repo.update(doctor['id'], updates)
