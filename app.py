@@ -3,6 +3,12 @@ from datetime import datetime
 from flask import Flask, render_template, session
 from flask_wtf.csrf import CSRFProtect
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from config import config_by_name
 from repositories import user_repo, get_datastore, use_mongo
 from blueprints.main import main_bp
@@ -56,11 +62,19 @@ def create_app(config_name=None):
                     'city': 'India'
                 }
         
+        user_avatar = session.get('user_avatar')
+        if not user_avatar and current_user:
+            user_avatar = current_user.get('avatar')
+        if not user_avatar:
+            role = session.get('user_role')
+            user_avatar = '/static/uploads/default_doctor.png' if role == 'doctor' else '/static/uploads/default_patient.png'
+
         return {
             'current_user': current_user,
             'current_year': datetime.utcnow().year,
             'user_role': session.get('user_role'),
             'user_name': session.get('user_name'),
+            'user_avatar': user_avatar,
             'use_mongo': use_mongo,
             'has_mongo_uri': bool(os.environ.get('MONGO_URI'))
         }

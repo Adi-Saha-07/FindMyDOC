@@ -54,8 +54,12 @@
         <!-- Auth links shown inside drawer on mobile -->
         <li class="nav-mobile-auth">
           {% if current_user %}
-            <div style="padding: 0.5rem 0.25rem; font-size: 0.88rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-subtle); margin-bottom: 0.5rem;">
-              Logged in as: <strong>{{ user_name }}</strong> ({{ user_role }})
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.25rem; font-size: 0.88rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-subtle); margin-bottom: 0.5rem;">
+              <img src="{{ user_avatar or ('/static/uploads/default_doctor.png' if user_role == 'doctor' else '/static/uploads/default_patient.png') }}" alt="{{ user_name }}" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--brand-green);" onerror="this.src='/static/uploads/default_patient.png'">
+              <div>
+                <div style="font-weight: 600; color: var(--text-primary);">{{ user_name }}</div>
+                <div style="font-size: 0.78rem; text-transform: capitalize;">{{ user_role }}</div>
+              </div>
             </div>
             {% if user_role == 'patient' %}
               <a href="{{ url_for('patient.dashboard') }}" class="btn btn-primary btn-sm" style="width:100%; margin-bottom:0.5rem;">My Dashboard</a>
@@ -81,12 +85,14 @@
         {% if current_user %}
           <div class="nav-user-buttons">
             {% if user_role == 'doctor' %}
-              <a href="{{ url_for('doctor.dashboard') }}" class="btn btn-outline btn-sm">
+              <a href="{{ url_for('doctor.dashboard') }}" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.75rem;">
+                <img src="{{ user_avatar or '/static/uploads/default_doctor.png' }}" alt="{{ user_name }}" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--brand-green);" onerror="this.src='/static/uploads/default_doctor.png'">
                 <span class="badge badge-hospital">Doctor</span>
                 <span>{{ user_name }}</span>
               </a>
             {% else %}
-              <a href="{{ url_for('patient.dashboard') }}" class="btn btn-outline btn-sm">
+              <a href="{{ url_for('patient.dashboard') }}" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.75rem;">
+                <img src="{{ user_avatar or '/static/uploads/default_patient.png' }}" alt="{{ user_name }}" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--brand-green);" onerror="this.src='/static/uploads/default_patient.png'">
                 <span class="badge badge-private">Patient</span>
                 <span>{{ user_name }}</span>
               </a>

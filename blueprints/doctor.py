@@ -115,12 +115,16 @@ def profile_edit():
         # Update Doctor repository
         doctor_repo.update(doctor['id'], updates)
 
-        # Sync User repository name & phone
-        user_repo.update(user['id'], {
+        # Sync User repository name, phone & avatar
+        user_updates = {
             "name": updates["name"],
             "phone": updates["phone"],
             "city": updates["city"]
-        })
+        }
+        if "avatar" in updates:
+            user_updates["avatar"] = updates["avatar"]
+            session['user_avatar'] = updates["avatar"]
+        user_repo.update(user['id'], user_updates)
         session['user_name'] = updates["name"]
 
         flash('Your doctor profile has been updated successfully!', 'success')

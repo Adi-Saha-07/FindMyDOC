@@ -1,9 +1,27 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+import os
+import uuid
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 from repositories import user_repo, doctor_repo, patient_repo
 from forms import LoginForm, RegisterPatientForm, RegisterDoctorForm
 
 auth_bp = Blueprint('auth', __name__)
+
+def save_avatar_file(file_storage, prefix="user"):
+    """Safely save uploaded avatar image to static/uploads and return relative web URL."""
+    if not file_storage or not getattr(file_storage, 'filename', None):
+        return None
+    filename = secure_filename(file_storage.filename)
+    if not filename:
+        return None
+    ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'jpg'
+    saved_filename = f"{prefix}_{uuid.uuid4().hex[:10]}.{ext}"
+    upload_dir = current_app.config.get('UPLOAD_FOLDER', os.path.join(current_app.root_path, 'static', 'uploads'))
+    os.makedirs(upload_dir, exist_ok=True)
+    file_path = os.path.join(upload_dir, saved_filename)
+    file_storage.save(file_path)
+    return f"/static/uploads/{saved_filename}"
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -42,6 +60,7 @@ def login():
         session['user_role'] = user['role']
         session['user_name'] = user['name']
         session['user_email'] = user['email']
+        session['user_avatar'] = user.get('avatar') or ('/static/uploads/default_doctor.png' if user.get('role') == 'doctor' else '/static/uploads/default_patient.png')
         session.permanent = True
 
         flash(f'Welcome back, {user["name"]}!', 'success')
@@ -79,6 +98,10 @@ def register():
                     flash('An account with this email address already exists. Please log in.', 'danger')
                     return render_template('auth/register.html', active_tab=tab, patient_form=patient_form, doctor_form=doctor_form)
 
+                # Save optional uploaded avatar or fallback to default
+                uploaded_avatar = save_avatar_file(patient_form.avatar_file.data, prefix="pat")
+                avatar_url = uploaded_avatar or "/static/uploads/default_patient.png"
+
                 # Create User
                 new_user = user_repo.create({
                     "name": patient_form.name.data.strip(),
@@ -86,6 +109,7 @@ def register():
                     "phone": patient_form.phone.data.strip(),
                     "city": patient_form.city.data.strip(),
                     "role": "patient",
+                    "avatar": avatar_url,
                     "password_hash": generate_password_hash(patient_form.password.data)
                 })
 
@@ -95,7 +119,8 @@ def register():
                     "name": new_user["name"],
                     "email": new_user["email"],
                     "phone": new_user["phone"],
-                    "city": new_user["city"]
+                    "city": new_user["city"],
+                    "avatar": avatar_url
                 })
 
                 # Auto login
@@ -107,6 +132,7 @@ def register():
                 session['user_role'] = 'patient'
                 session['user_name'] = new_user['name']
                 session['user_email'] = new_user['email']
+                session['user_avatar'] = avatar_url
                 session.permanent = True
 
                 flash('Welcome to FindMyDOC! Your patient account has been created.', 'success')
@@ -127,6 +153,10 @@ def register():
                     flash('A doctor account with this email address already exists. Please log in.', 'danger')
                     return render_template('auth/register.html', active_tab=tab, patient_form=patient_form, doctor_form=doctor_form)
 
+                # Save optional uploaded avatar or fallback to default
+                uploaded_avatar = save_avatar_file(doctor_form.avatar_file.data, prefix="doc")
+                avatar_url = uploaded_avatar or "/static/uploads/default_doctor.png"
+
                 # Create User
                 new_user = user_repo.create({
                     "name": doctor_form.name.data.strip(),
@@ -134,6 +164,7 @@ def register():
                     "phone": doctor_form.phone.data.strip(),
                     "city": doctor_form.city.data.strip(),
                     "role": "doctor",
+                    "avatar": avatar_url,
                     "password_hash": generate_password_hash(doctor_form.password.data)
                 })
 
@@ -144,7 +175,7 @@ def register():
                     "email": email,
                     "phone": doctor_form.phone.data.strip(),
                     "city": doctor_form.city.data.strip(),
-                    "avatar": "/static/uploads/default_doctor.png",
+                    "avatar": avatar_url,
                     "specialization": doctor_form.specialization.data,
                     "doctor_type": doctor_form.doctor_type.data,
                     "hospital_or_clinic_name": doctor_form.hospital_or_clinic_name.data.strip(),
@@ -168,6 +199,7 @@ def register():
                 session['user_role'] = 'doctor'
                 session['user_name'] = new_user['name']
                 session['user_email'] = new_user['email']
+                session['user_avatar'] = avatar_url
                 session.permanent = True
 
                 flash('Welcome Dr. ' + new_user['name'] + '! Your professional doctor profile is ready.', 'success')

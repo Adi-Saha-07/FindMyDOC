@@ -34,9 +34,62 @@
 
     <!-- PATIENT REGISTRATION FORM -->
     <div id="patientFormContainer" style="display: {% if active_tab == 'patient' %}block{% else %}none{% endif %};">
-      <form method="POST" id="registerPatientForm">
+      <form method="POST" id="registerPatientForm" enctype="multipart/form-data">
         {{ patient_form.hidden_tag() }}
         <input type="hidden" name="register_role" value="patient">
+
+        <!-- Profile Photo Upload (Patient) -->
+        <div class="avatar-upload-card">
+          <div class="avatar-preview-box" onclick="document.getElementById('pat-avatar_file').click();" title="Click to choose profile photo">
+            <img 
+              id="pat-avatar-preview" 
+              src="{{ url_for('static', filename='uploads/default_patient.png') }}" 
+              alt="Patient Profile Preview" 
+              class="avatar-preview-img"
+              onerror="this.src='/static/uploads/default_patient.png'"
+            >
+            <div class="avatar-preview-overlay">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="avatar-upload-info">
+            <div class="avatar-upload-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Profile Photo <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
+            </div>
+            <div class="avatar-upload-subtitle">
+              Upload your photo as profile picture. JPG, PNG, WEBP (Max 5MB).
+            </div>
+            <div class="avatar-upload-btn-wrap">
+              <label for="pat-avatar_file" class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0; padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Choose Photo
+              </label>
+              <input 
+                type="file" 
+                name="pat-avatar_file" 
+                id="pat-avatar_file" 
+                accept="image/png, image/jpeg, image/jpg, image/webp" 
+                style="display: none;" 
+                onchange="handleAvatarPreview(this, 'pat-avatar-preview', 'pat-avatar-filename')"
+              >
+              <span id="pat-avatar-filename" class="avatar-file-name" style="display: none;"></span>
+            </div>
+            {% if patient_form.avatar_file.errors %}
+              <div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.3rem;">{{ patient_form.avatar_file.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
           <div class="form-group">
@@ -98,9 +151,62 @@
 
     <!-- DOCTOR REGISTRATION FORM -->
     <div id="doctorFormContainer" style="display: {% if active_tab == 'doctor' %}block{% else %}none{% endif %};">
-      <form method="POST" id="registerDoctorForm">
+      <form method="POST" id="registerDoctorForm" enctype="multipart/form-data">
         {{ doctor_form.hidden_tag() }}
         <input type="hidden" name="register_role" value="doctor">
+
+        <!-- Profile Photo Upload (Doctor) -->
+        <div class="avatar-upload-card">
+          <div class="avatar-preview-box" onclick="document.getElementById('doc-avatar_file').click();" title="Click to choose doctor photo">
+            <img 
+              id="doc-avatar-preview" 
+              src="{{ url_for('static', filename='uploads/default_doctor.png') }}" 
+              alt="Doctor Portrait Preview" 
+              class="avatar-preview-img"
+              onerror="this.src='/static/uploads/default_doctor.png'"
+            >
+            <div class="avatar-preview-overlay">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="avatar-upload-info">
+            <div class="avatar-upload-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Doctor Portrait Photo <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
+            </div>
+            <div class="avatar-upload-subtitle">
+              Upload your medical portrait for patients to recognize you. JPG, PNG, WEBP (Max 5MB).
+            </div>
+            <div class="avatar-upload-btn-wrap">
+              <label for="doc-avatar_file" class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0; padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Choose Photo
+              </label>
+              <input 
+                type="file" 
+                name="doc-avatar_file" 
+                id="doc-avatar_file" 
+                accept="image/png, image/jpeg, image/jpg, image/webp" 
+                style="display: none;" 
+                onchange="handleAvatarPreview(this, 'doc-avatar-preview', 'doc-avatar-filename')"
+              >
+              <span id="doc-avatar-filename" class="avatar-file-name" style="display: none;"></span>
+            </div>
+            {% if doctor_form.avatar_file.errors %}
+              <div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.3rem;">{{ doctor_form.avatar_file.errors[0] }}</div>
+            {% endif %}
+          </div>
+        </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
           <div class="form-group">
@@ -220,6 +326,31 @@ function switchRegisterTab(role) {
     patBtn.classList.remove('active');
     docForm.style.display = 'block';
     patForm.style.display = 'none';
+  }
+}
+
+function handleAvatarPreview(input, previewId, nameId) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Selected image exceeds 5MB limit. Please choose a smaller photo.');
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = document.getElementById(previewId);
+      if (img) {
+        img.src = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+
+    const nameSpan = document.getElementById(nameId);
+    if (nameSpan) {
+      nameSpan.textContent = '✓ ' + file.name;
+      nameSpan.style.display = 'inline-block';
+    }
   }
 }
 </script>

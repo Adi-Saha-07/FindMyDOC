@@ -1282,3 +1282,104 @@ select.form-control {
     height: 52px;
   }
 }
+
+/* ============================================================
+   PROFILE PHOTO UPLOAD COMPONENT (Liquid Glass)
+   ============================================================ */
+.avatar-upload-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-card-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-upload-card:hover {
+  border-color: var(--brand-green);
+  box-shadow: 0 8px 30px rgba(71, 111, 85, 0.12);
+}
+
+.avatar-preview-box {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid var(--brand-green);
+  box-shadow: 0 6px 20px rgba(71, 111, 85, 0.2);
+  flex-shrink: 0;
+  cursor: pointer;
+  background: var(--bg-surface);
+}
+
+.avatar-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.avatar-preview-box:hover .avatar-preview-img {
+  transform: scale(1.08);
+}
+
+.avatar-preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.avatar-preview-box:hover .avatar-preview-overlay {
+  opacity: 1;
+}
+
+.avatar-upload-info {
+  flex-grow: 1;
+}
+
+.avatar-upload-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.avatar-upload-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.45rem;
+}
+
+.avatar-upload-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.avatar-file-name {
+  font-size: 0.8rem;
+  color: var(--brand-green);
+  font-weight: 600;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

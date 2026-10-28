@@ -46,6 +46,10 @@ class LoginForm(FlaskForm):
 
 
 class RegisterPatientForm(FlaskForm):
+    avatar_file = FileField('Profile Picture', validators=[
+        Optional(),
+        FileAllowed(['jpg', 'jpeg', 'png', 'webp', 'gif'], 'Images only (jpg, png, webp, gif)')
+    ])
     name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
     email = StringField('Email Address', validators=[DataRequired(), SafeEmail()])
     phone = StringField('Phone Number', validators=[DataRequired(), Length(min=7, max=20)])
@@ -56,6 +60,10 @@ class RegisterPatientForm(FlaskForm):
 
 
 class RegisterDoctorForm(FlaskForm):
+    avatar_file = FileField('Profile Picture', validators=[
+        Optional(),
+        FileAllowed(['jpg', 'jpeg', 'png', 'webp', 'gif'], 'Images only (jpg, png, webp, gif)')
+    ])
     name = StringField('Doctor Full Name', validators=[DataRequired(), Length(min=2, max=100)])
     email = StringField('Professional Email', validators=[DataRequired(), SafeEmail()])
     phone = StringField('Phone Number', validators=[DataRequired(), Length(min=7, max=20)])

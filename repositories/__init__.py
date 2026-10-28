@@ -11,6 +11,13 @@ To activate MongoDB:
 """
 
 import os
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from repositories.in_memory import (
     InMemoryUserRepository,
     InMemoryDoctorRepository,
