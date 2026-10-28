@@ -65,8 +65,8 @@ def create_app(config_name=None):
                     'city': 'India'
                 }
         
-        user_avatar = session.get('user_avatar')
-        if not user_avatar and current_user:
+        user_avatar = None
+        if current_user:
             user_avatar = current_user.get('avatar')
         if not user_avatar:
             role = session.get('user_role')

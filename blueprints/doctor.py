@@ -118,7 +118,6 @@ def profile_edit():
         }
         if "avatar" in updates:
             user_updates["avatar"] = updates["avatar"]
-            session['user_avatar'] = updates["avatar"]
         user_repo.update(user['id'], user_updates)
         session['user_name'] = updates["name"]
 

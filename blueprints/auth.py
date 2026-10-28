@@ -43,7 +43,6 @@ def login():
         session['user_role'] = user['role']
         session['user_name'] = user['name']
         session['user_email'] = user['email']
-        session['user_avatar'] = user.get('avatar') or ('/static/uploads/default_doctor.png' if user.get('role') == 'doctor' else '/static/uploads/default_patient.png')
         session.permanent = True
 
         flash(f'Welcome back, {user["name"]}!', 'success')
@@ -106,7 +105,7 @@ def register():
                     "avatar": avatar_url
                 })
 
-                # Auto login
+                # Auto login (keep cookie lightweight and well within 4KB browser limit)
                 csrf_tok = session.get('csrf_token')
                 session.clear()
                 if csrf_tok:
@@ -115,7 +114,6 @@ def register():
                 session['user_role'] = 'patient'
                 session['user_name'] = new_user['name']
                 session['user_email'] = new_user['email']
-                session['user_avatar'] = avatar_url
                 session.permanent = True
 
                 flash('Welcome to FindMyDOC! Your patient account has been created.', 'success')
@@ -173,7 +171,7 @@ def register():
                     "review_count": 0
                 })
 
-                # Auto login
+                # Auto login (keep cookie lightweight and well within 4KB browser limit)
                 csrf_tok = session.get('csrf_token')
                 session.clear()
                 if csrf_tok:
@@ -182,7 +180,6 @@ def register():
                 session['user_role'] = 'doctor'
                 session['user_name'] = new_user['name']
                 session['user_email'] = new_user['email']
-                session['user_avatar'] = avatar_url
                 session.permanent = True
 
                 flash('Welcome Dr. ' + new_user['name'] + '! Your professional doctor profile is ready.', 'success')
