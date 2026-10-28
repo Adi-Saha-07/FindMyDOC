@@ -27,9 +27,9 @@ class MongoDatabaseClient:
         self.db_name = db_name or os.environ.get("DATABASE_NAME", "findmydoc")
         
         client_options: Dict[str, Any] = {
-            "serverSelectionTimeoutMS": 3000,
-            "connectTimeoutMS": 3000,
-            "socketTimeoutMS": 3000,
+            "serverSelectionTimeoutMS": 2000,
+            "connectTimeoutMS": 2000,
+            "socketTimeoutMS": 2000,
             "retryWrites": True,
         }
         try:
