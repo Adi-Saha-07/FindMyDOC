@@ -35,9 +35,8 @@ class MongoDatabaseClient:
                 self.uri = f"{base}?retryWrites=true&w=majority"
 
         client_options: Dict[str, Any] = {
-            "serverSelectionTimeoutMS": 2000,
-            "connectTimeoutMS": 2000,
-            "socketTimeoutMS": 2000,
+            "serverSelectionTimeoutMS": 10000,
+            "connectTimeoutMS": 10000,
             "retryWrites": True,
         }
         try:
