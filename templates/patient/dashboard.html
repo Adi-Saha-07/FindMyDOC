@@ -9,9 +9,9 @@
     <div>
       <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.25rem;">
         <span class="badge badge-private">Patient Portal</span>
-        <span style="font-size: 0.82rem; color: var(--text-muted);">&bull; {{ patient.city }}</span>
+        <span style="font-size: 0.82rem; color: var(--text-muted);">&bull; {{ (patient.city if patient and patient.city else 'India') }}</span>
       </div>
-      <h1 style="font-size: 1.75rem;">Welcome, {{ patient.name }}</h1>
+      <h1 style="font-size: 1.75rem;">Welcome, {{ (patient.name if patient and patient.name else user_name) }}</h1>
       <p style="color: var(--text-secondary); font-size: 0.92rem;">
         Review your appointment requests and doctor-confirmed visits.
       </p>

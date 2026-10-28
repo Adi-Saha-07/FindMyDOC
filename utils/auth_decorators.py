@@ -7,7 +7,23 @@ def get_current_user():
     user_id = session.get('user_id')
     if not user_id:
         return None
-    return user_repo.get_by_id(user_id)
+    try:
+        user = user_repo.get_by_id(user_id)
+        if user:
+            return user
+    except Exception:
+        pass
+
+    # Safe fallback using session info if worker restart occurred
+    if session.get('user_name') and session.get('user_role'):
+        return {
+            'id': user_id,
+            'name': session.get('user_name'),
+            'role': session.get('user_role'),
+            'email': session.get('user_email', ''),
+            'city': 'Mumbai'
+        }
+    return None
 
 def login_required(f):
     @wraps(f)

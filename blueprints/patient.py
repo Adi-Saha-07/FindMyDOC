@@ -8,18 +8,24 @@ patient_bp = Blueprint('patient', __name__, url_prefix='/patient')
 @role_required('patient')
 def dashboard():
     user = get_current_user()
+    if not user:
+        session.clear()
+        flash('Session expired. Please log in again.', 'warning')
+        return redirect(url_for('auth.login'))
+
     patient = patient_repo.get_by_user_id(user['id'])
     if not patient:
         # Fallback create patient entry if missing
         patient = patient_repo.create({
             "user_id": user['id'],
-            "name": user['name'],
-            "email": user['email'],
+            "name": user.get('name', 'Patient'),
+            "email": user.get('email', ''),
             "phone": user.get('phone', ''),
-            "city": user.get('city', '')
+            "city": user.get('city', 'Mumbai')
         })
 
-    appointments = appointment_repo.get_by_patient_id(patient['id'])
+    patient_id = patient.get('id') if patient else user['id']
+    appointments = appointment_repo.get_by_patient_id(patient_id) if patient_id else []
 
     # Calculate statistics
     stats = {

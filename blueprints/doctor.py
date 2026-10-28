@@ -15,12 +15,18 @@ def allowed_file(filename):
 @role_required('doctor')
 def dashboard():
     user = get_current_user()
+    if not user:
+        session.clear()
+        flash('Session expired. Please log in again.', 'warning')
+        return redirect(url_for('auth.login'))
+
     doctor = doctor_repo.get_by_user_id(user['id'])
     if not doctor:
         flash('Doctor profile not found. Please set up your profile.', 'warning')
         return redirect(url_for('doctor.profile_edit'))
 
-    all_appointments = appointment_repo.get_by_doctor_id(doctor['id'])
+    doctor_id = doctor.get('id') if doctor else user['id']
+    all_appointments = appointment_repo.get_by_doctor_id(doctor_id) if doctor_id else []
 
     pending_requests = [a for a in all_appointments if a.get('status') == 'Pending']
     upcoming_appointments = [a for a in all_appointments if a.get('status') == 'Confirmed']

@@ -8,16 +8,16 @@
   <div class="card dashboard-header">
     <div style="display: flex; gap: 1rem; align-items: center;">
       <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
-        <img src="{{ doctor.avatar }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
+        <img src="{{ (doctor.avatar if doctor and doctor.avatar else '/static/uploads/default_doctor.png') }}" alt="{{ (doctor.name if doctor and doctor.name else user_name) }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
       </div>
       <div>
         <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
           <span class="badge badge-hospital">Doctor Practice Portal</span>
-          <span style="font-size: 0.82rem; color: var(--text-muted);">&bull; {{ doctor.city }}</span>
+          <span style="font-size: 0.82rem; color: var(--text-muted);">&bull; {{ (doctor.city if doctor and doctor.city else 'India') }}</span>
         </div>
-        <h1 style="font-size: 1.65rem; margin-bottom: 0.15rem;">{{ doctor.name }}</h1>
+        <h1 style="font-size: 1.65rem; margin-bottom: 0.15rem;">{{ (doctor.name if doctor and doctor.name else user_name) }}</h1>
         <p style="color: var(--text-secondary); font-size: 0.88rem;">
-          {{ doctor.specialization }} &bull; {{ doctor.hospital_or_clinic_name }} &bull; Consultation Fee: <strong>{{ doctor.consultation_fee | currency }}</strong>
+          {{ (doctor.specialization if doctor and doctor.specialization else 'General Medicine') }} &bull; {{ (doctor.hospital_or_clinic_name if doctor and doctor.hospital_or_clinic_name else 'Clinic') }} &bull; Consultation Fee: <strong>{{ (doctor.consultation_fee if doctor and doctor.consultation_fee else 500) | currency }}</strong>
         </p>
       </div>
     </div>

@@ -43,7 +43,18 @@ def create_app(config_name=None):
         current_user = None
         user_id = session.get('user_id')
         if user_id:
-            current_user = user_repo.get_by_id(user_id)
+            try:
+                current_user = user_repo.get_by_id(user_id)
+            except Exception:
+                current_user = None
+            if not current_user and session.get('user_name'):
+                current_user = {
+                    'id': user_id,
+                    'name': session.get('user_name'),
+                    'role': session.get('user_role'),
+                    'email': session.get('user_email', ''),
+                    'city': 'India'
+                }
         
         return {
             'current_user': current_user,
