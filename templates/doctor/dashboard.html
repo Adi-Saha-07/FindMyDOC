@@ -6,7 +6,7 @@
 <div class="container" style="padding: 2rem 0 4rem;">
   <!-- Doctor Dashboard Header -->
   <div class="card dashboard-header">
-    <div style="display: flex; gap: 1rem; align-items: center;">
+    <div class="dashboard-header-inner">
       <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
         <img src="{{ (doctor.avatar if doctor and doctor.avatar else '/static/uploads/default_doctor.png') }}" alt="{{ (doctor.name if doctor and doctor.name else user_name) }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
       </div>
@@ -77,7 +77,7 @@
 
   <!-- SECTION 1: INCOMING REQUESTS -->
   <div style="margin-top: 2.5rem;">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+    <div class="section-heading-row">
       <div>
         <h2 style="font-size: 1.35rem;">Incoming Appointment Requests</h2>
         <p style="color: var(--text-secondary); font-size: 0.88rem;">
@@ -113,7 +113,7 @@
             </div>
 
             <!-- Action Buttons -->
-            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+            <div class="apt-action-row" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
               <button 
                 type="button" 
                 class="btn btn-primary btn-sm"
@@ -151,7 +151,7 @@
 
   <!-- SECTION 2: SCHEDULED & CONFIRMED APPOINTMENTS -->
   <div style="margin-top: 2.5rem;">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+    <div class="section-heading-row">
       <div>
         <h2 style="font-size: 1.35rem;">Scheduled Visits</h2>
         <p style="color: var(--text-secondary); font-size: 0.88rem;">
@@ -194,7 +194,7 @@
               {% endif %}
             </div>
 
-            <div style="text-align: right; min-width: 100px;">
+            <div class="apt-right-actions">
               <span class="badge badge-hospital">
                 Fee: {{ doctor.consultation_fee | currency }}
               </span>

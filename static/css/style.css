@@ -104,13 +104,16 @@
 }
 
 /* Base Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -129,7 +132,12 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Inter', sans-serif;
   color: var(--text-primary);
   font-weight: 600;
@@ -162,7 +170,9 @@ img {
 /* ==========================================================================
    SOLID PROFESSIONAL CARDS & PANELS
    ========================================================================== */
-.card, .glass-panel, .glass-card {
+.card,
+.glass-panel,
+.glass-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -170,7 +180,8 @@ img {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover, .glass-card:hover {
+.card:hover,
+.glass-card:hover {
   border-color: var(--brand-green);
   box-shadow: var(--shadow-md);
 }
@@ -239,7 +250,8 @@ img {
   border-radius: var(--radius-sm);
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
   color: var(--brand-green);
 }
 
@@ -298,13 +310,15 @@ img {
   color: #ffffff;
 }
 
-.btn-outline, .btn-glass {
+.btn-outline,
+.btn-glass {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
 
-.btn-outline:hover, .btn-glass:hover {
+.btn-outline:hover,
+.btn-glass:hover {
   background: var(--bg-surface);
   border-color: var(--brand-green);
   color: var(--brand-green);
@@ -349,7 +363,8 @@ img {
   margin-bottom: 0.35rem;
 }
 
-.form-control, .glass-input {
+.form-control,
+.glass-input {
   width: 100%;
   padding: 0.65rem 0.9rem;
   font-family: inherit;
@@ -362,12 +377,14 @@ img {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.form-control:focus, .glass-input:focus {
+.form-control:focus,
+.glass-input:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(71, 111, 85, 0.18);
 }
 
-.form-control::placeholder, .glass-input::placeholder {
+.form-control::placeholder,
+.glass-input::placeholder {
   color: var(--text-muted);
 }
 
@@ -418,7 +435,8 @@ select.form-control {
   gap: 0.5rem;
 }
 
-.autocomplete-item:hover, .autocomplete-item.active {
+.autocomplete-item:hover,
+.autocomplete-item.active {
   background: var(--brand-green-light);
   color: var(--brand-green);
 }
@@ -449,28 +467,40 @@ select.form-control {
   border-color: var(--status-pending-border);
   color: var(--status-pending-text);
 }
-.badge-pending .badge-dot { background: #d97706; }
+
+.badge-pending .badge-dot {
+  background: #d97706;
+}
 
 .badge-confirmed {
   background: var(--status-confirmed-bg);
   border-color: var(--status-confirmed-border);
   color: var(--status-confirmed-text);
 }
-.badge-confirmed .badge-dot { background: var(--brand-green); }
+
+.badge-confirmed .badge-dot {
+  background: var(--brand-green);
+}
 
 .badge-rejected {
   background: var(--status-rejected-bg);
   border-color: var(--status-rejected-border);
   color: var(--status-rejected-text);
 }
-.badge-rejected .badge-dot { background: #dc2626; }
+
+.badge-rejected .badge-dot {
+  background: #dc2626;
+}
 
 .badge-cancelled {
   background: var(--status-cancelled-bg);
   border-color: var(--status-cancelled-border);
   color: var(--status-cancelled-text);
 }
-.badge-cancelled .badge-dot { background: #64748b; }
+
+.badge-cancelled .badge-dot {
+  background: #64748b;
+}
 
 .badge-hospital {
   background: var(--brand-green-light);
@@ -514,10 +544,21 @@ select.form-control {
   font-size: 0.9rem;
 }
 
-.flash-toast.success { border-left: 4px solid var(--brand-green); }
-.flash-toast.danger { border-left: 4px solid #dc2626; }
-.flash-toast.warning { border-left: 4px solid #d97706; }
-.flash-toast.info { border-left: 4px solid var(--brand-green); }
+.flash-toast.success {
+  border-left: 4px solid var(--brand-green);
+}
+
+.flash-toast.danger {
+  border-left: 4px solid #dc2626;
+}
+
+.flash-toast.warning {
+  border-left: 4px solid #d97706;
+}
+
+.flash-toast.info {
+  border-left: 4px solid var(--brand-green);
+}
 
 .flash-toast-close {
   background: none;
@@ -837,12 +878,15 @@ select.form-control {
 .appointment-item.status-Confirmed {
   border-left-color: var(--brand-green);
 }
+
 .appointment-item.status-Pending {
   border-left-color: #d97706;
 }
+
 .appointment-item.status-Rejected {
   border-left-color: #dc2626;
 }
+
 .appointment-item.status-Cancelled {
   border-left-color: #64748b;
 }
@@ -954,7 +998,8 @@ select.form-control {
   background: var(--bg-surface);
 }
 
-.fluid-blob-container, .grain-overlay {
+.fluid-blob-container,
+.grain-overlay {
   display: none !important;
 }
 
@@ -991,9 +1036,11 @@ select.form-control {
 .mobile-nav-toggle.open .hamburger-bar:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
+
 .mobile-nav-toggle.open .hamburger-bar:nth-child(2) {
   opacity: 0;
 }
+
 .mobile-nav-toggle.open .hamburger-bar:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
@@ -1006,6 +1053,7 @@ select.form-control {
   background: rgba(0, 0, 0, 0.4);
   z-index: 998;
 }
+
 .mobile-nav-backdrop.show {
   display: block;
 }
@@ -1028,6 +1076,7 @@ select.form-control {
 
 /* ---- Tablet and below (≤ 900px) ---- */
 @media (max-width: 900px) {
+
   /* Hamburger visible */
   .mobile-nav-toggle {
     display: flex;
@@ -1075,7 +1124,8 @@ select.form-control {
     border-bottom: 1px solid var(--border-subtle);
   }
 
-  .nav-link:hover, .nav-link.active {
+  .nav-link:hover,
+  .nav-link.active {
     background: var(--brand-green-light);
     color: var(--brand-green);
   }
@@ -1382,4 +1432,179 @@ select.form-control {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE — DOCTOR DETAIL + DASHBOARDS
+   ============================================================ */
+
+/* Doctor detail page: 2-col grid → single col */
+.doctor-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+/* Dashboard header inner layout */
+.dashboard-header-inner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Appointment right actions */
+.apt-right-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+/* Section heading + badge row */
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ---- Tablet (≤ 768px): doctor detail sidebar goes below ---- */
+@media (max-width: 768px) {
+  .doctor-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Unstick the booking sidebar */
+  .doctor-detail-grid > aside {
+    position: static !important;
+  }
+
+  /* Dashboard header: profile row still flex but wraps */
+  .dashboard-header-inner {
+    flex-wrap: wrap;
+  }
+
+  /* Dashboard header action buttons go full width row */
+  .dashboard-header {
+    gap: 1rem;
+  }
+
+  .dashboard-header > div:last-child {
+    width: 100%;
+  }
+
+  .dashboard-header > div:last-child .btn {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ---- Mobile (≤ 600px): deeper stacking ---- */
+@media (max-width: 600px) {
+  /* Doctor detail hero: image + text stack */
+  .doctor-detail-grid .card > div[style*="display: flex"] {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Doctor name smaller */
+  .doctor-detail-grid h1 {
+    font-size: 1.45rem !important;
+  }
+
+  /* Booking card full-width button */
+  .doctor-detail-grid aside .btn-block {
+    font-size: 1rem;
+  }
+
+  /* Dashboard header: profile pic row */
+  .dashboard-header-inner {
+    align-items: flex-start;
+  }
+
+  /* Dashboard h1 size */
+  .dashboard-header h1 {
+    font-size: 1.35rem !important;
+  }
+
+  /* Appointment item: stack info + actions */
+  .appointment-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.85rem !important;
+  }
+
+  /* Apt right actions: full-width, left-aligned */
+  .apt-right-actions {
+    flex-direction: row;
+    align-items: center;
+    min-width: unset;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .apt-right-actions .btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Doctor dashboard action buttons row */
+  .apt-action-row {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 0.5rem !important;
+  }
+
+  .apt-action-row .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Section heading row wraps on small screens */
+  .section-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Confirmed schedule box wraps */
+  .apt-confirmed-box {
+    flex-wrap: wrap;
+  }
+
+  /* Stats grid: force 2 cols on mobile dashboard */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Avatar upload card stacks */
+  .avatar-upload-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* ---- Extra small (≤ 420px) ---- */
+@media (max-width: 420px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apt-right-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .apt-right-actions .btn {
+    width: 100%;
+  }
 }
