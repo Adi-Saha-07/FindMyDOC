@@ -26,6 +26,14 @@ class MongoDatabaseClient:
         self.uri = uri or os.environ.get("MONGO_URI", "mongodb://localhost:27017/findmydoc")
         self.db_name = db_name or os.environ.get("DATABASE_NAME", "findmydoc")
         
+        # Ensure proper database and retryWrites options on SRV URIs
+        if "mongodb+srv://" in self.uri and "?" not in self.uri:
+            base = self.uri.rstrip("/")
+            if not base.endswith(f"/{self.db_name}"):
+                self.uri = f"{base}/{self.db_name}?retryWrites=true&w=majority"
+            else:
+                self.uri = f"{base}?retryWrites=true&w=majority"
+
         client_options: Dict[str, Any] = {
             "serverSelectionTimeoutMS": 2000,
             "connectTimeoutMS": 2000,

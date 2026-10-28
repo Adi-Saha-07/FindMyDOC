@@ -34,7 +34,10 @@ def login():
             return render_template('auth/login.html', form=form)
 
         # Establish session
+        csrf_tok = session.get('csrf_token')
         session.clear()
+        if csrf_tok:
+            session['csrf_token'] = csrf_tok
         session['user_id'] = user['id']
         session['user_role'] = user['role']
         session['user_name'] = user['name']
@@ -96,7 +99,10 @@ def register():
                 })
 
                 # Auto login
+                csrf_tok = session.get('csrf_token')
                 session.clear()
+                if csrf_tok:
+                    session['csrf_token'] = csrf_tok
                 session['user_id'] = new_user['id']
                 session['user_role'] = 'patient'
                 session['user_name'] = new_user['name']
@@ -154,7 +160,10 @@ def register():
                 })
 
                 # Auto login
+                csrf_tok = session.get('csrf_token')
                 session.clear()
+                if csrf_tok:
+                    session['csrf_token'] = csrf_tok
                 session['user_id'] = new_user['id']
                 session['user_role'] = 'doctor'
                 session['user_name'] = new_user['name']
@@ -179,6 +188,9 @@ def register():
 
 @auth_bp.route('/logout')
 def logout():
+    csrf_tok = session.get('csrf_token')
     session.clear()
+    if csrf_tok:
+        session['csrf_token'] = csrf_tok
     flash('You have been safely logged out.', 'info')
     return redirect(url_for('main.index'))

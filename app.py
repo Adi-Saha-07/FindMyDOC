@@ -63,13 +63,21 @@ def create_app(config_name=None):
             return f"\u20b9{val}"
 
     # Error handlers
+    from flask_wtf.csrf import CSRFError
+    from werkzeug.exceptions import HTTPException
+    from flask import request, flash, redirect, url_for
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        flash('Your session expired. Please submit the form again.', 'warning')
+        ref = request.referrer
+        if ref and ref != request.url:
+            return redirect(ref)
+        return redirect(request.url)
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('errors/404.html'), 404
-
-    @app.errorhandler(500)
-    def internal_server_error(e):
-        return render_template('errors/500.html'), 500
 
     @app.errorhandler(403)
     def forbidden(e):
@@ -78,6 +86,14 @@ def create_app(config_name=None):
     @app.errorhandler(413)
     def request_entity_too_large(e):
         return render_template('errors/500.html', message="Uploaded image is too large. Max file size is 5MB."), 413
+
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(e):
+        if e.code == 404:
+            return render_template('errors/404.html'), 404
+        if e.code == 403:
+            return render_template('errors/404.html', message=e.description), 403
+        return render_template('errors/500.html', message=e.description), e.code
 
     @app.errorhandler(Exception)
     def unhandled_exception(e):
