@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from flask import Flask, render_template, session
 from flask_wtf.csrf import CSRFProtect
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 try:
     from dotenv import load_dotenv
@@ -29,6 +30,9 @@ def create_app(config_name=None):
 
     # Initialize extensions
     csrf.init_app(app)
+
+    # Enable ProxyFix for reverse proxies (e.g. Vercel, Nginx) to properly detect HTTPS scheme and client IP
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
     # Ensure uploads folder exists (safely catch read-only serverless filesystem)
     try:

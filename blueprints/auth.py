@@ -27,7 +27,14 @@ def _handle_google_user(userinfo, chosen_role=None):
     role = chosen_role or session.get('oauth_role', 'patient')
     next_url = session.get('oauth_next', '')
 
-    user = user_repo.get_by_email(email)
+    try:
+        user = user_repo.get_by_email(email)
+    except Exception as e:
+        import traceback
+        print(f"[Google Auth Lookup Error] {e}\n{traceback.format_exc()}")
+        flash(f'Database lookup error: {str(e)}', 'danger')
+        return redirect(url_for('auth.login'))
+
     if user:
         # Existing user - update picture if empty or default
         if picture and (not user.get('avatar') or 'default_' in user.get('avatar', '')):
@@ -46,7 +53,6 @@ def _handle_google_user(userinfo, chosen_role=None):
         session['user_role'] = user['role']
         session['user_name'] = user['name']
         session['user_email'] = user['email']
-        session['user_avatar'] = user.get('avatar') or picture
         session.permanent = True
 
         flash(f'Welcome back, {user["name"]}! Signed in with Google.', 'success')
@@ -58,48 +64,54 @@ def _handle_google_user(userinfo, chosen_role=None):
     user_avatar = picture or (
         '/static/uploads/default_doctor.png' if role == 'doctor' else '/static/uploads/default_patient.png'
     )
-    new_user = user_repo.create({
-        'name': name,
-        'email': email,
-        'phone': '+91 9876543210',
-        'city': 'Delhi',
-        'role': role,
-        'avatar': user_avatar,
-        'google_id': google_id,
-        'auth_provider': 'google',
-        'password_hash': generate_password_hash(secrets.token_urlsafe(24))
-    })
-
-    if role == 'doctor':
-        doctor_repo.create({
-            'user_id': new_user['id'],
-            'name': new_user['name'],
+    try:
+        new_user = user_repo.create({
+            'name': name,
             'email': email,
-            'phone': new_user['phone'],
-            'city': new_user['city'],
+            'phone': '+91 9876543210',
+            'city': 'Delhi',
+            'role': role,
             'avatar': user_avatar,
-            'specialization': 'General Medicine',
-            'doctor_type': 'Hospital',
-            'hospital_or_clinic_name': 'City Hospital & Healthcare',
-            'qualifications': 'MBBS, MD',
-            'experience_years': 5,
-            'consultation_fee': 500.0,
-            'address': f"City Hospital, {new_user['city']}",
-            'working_days': 'Mon - Fri',
-            'timings': '09:00 AM - 05:00 PM',
-            'about': f"Dr. {new_user['name']} is a verified specialist practitioner providing personalized medical care.",
-            'rating': 5.0,
-            'review_count': 0
+            'google_id': google_id,
+            'auth_provider': 'google',
+            'password_hash': generate_password_hash(secrets.token_urlsafe(24))
         })
-    else:
-        patient_repo.create({
-            'user_id': new_user['id'],
-            'name': new_user['name'],
-            'email': email,
-            'phone': new_user['phone'],
-            'city': new_user['city'],
-            'avatar': user_avatar
-        })
+
+        if role == 'doctor':
+            doctor_repo.create({
+                'user_id': new_user['id'],
+                'name': new_user['name'],
+                'email': email,
+                'phone': new_user['phone'],
+                'city': new_user['city'],
+                'avatar': user_avatar,
+                'specialization': 'General Medicine',
+                'doctor_type': 'Hospital',
+                'hospital_or_clinic_name': 'City Hospital & Healthcare',
+                'qualifications': 'MBBS, MD',
+                'experience_years': 5,
+                'consultation_fee': 500.0,
+                'address': f"City Hospital, {new_user['city']}",
+                'working_days': 'Mon - Fri',
+                'timings': '09:00 AM - 05:00 PM',
+                'about': f"Dr. {new_user['name']} is a verified specialist practitioner providing personalized medical care.",
+                'rating': 5.0,
+                'review_count': 0
+            })
+        else:
+            patient_repo.create({
+                'user_id': new_user['id'],
+                'name': new_user['name'],
+                'email': email,
+                'phone': new_user['phone'],
+                'city': new_user['city'],
+                'avatar': user_avatar
+            })
+    except Exception as e:
+        import traceback
+        print(f"[Google Auth Registration Error] {e}\n{traceback.format_exc()}")
+        flash(f'Database error during registration: {str(e)}', 'danger')
+        return redirect(url_for('auth.register'))
 
     csrf_tok = session.get('csrf_token')
     session.clear()
@@ -110,13 +122,17 @@ def _handle_google_user(userinfo, chosen_role=None):
     session['user_role'] = new_user['role']
     session['user_name'] = new_user['name']
     session['user_email'] = new_user['email']
-    session['user_avatar'] = user_avatar
     session.permanent = True
 
     flash(f'Welcome to FindMyDOC, {new_user["name"]}! Your {role} account has been created with Google.', 'success')
     if next_url and next_url.startswith('/'):
         return redirect(next_url)
     return redirect(url_for('doctor.dashboard' if role == 'doctor' else 'patient.dashboard'))
+
+
+def _get_google_redirect_uri():
+    scheme = 'https' if request.is_secure or request.headers.get('X-Forwarded-Proto') == 'https' or not request.host.startswith(('localhost', '127.0.0.1')) else 'http'
+    return url_for('auth.google_callback', _external=True, _scheme=scheme)
 
 
 @auth_bp.route('/google')
@@ -134,7 +150,7 @@ def google_login():
         session['oauth_role'] = role
         session['oauth_next'] = next_url
 
-        redirect_uri = url_for('auth.google_callback', _external=True)
+        redirect_uri = _get_google_redirect_uri()
         params = {
             'client_id': client_id,
             'redirect_uri': redirect_uri,
@@ -171,7 +187,7 @@ def google_callback():
 
     client_id = current_app.config.get('GOOGLE_CLIENT_ID')
     client_secret = current_app.config.get('GOOGLE_CLIENT_SECRET')
-    redirect_uri = url_for('auth.google_callback', _external=True)
+    redirect_uri = _get_google_redirect_uri()
 
     try:
         token_payload = urlencode({
