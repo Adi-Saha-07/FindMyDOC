@@ -25,8 +25,63 @@
     "ENT",
     "Oncology"
   ],
-  "users": [],
-  "doctors": [],
-  "patients": [],
+  "users": [
+    {
+      "id": "u-demo-patient",
+      "name": "Mariz",
+      "email": "mariz@mediconnect.com",
+      "phone": "+91 9876543210",
+      "city": "Mumbai",
+      "role": "patient",
+      "avatar": "/static/uploads/default_patient.png",
+      "password_hash": "scrypt:32768:8:1$OxISvHAx4IACmTmd$673b370d7d6e7ba7d77b70eae82130d8cc1eab565783889e89facdef921dbd6ec657d8759107a22282dc9b94b68e76e1b6b579a40149441863f835a8c2fa1c1f",
+      "created_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "u-demo-doctor",
+      "name": "Dr. Sarah",
+      "email": "dr.sarah@mediconnect.com",
+      "phone": "+91 9876543211",
+      "city": "Mumbai",
+      "role": "doctor",
+      "avatar": "/static/uploads/default_doctor.png",
+      "password_hash": "scrypt:32768:8:1$9RQ8ferEb0q39hVn$9106408bceddd4ec0356c9fcc657fec3e24207ef1f75b1733f74bea7f0d4700d821bc47024dd7da93270a8f2cf5e9c84adb37507a5d8ba51c57877b1dfcdc0e4",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "doctors": [
+    {
+      "id": "doc-demo-sarah",
+      "user_id": "u-demo-doctor",
+      "name": "Dr. Sarah",
+      "email": "dr.sarah@mediconnect.com",
+      "phone": "+91 9876543211",
+      "city": "Mumbai",
+      "avatar": "/static/uploads/default_doctor.png",
+      "specialization": "Cardiology",
+      "doctor_type": "Hospital",
+      "hospital_or_clinic_name": "Apollo Heart Institute",
+      "qualifications": "MBBS, MD (Cardiology), FACC",
+      "experience_years": 12,
+      "consultation_fee": 800.0,
+      "address": "Apollo Hospital, Bandra, Mumbai",
+      "working_days": "Mon - Fri",
+      "timings": "09:00 AM - 04:00 PM",
+      "about": "Dr. Sarah is a senior cardiologist with over 12 years of clinical excellence in cardiovascular disease prevention and interventional cardiology.",
+      "rating": 4.9,
+      "review_count": 48
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat-demo-mariz",
+      "user_id": "u-demo-patient",
+      "name": "Mariz",
+      "email": "mariz@mediconnect.com",
+      "phone": "+91 9876543210",
+      "city": "Mumbai",
+      "avatar": "/static/uploads/default_patient.png"
+    }
+  ],
   "appointments": []
 }

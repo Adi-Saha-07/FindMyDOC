@@ -3,24 +3,38 @@
 {% block title %}Create an Account &bull; FindMyDOC{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="card auth-wrapper" style="max-width: 620px;">
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Create FindMyDOC Account</h1>
-      <p style="color: var(--text-secondary); font-size: 0.88rem;">
-        Choose whether you are registering as a patient or a doctor.
+<div class="container auth-page-container wide">
+  <div class="card auth-card-modern">
+    
+    <!-- Brand / Header -->
+    <div style="text-align: center; margin-bottom: 1.75rem;">
+      <div class="brand-icon" style="margin: 0 auto 0.85rem; width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 4px 12px rgba(71, 111, 85, 0.25);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <h1 style="font-size: 1.7rem; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: -0.01em;">
+        Create FindMyDOC Account
+      </h1>
+      <p style="color: var(--text-secondary); font-size: 0.92rem;">
+        Join India's leading doctor appointment &amp; medical consultation platform
       </p>
     </div>
 
     <!-- Role Selection Tabs -->
-    <div class="auth-tabs">
+    <div class="auth-tabs" style="margin-bottom: 1.75rem;">
       <button 
         type="button" 
         class="auth-tab-btn {% if active_tab == 'patient' %}active{% endif %}" 
         id="tabPatientBtn" 
         onclick="switchRegisterTab('patient')"
       >
-        Patient Registration
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>I am a Patient</span>
       </button>
       <button 
         type="button" 
@@ -28,18 +42,42 @@
         id="tabDoctorBtn" 
         onclick="switchRegisterTab('doctor')"
       >
-        Doctor / Specialist Registration
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path>
+          <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path>
+          <circle cx="20" cy="10" r="2"></circle>
+        </svg>
+        <span>I am a Doctor / Specialist</span>
       </button>
     </div>
 
+    <!-- ======================================================== -->
     <!-- PATIENT REGISTRATION FORM -->
+    <!-- ======================================================== -->
     <div id="patientFormContainer" style="display: {% if active_tab == 'patient' %}block{% else %}none{% endif %};">
+      
+      <!-- GOOGLE SIGN UP BUTTON FOR PATIENT -->
+      <a href="{{ url_for('auth.google_login', role='patient') }}" class="btn-google" id="googleSignUpPatientBtn" title="Register instantly with your Google account">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Sign up with Google as Patient</span>
+      </a>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or register with email</span>
+      </div>
+
       <form method="POST" id="registerPatientForm" enctype="multipart/form-data">
         {{ patient_form.hidden_tag() }}
         <input type="hidden" name="register_role" value="patient">
 
         <!-- Profile Photo Upload (Patient) -->
-        <div class="avatar-upload-card">
+        <div class="avatar-upload-card" style="margin-bottom: 1.25rem;">
           <div class="avatar-preview-box" onclick="document.getElementById('pat-avatar_file').click();" title="Click to choose profile photo">
             <img 
               id="pat-avatar-preview" 
@@ -61,10 +99,10 @@
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              Profile Photo <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
+              Profile Photo <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
             </div>
             <div class="avatar-upload-subtitle">
-              Upload your photo as profile picture. JPG, PNG, WEBP (Max 5MB).
+              JPG, PNG, WEBP up to 5MB. Visible to your doctors.
             </div>
             <div class="avatar-upload-btn-wrap">
               <label for="pat-avatar_file" class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0; padding: 0.35rem 0.85rem; font-size: 0.82rem;">
@@ -91,25 +129,25 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-2">
           <div class="form-group">
             <label class="form-label" for="pat-name">Full Name *</label>
-            {{ patient_form.name(class="form-control", id="pat-name", placeholder="Full name") }}
-            {% if patient_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.name.errors[0] }}</div>{% endif %}
+            {{ patient_form.name(class="form-control", id="pat-name", placeholder="e.g. Rahul Sharma") }}
+            {% if patient_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.name.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
             <label class="form-label" for="pat-email">Email Address *</label>
-            {{ patient_form.email(class="form-control", id="pat-email", placeholder="email@example.com") }}
-            {% if patient_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.email.errors[0] }}</div>{% endif %}
+            {{ patient_form.email(class="form-control", id="pat-email", placeholder="rahul@example.com") }}
+            {% if patient_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.email.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-2">
           <div class="form-group">
             <label class="form-label" for="pat-phone">Phone Number *</label>
-            {{ patient_form.phone(class="form-control", id="pat-phone", placeholder="+1 (555) 000-0000") }}
-            {% if patient_form.phone.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.phone.errors[0] }}</div>{% endif %}
+            {{ patient_form.phone(class="form-control", id="pat-phone", placeholder="+91 98765 43210") }}
+            {% if patient_form.phone.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.phone.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group autocomplete-wrapper">
@@ -119,45 +157,89 @@
               name="pat-city" 
               id="pat-city" 
               class="form-control" 
-              placeholder="e.g. New York, Chicago" 
+              placeholder="e.g. Mumbai, Delhi, Bengaluru" 
               value="{{ patient_form.city.data or '' }}"
               data-city-autocomplete="true"
               autocomplete="off"
               required
             >
-            {% if patient_form.city.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.city.errors[0] }}</div>{% endif %}
+            {% if patient_form.city.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.city.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-2">
           <div class="form-group">
-            <label class="form-label" for="pat-password">Password (min 6 characters) *</label>
-            {{ patient_form.password(class="form-control", id="pat-password") }}
-            {% if patient_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.password.errors[0] }}</div>{% endif %}
+            <label class="form-label" for="pat-password">Password (min 6 chars) *</label>
+            <div class="password-input-wrap">
+              {{ patient_form.password(class="form-control", id="pat-password", placeholder="Create password") }}
+              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pat-password', this)" title="Show / Hide password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            {% if patient_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.password.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
             <label class="form-label" for="pat-confirm_password">Confirm Password *</label>
-            {{ patient_form.confirm_password(class="form-control", id="pat-confirm_password") }}
-            {% if patient_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ patient_form.confirm_password.errors[0] }}</div>{% endif %}
+            <div class="password-input-wrap">
+              {{ patient_form.confirm_password(class="form-control", id="pat-confirm_password", placeholder="Repeat password") }}
+              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pat-confirm_password', this)" title="Show / Hide password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            {% if patient_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ patient_form.confirm_password.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitPatientRegBtn" style="margin-top: 0.85rem;">
-          Create Patient Account
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitPatientRegBtn" style="margin-top: 1rem; font-weight: 600;">
+          Create Patient Account &rarr;
         </button>
       </form>
     </div>
 
+    <!-- ======================================================== -->
     <!-- DOCTOR REGISTRATION FORM -->
+    <!-- ======================================================== -->
     <div id="doctorFormContainer" style="display: {% if active_tab == 'doctor' %}block{% else %}none{% endif %};">
+      
+      <!-- GOOGLE SIGN UP BUTTON FOR DOCTOR -->
+      <a href="{{ url_for('auth.google_login', role='doctor') }}" class="btn-google" id="googleSignUpDoctorBtn" title="Register instantly with your Google account">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Sign up with Google as Doctor</span>
+      </a>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or register with medical credentials</span>
+      </div>
+
       <form method="POST" id="registerDoctorForm" enctype="multipart/form-data">
         {{ doctor_form.hidden_tag() }}
         <input type="hidden" name="register_role" value="doctor">
 
-        <!-- Profile Photo Upload (Doctor) -->
-        <div class="avatar-upload-card">
-          <div class="avatar-preview-box" onclick="document.getElementById('doc-avatar_file').click();" title="Click to choose doctor photo">
+        <!-- 1. Doctor Identity Section -->
+        <div class="auth-form-section">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          1. Doctor Identity &amp; Contact
+        </div>
+
+        <!-- Doctor Avatar Upload -->
+        <div class="avatar-upload-card" style="margin-bottom: 1.25rem;">
+          <div class="avatar-preview-box" onclick="document.getElementById('doc-avatar_file').click();" title="Click to choose doctor portrait">
             <img 
               id="doc-avatar-preview" 
               src="{{ url_for('static', filename='uploads/default_doctor.png') }}" 
@@ -178,10 +260,10 @@
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              Doctor Portrait Photo <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
+              Doctor Portrait Photo <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">(Optional)</span>
             </div>
             <div class="avatar-upload-subtitle">
-              Upload your medical portrait for patients to recognize you. JPG, PNG, WEBP (Max 5MB).
+              Professional portrait helps build patient trust. JPG, PNG, WEBP (Max 5MB).
             </div>
             <div class="avatar-upload-btn-wrap">
               <label for="doc-avatar_file" class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0; padding: 0.35rem 0.85rem; font-size: 0.82rem;">
@@ -208,43 +290,54 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-2">
           <div class="form-group">
             <label class="form-label" for="doc-name">Doctor Full Name *</label>
-            {{ doctor_form.name(class="form-control", id="doc-name", placeholder="Dr. John Smith") }}
-            {% if doctor_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.name.errors[0] }}</div>{% endif %}
+            {{ doctor_form.name(class="form-control", id="doc-name", placeholder="Dr. Rajesh Verma") }}
+            {% if doctor_form.name.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.name.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
             <label class="form-label" for="doc-email">Professional Email *</label>
-            {{ doctor_form.email(class="form-control", id="doc-email", placeholder="dr.smith@clinic.com") }}
-            {% if doctor_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.email.errors[0] }}</div>{% endif %}
+            {{ doctor_form.email(class="form-control", id="doc-email", placeholder="dr.rajesh@clinic.com") }}
+            {% if doctor_form.email.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.email.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-2">
           <div class="form-group">
             <label class="form-label" for="doc-phone">Phone Number *</label>
-            {{ doctor_form.phone(class="form-control", id="doc-phone") }}
+            {{ doctor_form.phone(class="form-control", id="doc-phone", placeholder="+91 98765 00000") }}
+            {% if doctor_form.phone.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.phone.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group autocomplete-wrapper">
-            <label class="form-label" for="doc-city">City *</label>
+            <label class="form-label" for="doc-city">Practice City *</label>
             <input 
               type="text" 
               name="doc-city" 
               id="doc-city" 
               class="form-control" 
-              placeholder="City" 
+              placeholder="e.g. Mumbai, Delhi, Bengaluru" 
               value="{{ doctor_form.city.data or '' }}"
               data-city-autocomplete="true"
               autocomplete="off"
               required
             >
+            {% if doctor_form.city.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.city.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <!-- 2. Medical Practice Section -->
+        <div class="auth-form-section">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          2. Medical Specialization &amp; Practice
+        </div>
+
+        <div class="auth-grid-2">
           <div class="form-group">
             <label class="form-label" for="doc-specialization">Specialization *</label>
             {{ doctor_form.specialization(class="form-control", id="doc-specialization") }}
@@ -256,54 +349,103 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-split">
           <div class="form-group">
             <label class="form-label" for="doc-hospital_or_clinic_name">Hospital / Clinic Name *</label>
-            {{ doctor_form.hospital_or_clinic_name(class="form-control", id="doc-hospital_or_clinic_name") }}
+            {{ doctor_form.hospital_or_clinic_name(class="form-control", id="doc-hospital_or_clinic_name", placeholder="e.g. Apollo Hospital or City Clinic") }}
+            {% if doctor_form.hospital_or_clinic_name.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.hospital_or_clinic_name.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="doc-consultation_fee">Fee (&#x20B9;) *</label>
-            {{ doctor_form.consultation_fee(class="form-control", id="doc-consultation_fee") }}
+            <label class="form-label" for="doc-consultation_fee">Fee (&#x20B9; INR) *</label>
+            {{ doctor_form.consultation_fee(class="form-control", id="doc-consultation_fee", placeholder="500") }}
+            {% if doctor_form.consultation_fee.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.consultation_fee.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.85rem;">
+        <div class="auth-grid-split">
           <div class="form-group">
-            <label class="form-label" for="doc-qualifications">Qualifications *</label>
-            {{ doctor_form.qualifications(class="form-control", id="doc-qualifications", placeholder="e.g. MD, FACP") }}
+            <label class="form-label" for="doc-qualifications">Qualifications &amp; Degrees *</label>
+            {{ doctor_form.qualifications(class="form-control", id="doc-qualifications", placeholder="e.g. MBBS, MD, FACS") }}
+            {% if doctor_form.qualifications.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.qualifications.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
             <label class="form-label" for="doc-experience_years">Years Exp *</label>
-            {{ doctor_form.experience_years(class="form-control", id="doc-experience_years") }}
+            {{ doctor_form.experience_years(class="form-control", id="doc-experience_years", placeholder="8") }}
+            {% if doctor_form.experience_years.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.experience_years.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+        <!-- 3. Security Section -->
+        <div class="auth-form-section">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          3. Account Security
+        </div>
+
+        <div class="auth-grid-2">
           <div class="form-group">
-            <label class="form-label" for="doc-password">Password *</label>
-            {{ doctor_form.password(class="form-control", id="doc-password") }}
-            {% if doctor_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.password.errors[0] }}</div>{% endif %}
+            <label class="form-label" for="doc-password">Password (min 6 chars) *</label>
+            <div class="password-input-wrap">
+              {{ doctor_form.password(class="form-control", id="doc-password", placeholder="Create password") }}
+              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('doc-password', this)" title="Show / Hide password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            {% if doctor_form.password.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.password.errors[0] }}</div>{% endif %}
           </div>
 
           <div class="form-group">
             <label class="form-label" for="doc-confirm_password">Confirm Password *</label>
-            {{ doctor_form.confirm_password(class="form-control", id="doc-confirm_password") }}
-            {% if doctor_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem;">{{ doctor_form.confirm_password.errors[0] }}</div>{% endif %}
+            <div class="password-input-wrap">
+              {{ doctor_form.confirm_password(class="form-control", id="doc-confirm_password", placeholder="Repeat password") }}
+              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('doc-confirm_password', this)" title="Show / Hide password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            {% if doctor_form.confirm_password.errors %}<div style="color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem;">{{ doctor_form.confirm_password.errors[0] }}</div>{% endif %}
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitDoctorRegBtn" style="margin-top: 0.85rem;">
-          Register as Doctor
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitDoctorRegBtn" style="margin-top: 1rem; font-weight: 600;">
+          Register as Doctor / Specialist &rarr;
         </button>
       </form>
     </div>
 
-    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-secondary);">
+    <!-- Footer Links -->
+    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.9rem; color: var(--text-secondary);">
       Already have an account?
-      <a href="{{ url_for('auth.login') }}" style="font-weight: 600;">Sign In &rarr;</a>
+      <a href="{{ url_for('auth.login') }}" style="font-weight: 600; color: var(--brand-green); text-decoration: none;">
+        Sign In &rarr;
+      </a>
     </div>
+
+    <!-- Security & Trust Badges -->
+    <div class="auth-trust-row">
+      <div class="auth-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>256-Bit SSL Encrypted</span>
+      </div>
+      <div class="auth-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>HIPAA &amp; DPDP Compliant</span>
+      </div>
+      <div class="auth-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Verified Network</span>
+      </div>
+    </div>
+
   </div>
 </div>
 {% endblock %}
@@ -326,6 +468,21 @@ function switchRegisterTab(role) {
     patBtn.classList.remove('active');
     docForm.style.display = 'block';
     patForm.style.display = 'none';
+  }
+}
+
+function togglePasswordVisibility(fieldId, btn) {
+  const input = document.getElementById(fieldId);
+  if (!input) return;
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+    btn.setAttribute('title', 'Hide password');
+  } else {
+    input.type = 'password';
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+    btn.setAttribute('title', 'Show password');
   }
 }
 

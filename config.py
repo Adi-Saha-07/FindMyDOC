@@ -23,6 +23,10 @@ class Config:
     # Seed data
     SEED_DATA_PATH = os.path.join(BASE_DIR, 'data', 'seed.json')
 
+    # Google OAuth 2.0 Settings
+    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '').strip()
+    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '').strip()
+
     # Future MongoDB settings (TODO: PyMongo integration)
     MONGO_URI = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/mediconnect')
     DATABASE_NAME = os.environ.get('DATABASE_NAME', 'mediconnect')

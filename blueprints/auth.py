@@ -1,3 +1,7 @@
+import os
+import secrets
+from urllib.parse import urlencode
+import requests
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 from repositories import user_repo, doctor_repo, patient_repo
@@ -5,6 +9,223 @@ from forms import LoginForm, RegisterPatientForm, RegisterDoctorForm
 from utils.image_utils import process_avatar_image
 
 auth_bp = Blueprint('auth', __name__)
+
+
+def _handle_google_user(userinfo, chosen_role=None):
+    """Processes Google user profile info for login or auto-registration."""
+    email = (userinfo.get('email') or '').strip().lower()
+    name = (userinfo.get('name') or email.split('@')[0].capitalize()).strip()
+    picture = userinfo.get('picture')
+    google_id = userinfo.get('sub') or userinfo.get('id', '')
+
+    if not email:
+        flash('Google account did not provide a valid email address.', 'danger')
+        return redirect(url_for('auth.login'))
+
+    role = chosen_role or session.get('oauth_role', 'patient')
+    next_url = session.get('oauth_next', '')
+
+    user = user_repo.get_by_email(email)
+    if user:
+        # Existing user - update picture if empty or default
+        if picture and (not user.get('avatar') or 'default_' in user.get('avatar', '')):
+            try:
+                user_repo.update(user['id'], {'avatar': picture})
+                user['avatar'] = picture
+            except Exception:
+                pass
+
+        csrf_tok = session.get('csrf_token')
+        session.clear()
+        if csrf_tok:
+            session['csrf_token'] = csrf_tok
+
+        session['user_id'] = user['id']
+        session['user_role'] = user['role']
+        session['user_name'] = user['name']
+        session['user_email'] = user['email']
+        session['user_avatar'] = user.get('avatar') or picture
+        session.permanent = True
+
+        flash(f'Welcome back, {user["name"]}! Signed in with Google.', 'success')
+        if next_url and next_url.startswith('/'):
+            return redirect(next_url)
+        return redirect(url_for('doctor.dashboard' if user['role'] == 'doctor' else 'patient.dashboard'))
+
+    # New user: Create user and linked role profile
+    user_avatar = picture or (
+        '/static/uploads/default_doctor.png' if role == 'doctor' else '/static/uploads/default_patient.png'
+    )
+    new_user = user_repo.create({
+        'name': name,
+        'email': email,
+        'phone': '+91 9876543210',
+        'city': 'Delhi',
+        'role': role,
+        'avatar': user_avatar,
+        'google_id': google_id,
+        'auth_provider': 'google',
+        'password_hash': generate_password_hash(secrets.token_urlsafe(24))
+    })
+
+    if role == 'doctor':
+        doctor_repo.create({
+            'user_id': new_user['id'],
+            'name': new_user['name'],
+            'email': email,
+            'phone': new_user['phone'],
+            'city': new_user['city'],
+            'avatar': user_avatar,
+            'specialization': 'General Medicine',
+            'doctor_type': 'Hospital',
+            'hospital_or_clinic_name': 'City Hospital & Healthcare',
+            'qualifications': 'MBBS, MD',
+            'experience_years': 5,
+            'consultation_fee': 500.0,
+            'address': f"City Hospital, {new_user['city']}",
+            'working_days': 'Mon - Fri',
+            'timings': '09:00 AM - 05:00 PM',
+            'about': f"Dr. {new_user['name']} is a verified specialist practitioner providing personalized medical care.",
+            'rating': 5.0,
+            'review_count': 0
+        })
+    else:
+        patient_repo.create({
+            'user_id': new_user['id'],
+            'name': new_user['name'],
+            'email': email,
+            'phone': new_user['phone'],
+            'city': new_user['city'],
+            'avatar': user_avatar
+        })
+
+    csrf_tok = session.get('csrf_token')
+    session.clear()
+    if csrf_tok:
+        session['csrf_token'] = csrf_tok
+
+    session['user_id'] = new_user['id']
+    session['user_role'] = new_user['role']
+    session['user_name'] = new_user['name']
+    session['user_email'] = new_user['email']
+    session['user_avatar'] = user_avatar
+    session.permanent = True
+
+    flash(f'Welcome to FindMyDOC, {new_user["name"]}! Your {role} account has been created with Google.', 'success')
+    if next_url and next_url.startswith('/'):
+        return redirect(next_url)
+    return redirect(url_for('doctor.dashboard' if role == 'doctor' else 'patient.dashboard'))
+
+
+@auth_bp.route('/google')
+def google_login():
+    """Initiates Google OAuth or opens the demo Google Sign-In helper if credentials are not configured."""
+    role = request.args.get('role', 'patient')
+    next_url = request.args.get('next', '')
+
+    client_id = current_app.config.get('GOOGLE_CLIENT_ID')
+    client_secret = current_app.config.get('GOOGLE_CLIENT_SECRET')
+
+    if client_id and client_secret:
+        state = secrets.token_urlsafe(32)
+        session['oauth_state'] = state
+        session['oauth_role'] = role
+        session['oauth_next'] = next_url
+
+        redirect_uri = url_for('auth.google_callback', _external=True)
+        params = {
+            'client_id': client_id,
+            'redirect_uri': redirect_uri,
+            'response_type': 'code',
+            'scope': 'openid email profile',
+            'state': state,
+            'prompt': 'select_account'
+        }
+        auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}"
+        return redirect(auth_url)
+
+    # If Google OAuth credentials are not yet set in .env, offer quick demo accounts / simulation
+    return render_template('auth/google_demo.html', role=role, next_url=next_url)
+
+
+@auth_bp.route('/google/callback')
+def google_callback():
+    """Handles OAuth 2.0 callback from Google servers."""
+    error = request.args.get('error')
+    if error:
+        flash(f'Google sign-in was cancelled: {error}', 'warning')
+        return redirect(url_for('auth.login'))
+
+    state = request.args.get('state')
+    saved_state = session.get('oauth_state')
+    if not state or state != saved_state:
+        flash('Authentication state mismatch. Please try signing in again.', 'danger')
+        return redirect(url_for('auth.login'))
+
+    code = request.args.get('code')
+    if not code:
+        flash('No authorization code received from Google.', 'danger')
+        return redirect(url_for('auth.login'))
+
+    client_id = current_app.config.get('GOOGLE_CLIENT_ID')
+    client_secret = current_app.config.get('GOOGLE_CLIENT_SECRET')
+    redirect_uri = url_for('auth.google_callback', _external=True)
+
+    try:
+        token_resp = requests.post(
+            'https://oauth2.googleapis.com/token',
+            data={
+                'client_id': client_id,
+                'client_secret': client_secret,
+                'code': code,
+                'grant_type': 'authorization_code',
+                'redirect_uri': redirect_uri
+            },
+            timeout=10
+        )
+        if not token_resp.ok:
+            flash('Failed to exchange authorization code with Google.', 'danger')
+            return redirect(url_for('auth.login'))
+
+        tokens = token_resp.json()
+        access_token = tokens.get('access_token')
+
+        userinfo_resp = requests.get(
+            'https://www.googleapis.com/oauth2/v3/userinfo',
+            headers={'Authorization': f'Bearer {access_token}'},
+            timeout=10
+        )
+        if not userinfo_resp.ok:
+            flash('Failed to retrieve user profile from Google.', 'danger')
+            return redirect(url_for('auth.login'))
+
+        userinfo = userinfo_resp.json()
+        return _handle_google_user(userinfo)
+    except Exception as e:
+        import traceback
+        print(f"[Google Auth Callback Error] {e}\n{traceback.format_exc()}")
+        flash(f'Error connecting to Google: {str(e)}', 'danger')
+        return redirect(url_for('auth.login'))
+
+
+@auth_bp.route('/google-simulate', methods=['GET', 'POST'])
+def google_simulate():
+    """Allows testing Google Sign-In immediately without requiring live Google Cloud credentials."""
+    if request.method == 'GET':
+        return redirect(url_for('auth.google_login'))
+
+    role = request.form.get('role', 'patient')
+    name = (request.form.get('name') or 'Google User').strip()
+    email = (request.form.get('email') or 'google.user@gmail.com').strip().lower()
+    avatar = request.form.get('avatar', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80')
+
+    userinfo = {
+        'sub': f'g-{secrets.token_hex(8)}',
+        'name': name,
+        'email': email,
+        'picture': avatar
+    }
+    return _handle_google_user(userinfo, chosen_role=role)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

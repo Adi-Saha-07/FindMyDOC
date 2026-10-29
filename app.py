@@ -79,7 +79,9 @@ def create_app(config_name=None):
             'user_name': session.get('user_name'),
             'user_avatar': user_avatar,
             'use_mongo': use_mongo,
-            'has_mongo_uri': bool(os.environ.get('MONGO_URI'))
+            'has_mongo_uri': bool(os.environ.get('MONGO_URI')),
+            'has_google_auth': bool(app.config.get('GOOGLE_CLIENT_ID')),
+            'google_client_id': app.config.get('GOOGLE_CLIENT_ID', '')
         }
 
     # Custom template filters
