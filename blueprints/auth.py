@@ -24,7 +24,8 @@ def _handle_google_user(userinfo, chosen_role=None):
         flash('Google account did not provide a valid email address.', 'danger')
         return redirect(url_for('auth.login'))
 
-    role = chosen_role or session.get('oauth_role', 'patient')
+    # Google registration is strictly for patients; doctors register with verified credentials
+    role = 'patient'
     next_url = session.get('oauth_next', '')
 
     try:
@@ -138,7 +139,7 @@ def _get_google_redirect_uri():
 @auth_bp.route('/google')
 def google_login():
     """Initiates Google OAuth or opens the demo Google Sign-In helper if credentials are not configured."""
-    role = request.args.get('role', 'patient')
+    role = 'patient'
     next_url = request.args.get('next', '')
 
     client_id = current_app.config.get('GOOGLE_CLIENT_ID')
@@ -232,7 +233,7 @@ def google_simulate():
     if request.method == 'GET':
         return redirect(url_for('auth.google_login'))
 
-    role = request.form.get('role', 'patient')
+    role = 'patient'  # Google registration/sign-in simulated as patient
     name = (request.form.get('name') or 'Google User').strip()
     email = (request.form.get('email') or 'google.user@gmail.com').strip().lower()
     avatar = request.form.get('avatar', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80')
