@@ -1,7 +1,9 @@
 import os
+import json
 import secrets
 from urllib.parse import urlencode
-import requests
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 from repositories import user_repo, doctor_repo, patient_repo
@@ -172,34 +174,34 @@ def google_callback():
     redirect_uri = url_for('auth.google_callback', _external=True)
 
     try:
-        token_resp = requests.post(
+        token_payload = urlencode({
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'code': code,
+            'grant_type': 'authorization_code',
+            'redirect_uri': redirect_uri
+        }).encode('utf-8')
+
+        token_req = Request(
             'https://oauth2.googleapis.com/token',
-            data={
-                'client_id': client_id,
-                'client_secret': client_secret,
-                'code': code,
-                'grant_type': 'authorization_code',
-                'redirect_uri': redirect_uri
-            },
-            timeout=10
+            data=token_payload,
+            headers={'Content-Type': 'application/x-www-form-urlencoded'}
         )
-        if not token_resp.ok:
-            flash('Failed to exchange authorization code with Google.', 'danger')
-            return redirect(url_for('auth.login'))
+        with urlopen(token_req, timeout=10) as resp:
+            tokens = json.loads(resp.read().decode('utf-8'))
 
-        tokens = token_resp.json()
         access_token = tokens.get('access_token')
-
-        userinfo_resp = requests.get(
-            'https://www.googleapis.com/oauth2/v3/userinfo',
-            headers={'Authorization': f'Bearer {access_token}'},
-            timeout=10
-        )
-        if not userinfo_resp.ok:
-            flash('Failed to retrieve user profile from Google.', 'danger')
+        if not access_token:
+            flash('Failed to retrieve access token from Google.', 'danger')
             return redirect(url_for('auth.login'))
 
-        userinfo = userinfo_resp.json()
+        userinfo_req = Request(
+            'https://www.googleapis.com/oauth2/v3/userinfo',
+            headers={'Authorization': f'Bearer {access_token}'}
+        )
+        with urlopen(userinfo_req, timeout=10) as resp:
+            userinfo = json.loads(resp.read().decode('utf-8'))
+
         return _handle_google_user(userinfo)
     except Exception as e:
         import traceback
