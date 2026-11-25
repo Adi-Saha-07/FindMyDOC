@@ -36,7 +36,7 @@
             </div>
 
             <h1 style="font-size: 1.75rem; margin-bottom: 0.2rem;">{{ doctor.name }}</h1>
-            <p style="color: var(--brand-green); font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem;">
+            <p style="color: var(--brand-red); font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem;">
               {{ doctor.specialization }} Specialist
             </p>
             <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.5rem;">
@@ -107,7 +107,7 @@
         </div>
 
         <div class="card" style="padding: 0.85rem; background: var(--bg-surface); margin-bottom: 1.25rem; font-size: 0.85rem;">
-          <div style="font-weight: 600; color: var(--brand-green); margin-bottom: 0.25rem;">
+          <div style="font-weight: 600; color: var(--brand-red); margin-bottom: 0.25rem;">
             Direct Scheduling
           </div>
           <p style="color: var(--text-secondary); line-height: 1.45;">
@@ -145,7 +145,7 @@
                     {{ sdoc.name }}
                   </a>
                 </h4>
-                <div style="color: var(--brand-green); font-size: 0.82rem; font-weight: 500;">{{ sdoc.specialization }}</div>
+                <div style="color: var(--brand-red); font-size: 0.82rem; font-weight: 600;">{{ sdoc.specialization }}</div>
                 <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">
                   Rating: {{ sdoc.rating }} &bull; {{ sdoc.consultation_fee | currency }}
                 </div>

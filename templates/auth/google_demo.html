@@ -18,11 +18,11 @@
       </div>
       <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.35rem;">Patient Google Sign-In</h1>
       <p style="color: var(--text-secondary); font-size: 0.9rem;">
-        Sign in or register as a <strong style="color: var(--brand-green);">Patient</strong> using your Google account
+        Sign in or register as a <strong style="color: var(--brand-red);">Patient</strong> using your Google account
       </p>
-      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 0.75rem; font-size: 0.82rem; color: #166534; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+      <div style="background: var(--brand-red-light); border: 1px solid var(--brand-red-border); border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 0.75rem; font-size: 0.82rem; color: #991b1b; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
         <span>🩺 Are you a Doctor?</span>
-        <a href="{{ url_for('auth.register', tab='doctor') }}" style="color: #15803d; font-weight: 600; text-decoration: underline;">Register as Doctor here &rarr;</a>
+        <a href="{{ url_for('auth.register', tab='doctor') }}" style="color: var(--brand-red); font-weight: 600; text-decoration: underline;">Register as Doctor here &rarr;</a>
       </div>
     </div>
 
@@ -82,27 +82,27 @@
         <input type="hidden" name="name" value="Aditya Sharma">
         <input type="hidden" name="email" value="aditya.sharma@gmail.com">
         <button type="submit" class="google-account-item">
-          <div class="brand-icon" style="width: 36px; height: 36px; border-radius: 50%; font-size: 0.85rem; font-weight: 700; background: #e0ece3; color: var(--brand-green);">
+          <div class="brand-icon" style="width: 36px; height: 36px; border-radius: 50%; font-size: 0.85rem; font-weight: 700; background: var(--brand-red-light); color: var(--brand-red); border: 1px solid var(--brand-red-border);">
             AS
           </div>
           <div style="text-align: left; flex: 1;">
             <div style="font-weight: 600; color: var(--text-primary); font-size: 0.92rem;">Aditya Sharma</div>
             <div style="font-size: 0.8rem; color: var(--text-secondary);">aditya.sharma@gmail.com</div>
           </div>
-          <span class="badge" style="background: var(--brand-green-light); color: var(--brand-green); font-size: 0.75rem;">Patient</span>
+          <span class="badge" style="background: var(--brand-red-light); color: var(--brand-red); border: 1px solid var(--brand-red-border); font-size: 0.75rem;">Patient</span>
         </button>
       </form>
     </div>
 
     <!-- Live Google OAuth Setup Accordion -->
     <details style="border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.82rem; color: var(--text-secondary);">
-      <summary style="cursor: pointer; font-weight: 600; color: var(--brand-green); margin-bottom: 0.5rem;">
+      <summary style="cursor: pointer; font-weight: 600; color: var(--brand-red); margin-bottom: 0.5rem;">
         ⚙️ How to connect live Google Cloud credentials
       </summary>
       <div style="background: var(--bg-surface); padding: 0.85rem 1rem; border-radius: var(--radius-md); line-height: 1.5; margin-top: 0.5rem; border: 1px solid var(--border-color);">
         To enable the automatic Google popup/consent screen with your own Google Cloud app:
         <ol style="margin: 0.4rem 0 0.4rem 1.25rem; padding: 0;">
-          <li>Visit <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color: var(--brand-green); font-weight: 600;">Google Cloud Console</a> &rarr; Create <strong>OAuth 2.0 Client ID</strong> (Web application).</li>
+          <li>Visit <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color: var(--brand-red); font-weight: 600;">Google Cloud Console</a> &rarr; Create <strong>OAuth 2.0 Client ID</strong> (Web application).</li>
           <li>Under <strong>Authorized redirect URIs</strong>, add:<br>
             <code style="word-break: break-all; background: var(--bg-card); padding: 2px 5px; border-radius: 4px; display: inline-block; margin-top: 2px;">https://findmydoc-lyart.vercel.app/google/callback</code>
           </li>

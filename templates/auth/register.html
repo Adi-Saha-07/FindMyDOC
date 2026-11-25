@@ -209,9 +209,9 @@
     <div id="doctorFormContainer" style="display: {% if active_tab == 'doctor' %}block{% else %}none{% endif %};">
       
       <!-- Doctor registration is email-only with verified medical credentials -->
-      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-size: 0.875rem; color: #166534; display: flex; align-items: flex-start; gap: 0.6rem;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" style="flex-shrink:0; margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>Doctor registration requires <strong>verified medical credentials &amp; qualifications</strong>. Please register using the form below. Google Sign-In is available for <a href="{{ url_for('auth.register', tab='patient') }}" style="color:#15803d; font-weight:600; text-decoration: underline;">Patients only &rarr;</a></span>
+      <div style="background: var(--brand-red-light); border: 1px solid var(--brand-red-border); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-size: 0.875rem; color: #991b1b; display: flex; align-items: flex-start; gap: 0.6rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" style="flex-shrink:0; margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Doctor registration requires <strong>verified medical credentials &amp; qualifications</strong>. Please register using the form below. Google Sign-In is available for <a href="{{ url_for('auth.register', tab='patient') }}" style="color: var(--brand-red); font-weight: 600; text-decoration: underline;">Patients only &rarr;</a></span>
       </div>
 
       <form method="POST" id="registerDoctorForm" enctype="multipart/form-data">
@@ -415,7 +415,7 @@
     <!-- Footer Links -->
     <div style="text-align: center; margin-top: 1.75rem; font-size: 0.9rem; color: var(--text-secondary);">
       Already have an account?
-      <a href="{{ url_for('auth.login') }}" style="font-weight: 600; color: var(--brand-green); text-decoration: none;">
+      <a href="{{ url_for('auth.login') }}" style="font-weight: 600; color: var(--brand-red); text-decoration: none;">
         Sign In &rarr;
       </a>
     </div>
