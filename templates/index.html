@@ -5,8 +5,114 @@
 {% block content %}
 <!-- Hero Section (Split: Text Left, Search Right + 3D Hospital/Trees/Ambulance Bg) -->
 <section class="hero-section">
-  <!-- 3D-Styled Hospital, Trees & Realistic Ambulance Background -->
+  <!-- 3D-Styled Sky (Sun & Dynamic Clouds), Hospital, Trees & Realistic Ambulance Background -->
   <div class="hero-ambulance-bg" aria-hidden="true">
+    <!-- Sky Layer: Radiant Sun & Dynamic Drifting Clouds -->
+    <div class="hero-sky-layer">
+      <!-- Radiant Sun -->
+      <div class="hero-sun">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sunCoreGrad" cx="45%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#fef9c3"/>
+              <stop offset="45%" stop-color="#fde047"/>
+              <stop offset="85%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#ea580c" stop-opacity="0.9"/>
+            </radialGradient>
+            <radialGradient id="sunHaloGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fde047" stop-opacity="0.55"/>
+              <stop offset="55%" stop-color="#fbbf24" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle class="sun-halo" cx="80" cy="80" r="76" fill="url(#sunHaloGrad)"/>
+          <g class="sun-rays" stroke="#fbbf24" stroke-width="3" stroke-linecap="round" opacity="0.65">
+            <line x1="80" y1="12" x2="80" y2="24"/>
+            <line x1="80" y1="136" x2="80" y2="148"/>
+            <line x1="12" y1="80" x2="24" y2="80"/>
+            <line x1="136" y1="80" x2="148" y2="80"/>
+            <line x1="32" y1="32" x2="40" y2="40"/>
+            <line x1="120" y1="120" x2="128" y2="128"/>
+            <line x1="128" y1="32" x2="120" y2="40"/>
+            <line x1="40" y1="120" x2="32" y2="128"/>
+          </g>
+          <circle cx="80" cy="80" r="34" fill="url(#sunCoreGrad)"/>
+          <ellipse cx="70" cy="68" rx="14" ry="9" transform="rotate(-25 70 68)" fill="#ffffff" opacity="0.45"/>
+        </svg>
+      </div>
+
+      <!-- Radiant Moon (Slides in via half-round arc on Dark Mode) -->
+      <div class="hero-moon">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="moonCoreGrad" cx="38%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#f8fafc"/>
+              <stop offset="55%" stop-color="#e2e8f0"/>
+              <stop offset="100%" stop-color="#94a3b8"/>
+            </radialGradient>
+            <radialGradient id="moonHaloGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#cbd5e1" stop-opacity="0.42"/>
+              <stop offset="55%" stop-color="#93c5fd" stop-opacity="0.16"/>
+              <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="80" cy="80" r="74" fill="url(#moonHaloGrad)"/>
+          <!-- Subtle Twinkling Stars -->
+          <circle class="moon-star" cx="26" cy="42" r="2" fill="#f8fafc" opacity="0.85"/>
+          <circle class="moon-star" cx="132" cy="36" r="2.2" fill="#e0f2fe" opacity="0.9"/>
+          <circle class="moon-star" cx="136" cy="118" r="1.6" fill="#f8fafc" opacity="0.75"/>
+          <circle class="moon-star" cx="30" cy="120" r="1.5" fill="#e0f2fe" opacity="0.7"/>
+          <!-- Full/3D Moon Disc with Craters -->
+          <circle cx="80" cy="80" r="32" fill="url(#moonCoreGrad)"/>
+          <circle cx="68" cy="70" r="6" fill="#cbd5e1" opacity="0.55"/>
+          <circle cx="91" cy="88" r="7.5" fill="#94a3b8" opacity="0.35"/>
+          <circle cx="88" cy="64" r="4" fill="#cbd5e1" opacity="0.45"/>
+          <ellipse cx="69" cy="64" rx="12" ry="7" transform="rotate(-25 69 64)" fill="#ffffff" opacity="0.35"/>
+        </svg>
+      </div>
+
+      <!-- Dynamic Cloud 1 (Large, High) -->
+      <div class="hero-cloud hero-cloud-1">
+        <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cloudGrad1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+              <stop offset="70%" stop-color="#f1f5f9" stop-opacity="0.92"/>
+              <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.82"/>
+            </linearGradient>
+          </defs>
+          <path d="M46 74H176C193.673 74 208 60.568 208 44C208 28.436 195.367 15.654 179.13 14.142C172.642 5.565 162.357 0 150.8 0C135.724 0 122.927 9.483 117.91 22.845C113.385 19.782 107.926 18 102 18C86.536 18 74 30.536 74 46C74 46.678 74.024 47.35 74.072 48.015C71.51 47.038 68.732 46.5 65.83 46.5C53.22 46.5 43 56.72 43 69.33C43 70.927 43.164 72.487 43.475 74H46Z" fill="url(#cloudGrad1)"/>
+          <ellipse cx="148" cy="24" rx="22" ry="11" fill="#ffffff" opacity="0.65"/>
+        </svg>
+      </div>
+
+      <!-- Dynamic Cloud 2 (Medium, Mid-Sky) -->
+      <div class="hero-cloud hero-cloud-2">
+        <svg viewBox="0 0 180 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cloudGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.78"/>
+            </linearGradient>
+          </defs>
+          <path d="M36 64H146C160.359 64 172 52.359 172 38C172 24.492 161.699 13.39 148.515 12.117C142.346 4.716 133.044 0 122.64 0C106.564 0 93.133 11.246 89.76 26.322C85.547 23.591 80.529 22 75.14 22C60.151 22 48 34.151 48 49.14C48 50.118 48.052 51.084 48.152 52.036C45.323 50.73 42.172 50 38.85 50C26.783 50 17 59.783 17 71.85C17 72.58 17.036 73.3 17.106 74H36V64Z" fill="url(#cloudGrad2)"/>
+        </svg>
+      </div>
+
+      <!-- Dynamic Cloud 3 (Small, Fast Foreground Cloud) -->
+      <div class="hero-cloud hero-cloud-3">
+        <svg viewBox="0 0 150 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cloudGrad3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
+              <stop offset="100%" stop-color="#e2e8f0" stop-opacity="0.75"/>
+            </linearGradient>
+          </defs>
+          <path d="M28 54H122C134.15 54 144 44.15 144 32C144 20.556 135.258 11.155 124.095 10.1C118.774 3.924 110.893 0 102.1 0C88.316 0 76.783 9.61 73.854 22.523C70.259 20.289 66.017 19 61.48 19C48.512 19 38 29.512 38 42.48C38 43.33 38.045 44.169 38.133 44.996C35.809 43.925 33.22 43.33 30.49 43.33C20.278 43.33 12 51.608 12 61.82C12 62.558 12.043 63.286 12.127 64H28V54Z" fill="url(#cloudGrad3)"/>
+        </svg>
+      </div>
+    </div>
+
     <!-- Background Scenery: 3D Hospital Building & Layered Trees -->
     <svg class="hero-scenery-svg" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -32,7 +138,330 @@
           <stop offset="0%" stop-color="#22c55e"/>
           <stop offset="100%" stop-color="#15803d"/>
         </linearGradient>
+        <linearGradient id="lampConeGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stop-color="#fef08a" stop-opacity="0.52"/>
+          <stop offset="55%" stop-color="#fde047" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#fde047" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="lampHaloGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fef08a" stop-opacity="0.75"/>
+          <stop offset="55%" stop-color="#fbbf24" stop-opacity="0.24"/>
+          <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="cityFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f8fafc"/>
+          <stop offset="55%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#cbd5e1"/>
+        </linearGradient>
+        <linearGradient id="cityStone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+        <linearGradient id="citySide" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#94a3b8"/>
+          <stop offset="100%" stop-color="#64748b"/>
+        </linearGradient>
+        <linearGradient id="cityCurtainWall" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.78"/>
+          <stop offset="45%" stop-color="#38bdf8" stop-opacity="0.58"/>
+          <stop offset="100%" stop-color="#0369a1" stop-opacity="0.72"/>
+        </linearGradient>
+        <linearGradient id="cityGlass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#334155" stop-opacity="0.82"/>
+          <stop offset="50%" stop-color="#475569" stop-opacity="0.72"/>
+          <stop offset="100%" stop-color="#1e293b" stop-opacity="0.88"/>
+        </linearGradient>
+        <linearGradient id="cityFarHaze" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#cbd5e1" stop-opacity="0.48"/>
+          <stop offset="100%" stop-color="#e2e8f0" stop-opacity="0.18"/>
+        </linearGradient>
       </defs>
+
+      <!-- Realistic Multi-Layer 3D City Skyline (Dense, Close & Distant Depth) -->
+      <g class="scenery-city">
+        <!-- Layer 1: Continuous Distant Atmospheric Skyline (Far-Away Towers) -->
+        <g class="city-far-skyline" fill="url(#cityFarHaze)">
+          <rect x="0" y="92" width="48" height="198"/>
+          <rect x="44" y="64" width="54" height="226"/>
+          <rect x="62" y="48" width="18" height="16"/>
+          <rect x="285" y="78" width="52" height="212"/>
+          <rect x="332" y="44" width="64" height="246"/>
+          <polygon points="332,44 364,22 396,44"/>
+          <rect x="392" y="84" width="56" height="206"/>
+          <rect x="444" y="52" width="68" height="238"/>
+          <rect x="508" y="96" width="52" height="194"/>
+          <rect x="556" y="34" width="70" height="256"/>
+          <line x1="591" y1="10" x2="591" y2="34" stroke="#cbd5e1" stroke-width="2"/>
+          <rect x="622" y="76" width="58" height="214"/>
+          <rect x="676" y="42" width="66" height="248"/>
+          <rect x="738" y="88" width="56" height="202"/>
+          <rect x="790" y="28" width="72" height="262"/>
+          <rect x="810" y="12" width="32" height="16"/>
+          <rect x="858" y="68" width="64" height="222"/>
+          <rect x="918" y="46" width="70" height="244"/>
+          <rect x="984" y="82" width="58" height="208"/>
+          <rect x="1038" y="36" width="72" height="254"/>
+          <polygon points="1038,36 1074,14 1110,36"/>
+          <rect x="1106" y="74" width="62" height="216"/>
+          <rect x="1164" y="48" width="68" height="242"/>
+          <rect x="1228" y="84" width="58" height="206"/>
+          <rect x="1282" y="56" width="68" height="234"/>
+          <rect x="1346" y="92" width="56" height="198"/>
+          <rect x="1398" y="70" width="46" height="220"/>
+        </g>
+
+        <!-- Layer 2: Mid-Distance Silhouette Towers (Adds Extra City Density) -->
+        <g class="city-mid-skyline" fill="#cbd5e1" opacity="0.58">
+          <rect x="315" y="106" width="58" height="184"/>
+          <rect x="422" y="90" width="62" height="200"/>
+          <rect x="536" y="72" width="68" height="218"/>
+          <rect x="646" y="102" width="64" height="188"/>
+          <rect x="812" y="66" width="72" height="224"/>
+          <rect x="938" y="88" width="64" height="202"/>
+          <rect x="1098" y="78" width="68" height="212"/>
+          <rect x="1220" y="96" width="66" height="194"/>
+          <rect x="1338" y="80" width="62" height="210"/>
+        </g>
+
+        <!-- Far-Left Architectural Wing Behind Hospital -->
+        <g transform="translate(0, 122)">
+          <rect x="0" y="0" width="60" height="168" fill="url(#cityStone)"/>
+          <rect x="0" y="0" width="60" height="5" fill="#94a3b8"/>
+          <g fill="url(#cityGlass)">
+            <rect x="8" y="14" width="16" height="18" rx="1"/><rect x="32" y="14" width="16" height="18" rx="1"/>
+            <rect x="8" y="40" width="16" height="18" rx="1"/><rect x="32" y="40" width="16" height="18" rx="1" class="city-window-lit"/>
+            <rect x="8" y="66" width="16" height="18" rx="1"/><rect x="32" y="66" width="16" height="18" rx="1"/>
+            <rect x="8" y="92" width="16" height="18" rx="1" class="city-window-lit"/><rect x="32" y="92" width="16" height="18" rx="1"/>
+          </g>
+        </g>
+
+        <!-- Building 0: Compact Mid-Rise Next to Hospital -->
+        <g transform="translate(332, 118)">
+          <polygon points="74,0 90,10 90,172 74,172" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="74" height="172" fill="url(#cityStone)"/>
+          <rect x="-2" y="0" width="78" height="5" fill="#64748b"/>
+          <g fill="url(#cityGlass)">
+            <rect x="10" y="16" width="14" height="16" rx="1"/><rect x="30" y="16" width="14" height="16" rx="1" class="city-window-lit"/><rect x="50" y="16" width="14" height="16" rx="1"/>
+            <rect x="10" y="42" width="14" height="16" rx="1" class="city-window-lit"/><rect x="30" y="42" width="14" height="16" rx="1"/><rect x="50" y="42" width="14" height="16" rx="1"/>
+            <rect x="10" y="68" width="14" height="16" rx="1"/><rect x="30" y="68" width="14" height="16" rx="1" class="city-window-cool"/><rect x="50" y="68" width="14" height="16" rx="1"/>
+            <rect x="10" y="94" width="14" height="16" rx="1"/><rect x="30" y="94" width="14" height="16" rx="1"/><rect x="50" y="94" width="14" height="16" rx="1" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 1: Modern Setback Concrete & Recessed Glass Tower -->
+        <g transform="translate(418, 66)">
+          <rect x="18" y="-16" width="44" height="16" fill="#cbd5e1"/>
+          <polygon points="62,-16 74,-9 74,0 62,0" fill="#94a3b8"/>
+          <rect x="24" y="-22" width="12" height="6" fill="#94a3b8"/>
+          <polygon points="82,0 104,14 104,224 82,224" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="82" height="224" fill="url(#cityFront)"/>
+          <rect x="-2" y="0" width="86" height="5" fill="#94a3b8"/>
+          <rect x="0" y="168" width="82" height="4" fill="#cbd5e1"/>
+          <g fill="url(#cityGlass)">
+            <rect x="8" y="14" width="66" height="16" rx="1"/>
+            <rect x="8" y="38" width="66" height="16" rx="1"/>
+            <rect x="8" y="62" width="66" height="16" rx="1"/>
+            <rect x="8" y="86" width="66" height="16" rx="1"/>
+            <rect x="8" y="110" width="66" height="16" rx="1"/>
+            <rect x="8" y="134" width="66" height="16" rx="1"/>
+          </g>
+          <g fill="transparent">
+            <rect x="12" y="16" width="14" height="12" class="city-window-lit"/>
+            <rect x="48" y="40" width="20" height="12" class="city-window-lit"/>
+            <rect x="26" y="64" width="18" height="12" class="city-window-cool"/>
+            <rect x="12" y="112" width="22" height="12" class="city-window-lit"/>
+            <rect x="52" y="136" width="16" height="12" class="city-window-lit"/>
+          </g>
+          <g fill="#e2e8f0">
+            <rect x="24" y="12" width="4" height="144"/>
+            <rect x="44" y="12" width="4" height="144"/>
+            <rect x="64" y="12" width="4" height="144"/>
+          </g>
+          <rect x="6" y="182" width="70" height="42" fill="#1e293b" opacity="0.85"/>
+          <polygon points="0,180 82,180 88,186 -4,186" fill="#64748b"/>
+        </g>
+
+        <!-- Building 2: Classic Architectural Residential/Clinic Block -->
+        <g transform="translate(516, 126)">
+          <polygon points="78,0 96,10 96,164 78,164" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="78" height="164" fill="url(#cityStone)"/>
+          <rect x="-2" y="0" width="82" height="6" fill="#64748b"/>
+          <rect x="0" y="118" width="78" height="3" fill="#64748b" opacity="0.5"/>
+          <g fill="url(#cityGlass)">
+            <rect x="10" y="16" width="14" height="18" rx="1"/><rect x="32" y="16" width="14" height="18" rx="1" class="city-window-lit"/><rect x="54" y="16" width="14" height="18" rx="1"/>
+            <rect x="10" y="44" width="14" height="18" rx="1" class="city-window-lit"/><rect x="32" y="44" width="14" height="18" rx="1"/><rect x="54" y="44" width="14" height="18" rx="1"/>
+            <rect x="10" y="72" width="14" height="18" rx="1"/><rect x="32" y="72" width="14" height="18" rx="1" class="city-window-cool"/><rect x="54" y="72" width="14" height="18" rx="1" class="city-window-lit"/>
+            <rect x="10" y="100" width="14" height="14" rx="1"/><rect x="32" y="100" width="14" height="14" rx="1"/><rect x="54" y="100" width="14" height="14" rx="1"/>
+          </g>
+          <rect x="8" y="128" width="62" height="36" fill="#334155"/>
+          <rect x="12" y="132" width="24" height="32" fill="url(#cityCurtainWall)"/>
+          <rect x="42" y="132" width="24" height="32" fill="url(#cityCurtainWall)"/>
+        </g>
+
+        <!-- Building 3: Full-Height Glass Curtain-Wall Skyscraper -->
+        <g transform="translate(608, 24)">
+          <rect x="16" y="-14" width="64" height="14" fill="#475569"/>
+          <polygon points="80,-14 96,-6 96,4 80,4" fill="#334155"/>
+          <line x1="48" y1="-44" x2="48" y2="-14" stroke="#64748b" stroke-width="2.5"/>
+          <circle cx="48" cy="-45" r="2.8" fill="#ef4444" class="city-beacon"/>
+          <polygon points="96,0 122,16 122,266 96,266" fill="#1e293b" opacity="0.82"/>
+          <rect x="0" y="0" width="96" height="266" fill="url(#cityCurtainWall)"/>
+          <polygon points="0,35 96,0 96,42 0,88" fill="#ffffff" opacity="0.22"/>
+          <polygon points="0,125 96,82 96,115 0,162" fill="#ffffff" opacity="0.14"/>
+          <g stroke="#334155" stroke-width="1.5" opacity="0.65">
+            <line x1="24" y1="0" x2="24" y2="266"/>
+            <line x1="48" y1="0" x2="48" y2="266"/>
+            <line x1="72" y1="0" x2="72" y2="266"/>
+            <line x1="0" y1="24" x2="96" y2="24"/><line x1="0" y1="48" x2="96" y2="48"/>
+            <line x1="0" y1="72" x2="96" y2="72"/><line x1="0" y1="96" x2="96" y2="96"/>
+            <line x1="0" y1="120" x2="96" y2="120"/><line x1="0" y1="144" x2="96" y2="144"/>
+            <line x1="0" y1="168" x2="96" y2="168"/><line x1="0" y1="192" x2="96" y2="192"/>
+            <line x1="0" y1="216" x2="96" y2="216"/>
+          </g>
+          <g fill="transparent">
+            <rect x="26" y="26" width="20" height="20" class="city-window-lit"/>
+            <rect x="50" y="50" width="20" height="20" class="city-window-cool"/>
+            <rect x="2" y="74" width="20" height="20" class="city-window-lit"/>
+            <rect x="74" y="98" width="20" height="20" class="city-window-lit"/>
+            <rect x="26" y="122" width="20" height="20" class="city-window-lit"/>
+            <rect x="50" y="146" width="20" height="20" class="city-window-cool"/>
+            <rect x="2" y="170" width="20" height="20" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 4: Modern Chamfered Commercial Building -->
+        <g transform="translate(722, 96)">
+          <polygon points="88,0 110,14 110,194 88,194" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="88" height="194" fill="url(#cityFront)"/>
+          <rect x="-2" y="0" width="92" height="6" fill="#64748b"/>
+          <g fill="url(#cityGlass)">
+            <rect x="0" y="18" width="88" height="14"/>
+            <rect x="0" y="44" width="88" height="14"/>
+            <rect x="0" y="70" width="88" height="14"/>
+            <rect x="0" y="96" width="88" height="14"/>
+            <rect x="0" y="122" width="88" height="14"/>
+            <rect x="0" y="148" width="88" height="14"/>
+          </g>
+          <g fill="transparent">
+            <rect x="14" y="20" width="22" height="10" class="city-window-lit"/>
+            <rect x="52" y="46" width="24" height="10" class="city-window-cool"/>
+            <rect x="8" y="72" width="26" height="10" class="city-window-lit"/>
+            <rect x="44" y="124" width="24" height="10" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 5: Twin-Fin Corporate Glass Tower -->
+        <g transform="translate(826, 46)">
+          <rect x="10" y="-16" width="8" height="16" fill="#64748b"/>
+          <rect x="78" y="-16" width="8" height="16" fill="#64748b"/>
+          <polygon points="98,0 124,16 124,244 98,244" fill="#334155" opacity="0.8"/>
+          <rect x="0" y="0" width="98" height="244" fill="url(#cityCurtainWall)"/>
+          <polygon points="0,20 98,60 98,95 0,55" fill="#ffffff" opacity="0.2"/>
+          <rect x="0" y="0" width="10" height="244" fill="#cbd5e1"/>
+          <rect x="88" y="0" width="10" height="244" fill="#cbd5e1"/>
+          <g stroke="#1e293b" stroke-width="1.4" opacity="0.55">
+            <line x1="36" y1="0" x2="36" y2="244"/><line x1="62" y1="0" x2="62" y2="244"/>
+            <line x1="10" y1="26" x2="88" y2="26"/><line x1="10" y1="52" x2="88" y2="52"/>
+            <line x1="10" y1="78" x2="88" y2="78"/><line x1="10" y1="104" x2="88" y2="104"/>
+            <line x1="10" y1="130" x2="88" y2="130"/><line x1="10" y1="156" x2="88" y2="156"/>
+            <line x1="10" y1="182" x2="88" y2="182"/>
+          </g>
+          <g fill="transparent">
+            <rect x="12" y="28" width="22" height="22" class="city-window-lit"/>
+            <rect x="64" y="54" width="22" height="22" class="city-window-lit"/>
+            <rect x="38" y="80" width="22" height="22" class="city-window-cool"/>
+            <rect x="12" y="132" width="22" height="22" class="city-window-lit"/>
+            <rect x="64" y="158" width="22" height="22" class="city-window-cool"/>
+          </g>
+        </g>
+
+        <!-- Building 6: Tightly Adjoining Mid-Rise Residential -->
+        <g transform="translate(944, 108)">
+          <polygon points="78,0 98,12 98,182 78,182" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="78" height="182" fill="url(#cityStone)"/>
+          <rect x="-2" y="0" width="82" height="5" fill="#64748b"/>
+          <g fill="url(#cityGlass)">
+            <rect x="10" y="16" width="16" height="16" rx="1"/><rect x="32" y="16" width="16" height="16" rx="1" class="city-window-lit"/><rect x="54" y="16" width="14" height="16" rx="1"/>
+            <rect x="10" y="42" width="16" height="16" rx="1"/><rect x="32" y="42" width="16" height="16" rx="1"/><rect x="54" y="42" width="14" height="16" rx="1" class="city-window-lit"/>
+            <rect x="10" y="68" width="16" height="16" rx="1" class="city-window-lit"/><rect x="32" y="68" width="16" height="16" rx="1" class="city-window-cool"/><rect x="54" y="68" width="14" height="16" rx="1"/>
+            <rect x="10" y="94" width="16" height="16" rx="1"/><rect x="32" y="94" width="16" height="16" rx="1"/><rect x="54" y="94" width="14" height="16" rx="1" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 7: High-Rise Glass & Concrete Tower -->
+        <g transform="translate(1036, 56)">
+          <rect x="20" y="-14" width="46" height="14" fill="#cbd5e1"/>
+          <polygon points="86,0 108,14 108,234 86,234" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="86" height="234" fill="url(#cityFront)"/>
+          <rect x="-2" y="0" width="90" height="5" fill="#94a3b8"/>
+          <g fill="url(#cityGlass)">
+            <rect x="10" y="16" width="66" height="14" rx="1"/>
+            <rect x="10" y="40" width="66" height="14" rx="1"/>
+            <rect x="10" y="64" width="66" height="14" rx="1"/>
+            <rect x="10" y="88" width="66" height="14" rx="1"/>
+            <rect x="10" y="112" width="66" height="14" rx="1"/>
+            <rect x="10" y="136" width="66" height="14" rx="1"/>
+            <rect x="10" y="160" width="66" height="14" rx="1"/>
+          </g>
+          <g fill="transparent">
+            <rect x="14" y="18" width="18" height="10" class="city-window-lit"/>
+            <rect x="50" y="42" width="22" height="10" class="city-window-cool"/>
+            <rect x="22" y="90" width="22" height="10" class="city-window-lit"/>
+            <rect x="46" y="138" width="20" height="10" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 8: Adjoining Curtain-Wall Office Block -->
+        <g transform="translate(1138, 86)">
+          <polygon points="84,0 104,12 104,204 84,204" fill="#334155" opacity="0.78"/>
+          <rect x="0" y="0" width="84" height="204" fill="url(#cityCurtainWall)"/>
+          <polygon points="0,24 84,0 84,32 0,62" fill="#ffffff" opacity="0.18"/>
+          <g stroke="#334155" stroke-width="1.3" opacity="0.55">
+            <line x1="28" y1="0" x2="28" y2="204"/><line x1="56" y1="0" x2="56" y2="204"/>
+            <line x1="0" y1="26" x2="84" y2="26"/><line x1="0" y1="52" x2="84" y2="52"/>
+            <line x1="0" y1="78" x2="84" y2="78"/><line x1="0" y1="104" x2="84" y2="104"/>
+            <line x1="0" y1="130" x2="84" y2="130"/><line x1="0" y1="156" x2="84" y2="156"/>
+          </g>
+          <g fill="transparent">
+            <rect x="30" y="28" width="24" height="22" class="city-window-lit"/>
+            <rect x="2" y="54" width="24" height="22" class="city-window-cool"/>
+            <rect x="58" y="80" width="24" height="22" class="city-window-lit"/>
+            <rect x="30" y="106" width="24" height="22" class="city-window-lit"/>
+          </g>
+        </g>
+
+        <!-- Building 9: Far-Right Urban Block -->
+        <g transform="translate(1236, 114)">
+          <polygon points="88,0 108,12 108,176 88,176" fill="url(#citySide)"/>
+          <rect x="0" y="0" width="88" height="176" fill="url(#cityStone)"/>
+          <rect x="-2" y="0" width="92" height="5" fill="#64748b"/>
+          <g fill="url(#cityGlass)">
+            <rect x="10" y="16" width="18" height="16" rx="1"/><rect x="35" y="16" width="18" height="16" rx="1" class="city-window-lit"/><rect x="60" y="16" width="18" height="16" rx="1"/>
+            <rect x="10" y="42" width="18" height="16" rx="1" class="city-window-lit"/><rect x="35" y="42" width="18" height="16" rx="1"/><rect x="60" y="42" width="18" height="16" rx="1"/>
+            <rect x="10" y="68" width="18" height="16" rx="1"/><rect x="35" y="68" width="18" height="16" rx="1" class="city-window-cool"/><rect x="60" y="68" width="18" height="16" rx="1" class="city-window-lit"/>
+            <rect x="10" y="94" width="18" height="16" rx="1"/><rect x="35" y="94" width="18" height="16" rx="1"/><rect x="60" y="94" width="18" height="16" rx="1"/>
+          </g>
+        </g>
+
+        <!-- Building 10: Edge-Right Skyscraper -->
+        <g transform="translate(1338, 72)">
+          <rect x="0" y="0" width="102" height="218" fill="url(#cityFront)"/>
+          <rect x="0" y="0" width="102" height="5" fill="#64748b"/>
+          <g fill="url(#cityGlass)">
+            <rect x="12" y="16" width="78" height="14" rx="1"/>
+            <rect x="12" y="40" width="78" height="14" rx="1"/>
+            <rect x="12" y="64" width="78" height="14" rx="1"/>
+            <rect x="12" y="88" width="78" height="14" rx="1"/>
+            <rect x="12" y="112" width="78" height="14" rx="1"/>
+            <rect x="12" y="136" width="78" height="14" rx="1"/>
+          </g>
+          <g fill="transparent">
+            <rect x="18" y="18" width="20" height="10" class="city-window-lit"/>
+            <rect x="54" y="66" width="24" height="10" class="city-window-cool"/>
+            <rect x="24" y="114" width="24" height="10" class="city-window-lit"/>
+          </g>
+        </g>
+      </g>
 
       <!-- 3D Isometric-Style Hospital Building (Left Side Background) -->
       <g class="scenery-hospital" transform="translate(55, 42)">
@@ -105,10 +534,89 @@
         <circle cx="28" cy="56" r="24" fill="url(#treeDark)"/>
         <circle cx="40" cy="38" r="28" fill="url(#treeLight)"/>
       </g>
+
+      <!-- Roadside Street Lamps (OFF in Light Mode, Glowing ON in Dark Mode) -->
+      <g class="scenery-lamp" transform="translate(305, 138)">
+        <ellipse cx="14" cy="152" rx="14" ry="4" fill="#0f172a" opacity="0.14"/>
+        <path d="M10 152H18L16.5 134H11.5L10 152Z" fill="#475569"/>
+        <rect x="12.2" y="22" width="3.6" height="114" rx="1.5" fill="#64748b"/>
+        <path d="M14 24C14 14 21 10 31 11L36 12" stroke="#64748b" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M29 10H42C43.5 10 44.5 11.5 44 13H28C27.5 11.5 28 10 29 10Z" fill="#334155"/>
+        <ellipse class="street-lamp-bulb" cx="36" cy="14" rx="4.5" ry="2.5"/>
+        <g class="street-lamp-glow">
+          <circle cx="36" cy="16" r="22" fill="url(#lampHaloGrad)"/>
+          <polygon points="31,15 41,15 68,152 4,152" fill="url(#lampConeGrad)"/>
+        </g>
+      </g>
+
+      <g class="scenery-lamp" transform="translate(540, 138)">
+        <ellipse cx="14" cy="152" rx="14" ry="4" fill="#0f172a" opacity="0.14"/>
+        <path d="M10 152H18L16.5 134H11.5L10 152Z" fill="#475569"/>
+        <rect x="12.2" y="22" width="3.6" height="114" rx="1.5" fill="#64748b"/>
+        <path d="M14 24C14 14 21 10 31 11L36 12" stroke="#64748b" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M29 10H42C43.5 10 44.5 11.5 44 13H28C27.5 11.5 28 10 29 10Z" fill="#334155"/>
+        <ellipse class="street-lamp-bulb" cx="36" cy="14" rx="4.5" ry="2.5"/>
+        <g class="street-lamp-glow">
+          <circle cx="36" cy="16" r="22" fill="url(#lampHaloGrad)"/>
+          <polygon points="31,15 41,15 68,152 4,152" fill="url(#lampConeGrad)"/>
+        </g>
+      </g>
     </svg>
 
     <!-- 3D Perspective Road -->
     <div class="ambulance-road"></div>
+
+    <!-- Patient Stretcher & Male Nurse Transfer (Appears when ambulance stops at hospital) -->
+    <div class="ambulance-transfer-group">
+      <svg class="transfer-svg" viewBox="0 0 130 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground Shadow -->
+        <ellipse cx="64" cy="69" rx="46" ry="4.5" fill="#0f172a" opacity="0.18"/>
+
+        <!-- Wheeled Hospital Stretcher + Patient -->
+        <g class="stretcher-unit">
+          <!-- Stretcher Scissor Legs & Frame -->
+          <line x1="34" y1="48" x2="54" y2="63" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="54" y1="48" x2="34" y2="63" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="64" y1="48" x2="82" y2="63" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="82" y1="48" x2="64" y2="63" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Stretcher Wheels -->
+          <circle cx="34" cy="65" r="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+          <circle cx="82" cy="65" r="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+          <!-- Stretcher Bed Rail -->
+          <rect x="26" y="43" width="64" height="5" rx="2.5" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+          <!-- Patient Pillow & Head -->
+          <rect x="74" y="36" width="13" height="6" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+          <circle cx="79" cy="35" r="5.5" fill="#fdba74"/>
+          <path d="M74 34C74 30.8 76.5 29 79.5 29C82.2 29 84.3 30.8 84.5 33.5" fill="#334155"/>
+          <!-- Patient Body under Medical Blanket -->
+          <path d="M30 43C30 37.5 34 35 42 35H72C74.5 35 76 37 76 39.5V43H30Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1"/>
+          <path d="M34 39H68" stroke="#bae6fd" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Side Safety Rail -->
+          <path d="M40 37H66V43" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Male Nurse Pushing Stretcher into Hospital -->
+        <g class="male-nurse-unit">
+          <!-- Legs (Walking) -->
+          <line class="nurse-leg-back" x1="16" y1="47" x2="12" y2="66" stroke="#0369a1" stroke-width="4.2" stroke-linecap="round"/>
+          <line class="nurse-leg-front" x1="20" y1="47" x2="23" y2="66" stroke="#0284c7" stroke-width="4.2" stroke-linecap="round"/>
+          <!-- Shoes -->
+          <ellipse cx="11.5" cy="67" rx="3.5" ry="1.8" fill="#1e293b"/>
+          <ellipse cx="23.5" cy="67" rx="3.5" ry="1.8" fill="#1e293b"/>
+          <!-- Scrubs Torso -->
+          <rect x="12" y="27" width="12" height="21" rx="4" fill="#0ea5e9" stroke="#0369a1" stroke-width="1"/>
+          <!-- Medical Pocket / ID Badge -->
+          <rect x="19" y="32" width="3.5" height="4.5" rx="0.8" fill="#ffffff"/>
+          <!-- Arm Pushing Stretcher Handle -->
+          <path d="M21 31L30 41" stroke="#0284c7" stroke-width="3.6" stroke-linecap="round"/>
+          <circle cx="30" cy="41.5" r="2.2" fill="#fdba74"/>
+          <!-- Head, Hair & Surgical Mask -->
+          <circle cx="18" cy="19" r="6" fill="#fdba74"/>
+          <path d="M12.5 18C12.5 14 15 12 18.5 12C21.8 12 24 14 24 17.5C22.2 16 15.5 16 12.5 18Z" fill="#1e293b"/>
+          <rect x="17.5" y="19.5" width="6.2" height="3.8" rx="1.2" fill="#e0f2fe"/>
+        </g>
+      </svg>
+    </div>
 
     <!-- Larger 3D Realistic Ambulance -->
     <div class="ambulance-vehicle">
@@ -142,8 +650,8 @@
         <!-- Ground Drop Shadow -->
         <ellipse cx="118" cy="92" rx="92" ry="7" fill="#0f172a" opacity="0.24"/>
 
-        <!-- Headlight Beam -->
-        <polygon points="205,64 240,54 240,84 205,73" fill="url(#headlightBeam)"/>
+        <!-- Headlight Beam (Off in Light Theme, Animated On in Dark Theme) -->
+        <polygon class="ambulance-headlight-beam" points="200,62 240,48 240,86 200,71" fill="url(#headlightBeam)"/>
 
         <!-- Rear Bumper & Taillight -->
         <rect x="24" y="68" width="8" height="10" rx="2" fill="#334155"/>
@@ -187,7 +695,7 @@
         <rect x="115" y="35" width="22" height="16" rx="2.5" fill="url(#ambGlassGrad)" stroke="#64748b" stroke-width="1.2"/>
 
         <!-- Front Headlight & Bumper -->
-        <rect x="195" y="62" width="6" height="7" rx="2" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
+        <rect class="ambulance-headlight-lamp" x="195" y="62" width="6" height="7" rx="2" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
         <rect x="194" y="71" width="10" height="7" rx="2.5" fill="#334155"/>
 
         <!-- Wheel Arches -->
@@ -357,30 +865,12 @@
     </div>
   </div>
 
-  {% set spec_icons = {
-    'Cardiology': '🫀',
-    'Dermatology': '✨',
-    'ENT': '👂',
-    'Gastroenterology': '🩺',
-    'General Medicine': '🏥',
-    'Gynecology': '🌸',
-    'Neurology': '🧠',
-    'Oncology': '🎗️',
-    'Ophthalmology': '👁️',
-    'Orthopedics': '🦴',
-    'Pediatrics': '👶',
-    'Psychiatry': '💭'
-  } %}
-
   <!-- Infinite Marquee Tracks -->
   <div class="spec-marquee-container">
     <!-- Row 1: Scrolling Left -->
     <div class="spec-marquee-track">
       {% for s in specializations[:6] %}
         <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card">
-          <div class="spec-icon-box">
-            {{ spec_icons.get(s, '🩺') }}
-          </div>
           <div>
             <div class="spec-card-title">{{ s }}</div>
             <div class="spec-card-link">View Doctors &rarr;</div>
@@ -390,9 +880,6 @@
       <!-- Duplicated for seamless infinite loop -->
       {% for s in specializations[:6] %}
         <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card" aria-hidden="true" tabindex="-1">
-          <div class="spec-icon-box">
-            {{ spec_icons.get(s, '🩺') }}
-          </div>
           <div>
             <div class="spec-card-title">{{ s }}</div>
             <div class="spec-card-link">View Doctors &rarr;</div>
@@ -405,9 +892,6 @@
     <div class="spec-marquee-track reverse">
       {% for s in specializations[6:] %}
         <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card">
-          <div class="spec-icon-box">
-            {{ spec_icons.get(s, '🩺') }}
-          </div>
           <div>
             <div class="spec-card-title">{{ s }}</div>
             <div class="spec-card-link">View Doctors &rarr;</div>
@@ -417,9 +901,6 @@
       <!-- Duplicated for seamless infinite loop -->
       {% for s in specializations[6:] %}
         <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card" aria-hidden="true" tabindex="-1">
-          <div class="spec-icon-box">
-            {{ spec_icons.get(s, '🩺') }}
-          </div>
           <div>
             <div class="spec-card-title">{{ s }}</div>
             <div class="spec-card-link">View Doctors &rarr;</div>

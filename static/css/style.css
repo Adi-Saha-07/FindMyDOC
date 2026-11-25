@@ -822,7 +822,7 @@ select.form-control {
 .hero-section {
   padding: 4rem 0 4.75rem;
   background: transparent;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: none;
   text-align: left;
   position: relative;
   overflow: hidden;
@@ -844,21 +844,17 @@ select.form-control {
   text-align: left;
   padding: 1.25rem 1.35rem;
   border-radius: 22px;
-  background: radial-gradient(
-    ellipse at 45% 50%,
-    rgba(248, 250, 252, 0.82) 0%,
-    rgba(248, 250, 252, 0.52) 60%,
-    transparent 92%
-  );
+  background: radial-gradient(ellipse at 45% 50%,
+      rgba(248, 250, 252, 0.82) 0%,
+      rgba(248, 250, 252, 0.52) 60%,
+      transparent 92%);
 }
 
 [data-theme="dark"] .hero-text-col {
-  background: radial-gradient(
-    ellipse at 45% 50%,
-    rgba(11, 13, 18, 0.78) 0%,
-    rgba(11, 13, 18, 0.48) 60%,
-    transparent 92%
-  );
+  background: radial-gradient(ellipse at 45% 50%,
+      rgba(11, 13, 18, 0.78) 0%,
+      rgba(11, 13, 18, 0.48) 60%,
+      transparent 92%);
 }
 
 .hero-text-col .hero-title {
@@ -909,6 +905,172 @@ select.form-control {
   }
 }
 
+/* Sky Layer: Sun & Dynamic Drifting Clouds */
+.hero-sky-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-sun,
+.hero-moon {
+  position: absolute;
+  top: 14px;
+  right: 12%;
+  width: 112px;
+  height: 112px;
+  transform-origin: 50% 210px;
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  will-change: transform, opacity;
+}
+
+.hero-sun {
+  opacity: 0.95;
+  transform: rotate(0deg) scale(1);
+}
+
+.hero-moon {
+  opacity: 0;
+  transform: rotate(95deg) scale(0.72);
+}
+
+.hero-sun svg,
+.hero-moon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-sun svg {
+  animation: sunPulse 7s ease-in-out infinite alternate;
+}
+
+.hero-moon svg {
+  animation: sunPulse 8s ease-in-out infinite alternate;
+}
+
+.hero-sun .sun-rays {
+  transform-origin: 80px 80px;
+  animation: sunRaysSpin 42s linear infinite;
+}
+
+.hero-moon .moon-star {
+  animation: starTwinkle 2.8s ease-in-out infinite alternate;
+}
+
+.hero-moon .moon-star:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+.hero-moon .moon-star:nth-child(3) {
+  animation-delay: 1.4s;
+}
+
+.hero-moon .moon-star:nth-child(4) {
+  animation-delay: 2.1s;
+}
+
+/* Theme Switch: Sun sets & Moon rises along a half-round arc */
+[data-theme="dark"] .hero-sun {
+  opacity: 0;
+  transform: rotate(-95deg) scale(0.72);
+}
+
+[data-theme="dark"] .hero-moon {
+  opacity: 0.92;
+  transform: rotate(0deg) scale(1);
+}
+
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.hero-cloud {
+  position: absolute;
+  left: -240px;
+  will-change: transform;
+  filter: drop-shadow(0 6px 14px rgba(148, 163, 184, 0.18));
+}
+
+.hero-cloud svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-cloud-1 {
+  top: 18px;
+  width: 175px;
+  opacity: 0.85;
+  animation: cloudDrift 38s linear infinite;
+  animation-delay: -10s;
+}
+
+.hero-cloud-2 {
+  top: 64px;
+  width: 138px;
+  opacity: 0.72;
+  animation: cloudDrift 28s linear infinite;
+  animation-delay: -21s;
+}
+
+.hero-cloud-3 {
+  top: 38px;
+  width: 112px;
+  opacity: 0.65;
+  animation: cloudDrift 22s linear infinite;
+  animation-delay: -6s;
+}
+
+[data-theme="dark"] .hero-cloud {
+  opacity: 0.22;
+  filter: brightness(0.45) contrast(1.1);
+}
+
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(100vw + 300px));
+  }
+}
+
+@keyframes sunPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes sunRaysSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* 3D Hospital, Trees & Realistic Ambulance Background */
 .hero-ambulance-bg {
   position: absolute;
@@ -931,8 +1093,82 @@ select.form-control {
 }
 
 [data-theme="dark"] .hero-scenery-svg {
-  opacity: 0.38;
-  filter: brightness(0.8) contrast(1.1);
+  opacity: 0.62;
+  filter: brightness(0.92) contrast(1.08);
+}
+
+/* City Skyline Depth & Night Windows */
+.scenery-city {
+  opacity: 0.78;
+}
+
+[data-theme="dark"] .scenery-city {
+  opacity: 0.56;
+  filter: brightness(0.42) contrast(1.18);
+}
+
+[data-theme="dark"] .city-far-skyline {
+  opacity: 0.22;
+}
+
+[data-theme="dark"] .city-mid-skyline {
+  fill: #1e293b;
+  opacity: 0.45;
+}
+
+[data-theme="dark"] .city-window-lit {
+  fill: #fde68a;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 4px rgba(253, 224, 71, 0.55));
+}
+
+[data-theme="dark"] .city-window-cool {
+  fill: #93c5fd;
+  opacity: 0.72;
+  filter: drop-shadow(0 0 4px rgba(147, 197, 253, 0.45));
+}
+
+[data-theme="dark"] .city-beacon {
+  animation: beaconPulse 1.2s ease-in-out infinite alternate;
+}
+
+/* Roadside Street Lamps: OFF in Light Mode, Glowing ON in Dark Mode */
+.street-lamp-bulb {
+  fill: #cbd5e1;
+  transition: fill 0.45s ease, filter 0.45s ease;
+}
+
+.street-lamp-glow {
+  opacity: 0;
+  transform: scaleY(0.35);
+  transform-origin: 36px 15px;
+  transition:
+    opacity 0.55s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .street-lamp-bulb {
+  fill: #fef08a;
+  filter: drop-shadow(0 0 8px #fde047);
+}
+
+[data-theme="dark"] .street-lamp-glow {
+  opacity: 1;
+  transform: scaleY(1);
+  animation: streetLampGlow 2.4s ease-in-out infinite alternate;
+}
+
+.scenery-lamp:nth-of-type(even) .street-lamp-glow {
+  animation-delay: 0.9s;
+}
+
+@keyframes streetLampGlow {
+  0% {
+    opacity: 0.82;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .ambulance-road {
@@ -969,8 +1205,9 @@ select.form-control {
   bottom: 4px;
   left: -380px;
   width: 330px;
+  z-index: 2;
   opacity: 1;
-  animation: ambulanceDrive 17s linear infinite;
+  animation: ambulanceStory 18s linear infinite;
   will-change: transform;
 }
 
@@ -986,7 +1223,37 @@ select.form-control {
 }
 
 .ambulance-wheel {
-  animation: wheelSpin 0.65s linear infinite;
+  animation: wheelSpinStory 18s linear infinite;
+}
+
+/* Patient Stretcher + Male Nurse Transfer Animation */
+.ambulance-transfer-group {
+  position: absolute;
+  bottom: 12px;
+  left: 150px;
+  width: 148px;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  animation: patientTransferStory 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.transfer-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: scaleX(-1);
+}
+
+.nurse-leg-front {
+  transform-origin: 20px 47px;
+  animation: nurseWalkFront 0.55s ease-in-out infinite alternate;
+}
+
+.nurse-leg-back {
+  transform-origin: 16px 47px;
+  animation: nurseWalkBack 0.55s ease-in-out infinite alternate;
 }
 
 .ambulance-beacon,
@@ -994,26 +1261,152 @@ select.form-control {
   animation: beaconPulse 0.75s ease-in-out infinite alternate;
 }
 
-@keyframes ambulanceDrive {
+/* Headlight: OFF in Light Mode, Animated ON in Dark Mode */
+.ambulance-headlight-beam {
+  opacity: 0;
+  transform: scaleX(0.35);
+  transform-origin: 200px 66px;
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease;
+}
+
+.ambulance-headlight-lamp {
+  fill: #cbd5e1;
+  stroke: #94a3b8;
+  transition: fill 0.4s ease, stroke 0.4s ease, filter 0.4s ease;
+}
+
+[data-theme="dark"] .ambulance-headlight-beam {
+  opacity: 1;
+  transform: scaleX(1);
+  filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.55));
+  animation: headlightBeamGlow 1.8s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .ambulance-headlight-lamp {
+  fill: #fef08a;
+  stroke: #eab308;
+  filter: drop-shadow(0 0 6px #fde047);
+}
+
+@keyframes headlightBeamGlow {
+  0% {
+    opacity: 0.78;
+    filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.45));
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 13px rgba(254, 240, 138, 0.8));
+  }
+}
+
+@keyframes ambulanceStory {
   0% {
     transform: translateX(0);
+  }
+  19% {
+    transform: translateX(610px);
+  }
+  23% {
+    transform: translateX(630px);
+  }
+  62% {
+    transform: translateX(630px);
+  }
+  67% {
+    transform: translateX(675px);
   }
   100% {
     transform: translateX(calc(100vw + 430px));
   }
 }
 
-@keyframes wheelSpin {
-  from {
+@keyframes wheelSpinStory {
+  0% {
     transform: rotate(0deg);
   }
+  23% {
+    transform: rotate(1620deg);
+  }
+  62% {
+    transform: rotate(1620deg);
+  }
+  100% {
+    transform: rotate(4320deg);
+  }
+}
+
+@keyframes patientTransferStory {
+  0%,
+  22% {
+    opacity: 0;
+    transform: translate(115px, -10px) scale(0.92);
+  }
+  26% {
+    opacity: 1;
+    transform: translate(92px, -6px) scale(0.96);
+  }
+  32% {
+    opacity: 1;
+    transform: translate(76px, 0px) scale(1);
+  }
+  52% {
+    opacity: 1;
+    transform: translate(12px, -14px) scale(0.84);
+  }
+  58%,
+  100% {
+    opacity: 0;
+    transform: translate(-6px, -22px) scale(0.72);
+  }
+}
+
+@keyframes nurseWalkFront {
+  from {
+    transform: rotate(-14deg);
+  }
   to {
-    transform: rotate(360deg);
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes nurseWalkBack {
+  from {
+    transform: rotate(14deg);
+  }
+  to {
+    transform: rotate(-14deg);
   }
 }
 
 /* Mobile-only adjustments for 3D Hospital, Trees & Ambulance behind text (PC untouched) */
 @media (max-width: 960px) {
+  .hero-sun,
+  .hero-moon {
+    width: 82px;
+    height: 82px;
+    top: 8px;
+    right: 6%;
+    transform-origin: 50% 160px;
+  }
+
+  .hero-cloud-1 {
+    width: 130px;
+    top: 12px;
+  }
+
+  .hero-cloud-2 {
+    width: 105px;
+    top: 48px;
+  }
+
+  .hero-cloud-3 {
+    width: 85px;
+    top: 26px;
+  }
+
   .hero-scenery-svg {
     width: 165%;
     left: -2%;
@@ -1039,8 +1432,14 @@ select.form-control {
     bottom: auto;
     left: -250px;
     opacity: 1;
-    animation: ambulanceDriveMobile 12s linear infinite;
-    animation-delay: -2s;
+    animation: ambulanceStoryMobile 18s linear infinite;
+  }
+
+  .ambulance-transfer-group {
+    top: 168px;
+    bottom: auto;
+    left: 65px;
+    width: 112px;
   }
 
   [data-theme="dark"] .ambulance-vehicle {
@@ -1049,23 +1448,43 @@ select.form-control {
 }
 
 @media (max-width: 600px) {
+  .hero-sun,
+  .hero-moon {
+    width: 68px;
+    height: 68px;
+    top: 6px;
+    right: 4%;
+    transform-origin: 50% 135px;
+  }
+
+  .hero-cloud-1 {
+    width: 108px;
+    opacity: 0.65;
+  }
+
+  .hero-cloud-2 {
+    width: 86px;
+    opacity: 0.55;
+  }
+
+  .hero-cloud-3 {
+    width: 72px;
+    opacity: 0.5;
+  }
+
   .hero-text-col {
     padding: 1rem 0.75rem;
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(248, 250, 252, 0.86) 0%,
-      rgba(248, 250, 252, 0.56) 62%,
-      transparent 95%
-    );
+    background: radial-gradient(ellipse at 50% 50%,
+        rgba(248, 250, 252, 0.86) 0%,
+        rgba(248, 250, 252, 0.56) 62%,
+        transparent 95%);
   }
 
   [data-theme="dark"] .hero-text-col {
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(11, 13, 18, 0.82) 0%,
-      rgba(11, 13, 18, 0.52) 62%,
-      transparent 95%
-    );
+    background: radial-gradient(ellipse at 50% 50%,
+        rgba(11, 13, 18, 0.82) 0%,
+        rgba(11, 13, 18, 0.52) 62%,
+        transparent 95%);
   }
 
   .hero-scenery-svg {
@@ -1089,8 +1508,14 @@ select.form-control {
     bottom: auto;
     left: -200px;
     opacity: 1;
-    animation: ambulanceDriveMobile 9s linear infinite;
-    animation-delay: -2.2s;
+    animation: ambulanceStoryMobile 18s linear infinite;
+  }
+
+  .ambulance-transfer-group {
+    top: 146px;
+    bottom: auto;
+    left: 42px;
+    width: 98px;
   }
 
   [data-theme="dark"] .ambulance-vehicle {
@@ -1098,12 +1523,24 @@ select.form-control {
   }
 }
 
-@keyframes ambulanceDriveMobile {
+@keyframes ambulanceStoryMobile {
   0% {
     transform: translateX(0);
   }
+  19% {
+    transform: translateX(350px);
+  }
+  23% {
+    transform: translateX(365px);
+  }
+  62% {
+    transform: translateX(365px);
+  }
+  67% {
+    transform: translateX(395px);
+  }
   100% {
-    transform: translateX(calc(100vw + 230px));
+    transform: translateX(calc(100vw + 240px));
   }
 }
 
@@ -1111,6 +1548,7 @@ select.form-control {
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-2px);
   }
@@ -1120,18 +1558,21 @@ select.form-control {
   0% {
     opacity: 0.35;
   }
+
   100% {
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .ambulance-vehicle,
   .ambulance-svg,
   .ambulance-beacon,
   .ambulance-beacon-glow {
     animation: none;
   }
+
   .ambulance-vehicle {
     left: 10%;
   }
@@ -1174,6 +1615,7 @@ select.form-control {
 }
 
 @media (max-width: 960px) {
+
   .hero-title,
   .hero-subtitle {
     margin-left: auto;
@@ -1193,57 +1635,108 @@ select.form-control {
   max-width: 860px;
   margin: 0 auto;
   padding: 1.6rem 1.75rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.42) 0%,
-    rgba(255, 255, 255, 0.14) 48%,
-    rgba(255, 255, 255, 0.08) 78%,
-    rgba(255, 255, 255, 0.28) 100%
-  );
-  backdrop-filter: blur(5px) saturate(135%) brightness(1.03);
-  -webkit-backdrop-filter: blur(5px) saturate(135%) brightness(1.03);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  outline: 1px solid rgba(148, 163, 184, 0.35);
-  border-radius: 24px;
+  background: linear-gradient(140deg,
+      rgba(255, 255, 255, 0.54) 0%,
+      rgba(255, 255, 255, 0.32) 48%,
+      rgba(255, 255, 255, 0.28) 76%,
+      rgba(255, 255, 255, 0.44) 100%);
+  backdrop-filter: blur(14px) saturate(185%) contrast(1.06) brightness(1.04);
+  -webkit-backdrop-filter: blur(14px) saturate(185%) contrast(1.06) brightness(1.04);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  outline: none;
+  border-radius: 26px;
   box-shadow:
-    0 20px 44px -12px rgba(15, 23, 42, 0.1),
-    0 4px 12px rgba(15, 23, 42, 0.04),
-    inset 0 2px 2px rgba(255, 255, 255, 0.95),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.45),
-    inset 1.5px 0 2px rgba(255, 255, 255, 0.65),
-    inset -1.5px 0 2px rgba(255, 255, 255, 0.35);
-  transition: border-color 0.25s ease;
+    0 22px 48px -12px rgba(15, 23, 42, 0.14),
+    0 6px 16px rgba(15, 23, 42, 0.06),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -1.5px 3px rgba(255, 255, 255, 0.35),
+    inset 0 0 24px rgba(255, 255, 255, 0.28);
+  transition: box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   overflow: visible;
+}
+
+/* Optical Curved Lens Caustic & Specular Sheen */
+.hero-search-card::before,
+.liquid-glass-search::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 18% 0%,
+      rgba(255, 255, 255, 0.62) 0%,
+      rgba(255, 255, 255, 0.16) 45%,
+      transparent 72%),
+    radial-gradient(85% 45% at 85% 100%,
+      rgba(255, 255, 255, 0.32) 0%,
+      transparent 65%);
+  z-index: 0;
+}
+
+.hero-search-card::after,
+.liquid-glass-search::after {
+  display: none;
+}
+
+.hero-search-card>*,
+.liquid-glass-search>* {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-search-card:hover,
 .liquid-glass-search:hover {
-  border-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 26px 54px -12px rgba(15, 23, 42, 0.16),
+    0 8px 18px rgba(15, 23, 42, 0.07),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
+    inset 0 0 30px rgba(255, 255, 255, 0.36);
 }
 
 [data-theme="dark"] .hero-search-card,
 [data-theme="dark"] .liquid-glass-search {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 50%,
-    rgba(255, 255, 255, 0.02) 80%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: linear-gradient(140deg,
+      rgba(24, 29, 44, 0.62) 0%,
+      rgba(16, 20, 31, 0.46) 50%,
+      rgba(14, 17, 26, 0.42) 78%,
+      rgba(24, 29, 44, 0.54) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   outline: none;
-  backdrop-filter: blur(6px) saturate(140%) brightness(1.06);
-  -webkit-backdrop-filter: blur(6px) saturate(140%) brightness(1.06);
+  backdrop-filter: blur(16px) saturate(190%) contrast(1.08) brightness(1.05);
+  -webkit-backdrop-filter: blur(16px) saturate(190%) contrast(1.08) brightness(1.05);
   box-shadow:
-    0 24px 56px -14px rgba(0, 0, 0, 0.65),
-    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.35),
-    inset 0 -1.5px 3px rgba(255, 255, 255, 0.12),
-    inset 1px 0 1.5px rgba(255, 255, 255, 0.2);
+    0 24px 56px -14px rgba(0, 0, 0, 0.68),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.24),
+    inset 0 -1.5px 3px rgba(255, 255, 255, 0.08),
+    inset 0 0 24px rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .hero-search-card::before,
+[data-theme="dark"] .liquid-glass-search::before {
+  background:
+    radial-gradient(120% 70% at 18% 0%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 45%,
+      transparent 72%),
+    radial-gradient(85% 45% at 85% 100%,
+      rgba(255, 255, 255, 0.09) 0%,
+      transparent 65%);
+}
+
+[data-theme="dark"] .hero-search-card::after,
+[data-theme="dark"] .liquid-glass-search::after {
+  display: none;
 }
 
 [data-theme="dark"] .hero-search-card:hover,
 [data-theme="dark"] .liquid-glass-search:hover {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 26px 60px -14px rgba(0, 0, 0, 0.74),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.3),
+    inset 0 0 28px rgba(255, 255, 255, 0.09);
 }
 
 /* Background Glow Orbs Removed */
@@ -1280,15 +1773,31 @@ select.form-control {
 }
 
 @keyframes liquidFloat1 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(28px, 16px) scale(1.12); }
-  100% { transform: translate(-18px, 22px) scale(0.94); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(28px, 16px) scale(1.12);
+  }
+
+  100% {
+    transform: translate(-18px, 22px) scale(0.94);
+  }
 }
 
 @keyframes liquidFloat2 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-32px, -18px) scale(1.1); }
-  100% { transform: translate(18px, -12px) scale(0.92); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-32px, -18px) scale(1.1);
+  }
+
+  100% {
+    transform: translate(18px, -12px) scale(0.92);
+  }
 }
 
 .search-bar-form {
@@ -1325,71 +1834,88 @@ select.form-control {
   color: var(--brand-red);
 }
 
-/* Liquid Glass Capsule Inputs - Crisp & High-Contrast in Light Mode */
+/* Liquid Glass Capsule Inputs - Borderless Optical Glass */
 .hero-search-card .form-control,
 .liquid-glass-search .form-control {
-  background: #ffffff;
-  border: 1.5px solid #cbd5e1;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.52) 0%,
+      rgba(255, 255, 255, 0.24) 60%,
+      rgba(255, 255, 255, 0.38) 100%);
+  backdrop-filter: saturate(150%) brightness(1.03);
+  -webkit-backdrop-filter: saturate(150%) brightness(1.03);
+  border: none;
+  outline: none;
   border-radius: 14px;
   padding: 0.85rem 1.15rem 0.85rem 2.85rem;
   font-size: 0.95rem;
   font-weight: 500;
   color: #0f172a;
-  box-shadow: 
-    0 2px 5px rgba(0, 0, 0, 0.04),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.05),
+    inset 0 0 12px rgba(255, 255, 255, 0.35);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-search-card .form-control::placeholder,
 .liquid-glass-search .form-control::placeholder {
-  color: #64748b;
-  opacity: 0.95;
+  color: #475569;
+  opacity: 0.92;
 }
 
 .hero-search-card .form-control:hover,
 .liquid-glass-search .form-control:hover {
-  border-color: #94a3b8;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.64) 0%,
+      rgba(255, 255, 255, 0.34) 100%);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
 }
 
 .hero-search-card .form-control:focus,
 .liquid-glass-search .form-control:focus {
-  background: #ffffff;
-  border-color: var(--brand-red);
-  box-shadow: 
-    0 0 0 4px rgba(220, 38, 38, 0.15),
-    0 4px 14px rgba(220, 38, 38, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  border: none;
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(220, 38, 38, 0.16),
+    0 6px 16px rgba(220, 38, 38, 0.08);
 }
 
 [data-theme="dark"] .hero-search-card .form-control,
 [data-theme="dark"] .liquid-glass-search .form-control {
-  background: rgba(28, 30, 38, 0.75);
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.11) 0%,
+      rgba(255, 255, 255, 0.04) 65%,
+      rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: saturate(150%) brightness(1.05);
+  border: none;
+  outline: none;
   color: var(--text-primary);
-  box-shadow: 
-    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.28),
+    inset 0 0 12px rgba(255, 255, 255, 0.06);
 }
 
 [data-theme="dark"] .hero-search-card .form-control::placeholder,
 [data-theme="dark"] .liquid-glass-search .form-control::placeholder {
-  color: #9ca3af;
+  color: #cbd5e1;
 }
 
 [data-theme="dark"] .hero-search-card .form-control:hover,
 [data-theme="dark"] .liquid-glass-search .form-control:hover {
-  border-color: rgba(255, 255, 255, 0.28);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.06) 100%);
 }
 
 [data-theme="dark"] .hero-search-card .form-control:focus,
 [data-theme="dark"] .liquid-glass-search .form-control:focus {
-  background: rgba(34, 36, 46, 0.95);
-  border-color: rgba(239, 68, 68, 0.65);
-  box-shadow: 
-    0 0 0 4px rgba(239, 68, 68, 0.22),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    0 4px 18px rgba(239, 68, 68, 0.22);
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(239, 68, 68, 0.24),
+    0 4px 18px rgba(239, 68, 68, 0.2);
 }
 
 /* Liquid Button with Specular Apple Glass Gradient */
@@ -1402,7 +1928,7 @@ select.form-control {
   font-weight: 700;
   font-size: 0.96rem;
   letter-spacing: -0.01em;
-  box-shadow: 
+  box-shadow:
     0 6px 20px rgba(220, 38, 38, 0.38),
     inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.55),
     inset 0 -1.5px 1px 0 rgba(0, 0, 0, 0.15);
@@ -1420,7 +1946,7 @@ select.form-control {
 .hero-search-card .btn-primary:active,
 .liquid-glass-search .btn-primary:active {
   transform: scale(0.96);
-  box-shadow: 
+  box-shadow:
     0 2px 6px rgba(220, 38, 38, 0.28),
     inset 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 }
@@ -1462,7 +1988,7 @@ select.form-control {
   background: rgba(28, 30, 38, 0.75);
   border: 1.5px solid rgba(255, 255, 255, 0.14);
   color: #e2e8f0;
-  box-shadow: 
+  box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.3),
     inset 0 1px 1px rgba(255, 255, 255, 0.12);
 }
@@ -1514,6 +2040,7 @@ select.form-control {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(calc(-50% - 0.575rem));
   }
@@ -1523,6 +2050,7 @@ select.form-control {
   from {
     transform: translateX(calc(-50% - 0.575rem));
   }
+
   to {
     transform: translateX(0);
   }
@@ -1619,6 +2147,7 @@ select.form-control {
 
 /* Pause animation if user prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   .spec-marquee-track,
   .spec-marquee-track.reverse {
     animation: none;
@@ -2810,7 +3339,7 @@ select.form-control {
   }
 
   /* Unstick the booking sidebar */
-  .doctor-detail-grid > aside {
+  .doctor-detail-grid>aside {
     position: static !important;
   }
 
@@ -2824,11 +3353,11 @@ select.form-control {
     gap: 1rem;
   }
 
-  .dashboard-header > div:last-child {
+  .dashboard-header>div:last-child {
     width: 100%;
   }
 
-  .dashboard-header > div:last-child .btn {
+  .dashboard-header>div:last-child .btn {
     flex: 1;
     justify-content: center;
     text-align: center;
@@ -2837,8 +3366,9 @@ select.form-control {
 
 /* ---- Mobile (≤ 600px): deeper stacking ---- */
 @media (max-width: 600px) {
+
   /* Doctor detail hero: image + text stack */
-  .doctor-detail-grid .card > div[style*="display: flex"] {
+  .doctor-detail-grid .card>div[style*="display: flex"] {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -3000,6 +3530,7 @@ select.form-control {
 
 /* Prevent mobile iOS zoom on form inputs */
 @media (max-width: 768px) {
+
   .form-control,
   .glass-input,
   select.form-control {
