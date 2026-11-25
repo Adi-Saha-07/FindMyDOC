@@ -5,7 +5,10 @@
 {% block content %}
 <div class="container" style="padding: 2rem 0 4rem;">
   <!-- Doctor Dashboard Header -->
-  <div class="card dashboard-header">
+  <div class="liquid-glass-wrapper" style="max-width: 100%;">
+    <div class="liquid-glow-orb liquid-glow-orb-1" aria-hidden="true"></div>
+    <div class="liquid-glow-orb liquid-glow-orb-2" aria-hidden="true"></div>
+    <div class="liquid-glass-card dashboard-header">
     <div class="dashboard-header-inner">
       <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
         <img src="{{ (doctor.avatar if doctor and doctor.avatar else '/static/uploads/default_doctor.png') }}" alt="{{ (doctor.name if doctor and doctor.name else user_name) }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
@@ -29,6 +32,7 @@
       <a href="{{ url_for('main.doctor_detail', doctor_id=doctor.id) }}" class="btn btn-outline btn-sm" target="_blank">
         View Public Profile &nearr;
       </a>
+    </div>
     </div>
   </div>
 

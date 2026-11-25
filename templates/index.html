@@ -3,71 +3,296 @@
 {% block title %}FindMyDOC &bull; Find Local Doctors &amp; Book Appointments{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section (Split: Text Left, Search Right + 3D Hospital/Trees/Ambulance Bg) -->
 <section class="hero-section">
-  <div class="container">
-    <div class="hero-pill">
-      <span>Verified Doctors &bull; Direct Scheduling</span>
+  <!-- 3D-Styled Hospital, Trees & Realistic Ambulance Background -->
+  <div class="hero-ambulance-bg" aria-hidden="true">
+    <!-- Background Scenery: 3D Hospital Building & Layered Trees -->
+    <svg class="hero-scenery-svg" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- 3D Hospital Gradients -->
+        <linearGradient id="hospFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f8fafc"/>
+          <stop offset="100%" stop-color="#e2e8f0"/>
+        </linearGradient>
+        <linearGradient id="hospSide" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#cbd5e1"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+        <linearGradient id="hospGlass" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.85"/>
+          <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.75"/>
+        </linearGradient>
+        <linearGradient id="treeLight" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#86efac"/>
+          <stop offset="100%" stop-color="#22c55e"/>
+        </linearGradient>
+        <linearGradient id="treeDark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#22c55e"/>
+          <stop offset="100%" stop-color="#15803d"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 3D Isometric-Style Hospital Building (Left Side Background) -->
+      <g class="scenery-hospital" transform="translate(55, 42)">
+        <!-- Ground Shadow -->
+        <ellipse cx="145" cy="248" rx="165" ry="12" fill="#0f172a" opacity="0.12"/>
+        <!-- Left Wing 3D Side -->
+        <polygon points="10,105 42,92 42,244 10,244" fill="url(#hospSide)"/>
+        <!-- Left Wing Front -->
+        <rect x="42" y="92" width="68" height="152" rx="2" fill="url(#hospFront)" stroke="#cbd5e1" stroke-width="1.2"/>
+        <!-- Main Center Tower 3D Side Wall -->
+        <polygon points="240,26 278,42 278,244 240,244" fill="url(#hospSide)"/>
+        <!-- Main Center Tower Roof Bevel -->
+        <polygon points="108,26 240,26 278,42 140,42" fill="#e2e8f0"/>
+        <!-- Main Center Tower Front Facade -->
+        <rect x="108" y="26" width="132" height="218" rx="3" fill="url(#hospFront)" stroke="#cbd5e1" stroke-width="1.5"/>
+        <!-- Rooftop Medical Sign & Cross -->
+        <rect x="148" y="2" width="52" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="171" y="6" width="6" height="16" rx="1" fill="#dc2626"/>
+        <rect x="166" y="11" width="16" height="6" rx="1" fill="#dc2626"/>
+        <!-- Tower Windows Grid (3D Glass) -->
+        <g fill="url(#hospGlass)" stroke="#94a3b8" stroke-width="0.8">
+          <rect x="122" y="44" width="24" height="22" rx="2"/><rect x="162" y="44" width="24" height="22" rx="2"/><rect x="202" y="44" width="24" height="22" rx="2"/>
+          <rect x="122" y="78" width="24" height="22" rx="2"/><rect x="162" y="78" width="24" height="22" rx="2"/><rect x="202" y="78" width="24" height="22" rx="2"/>
+          <rect x="122" y="112" width="24" height="22" rx="2"/><rect x="162" y="112" width="24" height="22" rx="2"/><rect x="202" y="112" width="24" height="22" rx="2"/>
+          <rect x="122" y="146" width="24" height="22" rx="2"/><rect x="162" y="146" width="24" height="22" rx="2"/><rect x="202" y="146" width="24" height="22" rx="2"/>
+          <!-- Left Wing Windows -->
+          <rect x="54" y="110" width="18" height="20" rx="2"/><rect x="80" y="110" width="18" height="20" rx="2"/>
+          <rect x="54" y="144" width="18" height="20" rx="2"/><rect x="80" y="144" width="18" height="20" rx="2"/>
+          <rect x="54" y="178" width="18" height="20" rx="2"/><rect x="80" y="178" width="18" height="20" rx="2"/>
+        </g>
+        <!-- Emergency Entrance Canopy (3D) -->
+        <polygon points="124,186 224,186 236,196 112,196" fill="#dc2626" opacity="0.9"/>
+        <rect x="140" y="196" width="68" height="48" fill="#334155"/>
+        <rect x="148" y="202" width="24" height="42" fill="url(#hospGlass)"/>
+        <rect x="176" y="202" width="24" height="42" fill="url(#hospGlass)"/>
+      </g>
+
+      <!-- 3D Trees Flanking Hospital & Roadside -->
+      <g class="scenery-tree" transform="translate(345, 172)">
+        <ellipse cx="42" cy="118" rx="34" ry="7" fill="#0f172a" opacity="0.12"/>
+        <rect x="37" y="72" width="10" height="46" rx="3" fill="#78350f"/>
+        <circle cx="48" cy="52" r="30" fill="url(#treeDark)"/>
+        <circle cx="28" cy="56" r="24" fill="url(#treeDark)"/>
+        <circle cx="40" cy="38" r="28" fill="url(#treeLight)"/>
+        <circle cx="32" cy="28" r="14" fill="#bbf7d0" opacity="0.45"/>
+      </g>
+
+      <g class="scenery-tree" transform="translate(430, 195) scale(0.8)">
+        <ellipse cx="42" cy="118" rx="32" ry="6" fill="#0f172a" opacity="0.1"/>
+        <rect x="37" y="72" width="10" height="46" rx="3" fill="#78350f"/>
+        <circle cx="48" cy="52" r="30" fill="url(#treeDark)"/>
+        <circle cx="28" cy="56" r="24" fill="url(#treeDark)"/>
+        <circle cx="40" cy="38" r="28" fill="url(#treeLight)"/>
+      </g>
+
+      <!-- Right Side 3D Trees -->
+      <g class="scenery-tree" transform="translate(1240, 170) scale(0.95)">
+        <ellipse cx="42" cy="118" rx="34" ry="7" fill="#0f172a" opacity="0.12"/>
+        <rect x="37" y="72" width="10" height="46" rx="3" fill="#78350f"/>
+        <circle cx="48" cy="52" r="30" fill="url(#treeDark)"/>
+        <circle cx="28" cy="56" r="24" fill="url(#treeDark)"/>
+        <circle cx="40" cy="38" r="28" fill="url(#treeLight)"/>
+        <circle cx="32" cy="28" r="14" fill="#bbf7d0" opacity="0.45"/>
+      </g>
+
+      <g class="scenery-tree" transform="translate(1330, 195) scale(0.75)">
+        <ellipse cx="42" cy="118" rx="32" ry="6" fill="#0f172a" opacity="0.1"/>
+        <rect x="37" y="72" width="10" height="46" rx="3" fill="#78350f"/>
+        <circle cx="48" cy="52" r="30" fill="url(#treeDark)"/>
+        <circle cx="28" cy="56" r="24" fill="url(#treeDark)"/>
+        <circle cx="40" cy="38" r="28" fill="url(#treeLight)"/>
+      </g>
+    </svg>
+
+    <!-- 3D Perspective Road -->
+    <div class="ambulance-road"></div>
+
+    <!-- Larger 3D Realistic Ambulance -->
+    <div class="ambulance-vehicle">
+      <svg class="ambulance-svg" viewBox="0 0 240 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ambBodyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="65%" stop-color="#f1f5f9"/>
+            <stop offset="100%" stop-color="#cbd5e1"/>
+          </linearGradient>
+          <linearGradient id="ambRoofGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e2e8f0"/>
+            <stop offset="100%" stop-color="#ffffff"/>
+          </linearGradient>
+          <linearGradient id="ambGlassGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.75"/>
+            <stop offset="50%" stop-color="#0284c7" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+          </linearGradient>
+          <radialGradient id="ambTireGrad" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#475569"/>
+            <stop offset="70%" stop-color="#1e293b"/>
+            <stop offset="100%" stop-color="#0f172a"/>
+          </radialGradient>
+          <linearGradient id="headlightBeam" x1="0" y1="0.5" x2="1" y2="0.5">
+            <stop offset="0%" stop-color="#fef08a" stop-opacity="0.65"/>
+            <stop offset="100%" stop-color="#fef08a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Ground Drop Shadow -->
+        <ellipse cx="118" cy="92" rx="92" ry="7" fill="#0f172a" opacity="0.24"/>
+
+        <!-- Headlight Beam -->
+        <polygon points="205,64 240,54 240,84 205,73" fill="url(#headlightBeam)"/>
+
+        <!-- Rear Bumper & Taillight -->
+        <rect x="24" y="68" width="8" height="10" rx="2" fill="#334155"/>
+        <rect x="26" y="56" width="5" height="10" rx="1.5" fill="#ef4444"/>
+
+        <!-- 3D Roof Cap & AC Unit -->
+        <path d="M40 20H142L148 25H34L40 20Z" fill="url(#ambRoofGrad)" stroke="#94a3b8" stroke-width="1"/>
+        <rect x="52" y="15" width="26" height="5" rx="2" fill="#cbd5e1" stroke="#94a3b8" stroke-width="0.8"/>
+
+        <!-- Emergency Beacon + Glow -->
+        <ellipse class="ambulance-beacon-glow" cx="122" cy="17" rx="22" ry="11" fill="#dc2626" opacity="0.28"/>
+        <rect class="ambulance-beacon" x="112" y="13" width="20" height="8" rx="4" fill="#dc2626" stroke="#991b1b" stroke-width="1"/>
+        <rect x="116" y="14.5" width="8" height="2.5" rx="1" fill="#fca5a5"/>
+
+        <!-- Main Ambulance Box Body (3D Shaded) -->
+        <path d="M30 28C30 24.6863 32.6863 22 36 22H146C149.314 22 152 24.6863 152 28V77H30V28Z" fill="url(#ambBodyGrad)" stroke="#64748b" stroke-width="1.8"/>
+
+        <!-- 3D Side Panel Inset -->
+        <rect x="38" y="30" width="106" height="32" rx="4" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+
+        <!-- Cab Body (3D Shaded) -->
+        <path d="M152 32H176C181.5 32 186.4 35.1 188.9 40L198.5 57.5C199.8 59.9 200.5 62.6 200.5 65.4V77H152V32Z" fill="url(#ambBodyGrad)" stroke="#64748b" stroke-width="1.8"/>
+
+        <!-- Cab Windshield & Side Window with Specular Reflection -->
+        <path d="M158 37H174.5C177.8 37 180.8 38.8 182.3 41.8L189 55H158V37Z" fill="url(#ambGlassGrad)" stroke="#475569" stroke-width="1.4"/>
+        <polygon points="162,39 170,39 164,53 160,53" fill="#ffffff" opacity="0.35"/>
+        <!-- Side Mirror -->
+        <rect x="179" y="49" width="5" height="9" rx="1.5" fill="#334155"/>
+
+        <!-- Crimson Emergency Stripe + Chevron Accent -->
+        <rect x="30" y="63" width="170.5" height="6" fill="#dc2626"/>
+        <polygon points="34,63 42,63 38,69 30,69" fill="#ffffff" opacity="0.65"/>
+        <polygon points="46,63 54,63 50,69 42,69" fill="#ffffff" opacity="0.65"/>
+
+        <!-- 3D Medical Cross Badge -->
+        <rect x="86" y="34" width="9" height="25" rx="2" fill="#dc2626"/>
+        <rect x="78" y="42" width="25" height="9" rx="2" fill="#dc2626"/>
+        <rect x="86" y="34" width="3" height="25" rx="1" fill="#f87171" opacity="0.45"/>
+
+        <!-- Side Rear Window -->
+        <rect x="115" y="35" width="22" height="16" rx="2.5" fill="url(#ambGlassGrad)" stroke="#64748b" stroke-width="1.2"/>
+
+        <!-- Front Headlight & Bumper -->
+        <rect x="195" y="62" width="6" height="7" rx="2" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
+        <rect x="194" y="71" width="10" height="7" rx="2.5" fill="#334155"/>
+
+        <!-- Wheel Arches -->
+        <path d="M51 77C51 67.6112 58.6112 60 68 60C77.3888 60 85 67.6112 85 77" fill="#1e293b"/>
+        <path d="M159 77C159 67.6112 166.611 60 176 60C185.389 60 193 67.6112 193 77" fill="#1e293b"/>
+
+        <!-- Rear 3D Wheel -->
+        <g class="ambulance-wheel" style="transform-origin: 68px 77px;">
+          <circle cx="68" cy="77" r="14" fill="url(#ambTireGrad)" stroke="#0f172a" stroke-width="1.5"/>
+          <circle cx="68" cy="77" r="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>
+          <circle cx="68" cy="77" r="3" fill="#475569"/>
+          <line x1="68" y1="70" x2="68" y2="84" stroke="#64748b" stroke-width="1.2"/>
+          <line x1="61" y1="77" x2="75" y2="77" stroke="#64748b" stroke-width="1.2"/>
+        </g>
+
+        <!-- Front 3D Wheel -->
+        <g class="ambulance-wheel" style="transform-origin: 176px 77px;">
+          <circle cx="176" cy="77" r="14" fill="url(#ambTireGrad)" stroke="#0f172a" stroke-width="1.5"/>
+          <circle cx="176" cy="77" r="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>
+          <circle cx="176" cy="77" r="3" fill="#475569"/>
+          <line x1="176" y1="70" x2="176" y2="84" stroke="#64748b" stroke-width="1.2"/>
+          <line x1="169" y1="77" x2="183" y2="77" stroke="#64748b" stroke-width="1.2"/>
+        </g>
+      </svg>
     </div>
+  </div>
 
-    <h1 class="hero-title">
-      Find Local Doctors &amp; <span class="gradient-text">Book Confirmed Appointments</span>
-    </h1>
-
-    <p class="hero-subtitle">
-      Connect with hospital specialists and private physicians in your city. Submit your request, receive an assigned time slot, and track everything in your dashboard.
-    </p>
-
-    <!-- Search Card -->
-    <div class="hero-search-card">
-      <form action="{{ url_for('main.search') }}" method="GET" class="search-bar-form" id="heroSearchForm">
-        <!-- City Input with Autocomplete -->
-        <div class="search-input-group autocomplete-wrapper">
-          <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-          <input 
-            type="text" 
-            name="city" 
-            id="heroCityInput" 
-            class="form-control" 
-            placeholder="Enter city (e.g. Mumbai, Delhi...)" 
-            data-city-autocomplete="true"
-            autocomplete="off"
-            aria-label="City name"
-          >
+  <div class="container" style="position: relative; z-index: 1;">
+    <div class="hero-split-grid">
+      <!-- LEFT: Hero Heading & Copy -->
+      <div class="hero-text-col">
+        <div class="hero-pill">
+          <span>Verified Doctors &bull; Direct Scheduling</span>
         </div>
 
-        <!-- Specialization Dropdown -->
-        <div class="search-input-group">
-          <select name="specialization" id="heroSpecSelect" class="form-control" aria-label="Specialization">
-            <option value="">All Specializations</option>
-            {% for s in specializations %}
-              <option value="{{ s }}">{{ s }}</option>
-            {% endfor %}
-          </select>
+        <h1 class="hero-title">
+          Find Local Doctors &amp; <span class="gradient-text">Book Confirmed Appointments</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Connect with hospital specialists and private physicians in your city. Submit your request, receive an assigned time slot, and track everything in your dashboard.
+        </p>
+      </div>
+
+      <!-- RIGHT: Liquid Glass Search Section -->
+      <div class="hero-search-col">
+        <div class="liquid-glass-wrapper" style="max-width: 100%; margin: 0;">
+          <div class="liquid-glow-orb liquid-glow-orb-1" aria-hidden="true"></div>
+          <div class="liquid-glow-orb liquid-glow-orb-2" aria-hidden="true"></div>
+
+          <div class="hero-search-card liquid-glass-search">
+            <form action="{{ url_for('main.search') }}" method="GET" class="search-bar-form" id="heroSearchForm">
+              <!-- City Input with Autocomplete -->
+              <div class="search-input-group autocomplete-wrapper">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <input 
+                  type="text" 
+                  name="city" 
+                  id="heroCityInput" 
+                  class="form-control" 
+                  placeholder="Enter city (e.g. Mumbai, Delhi...)" 
+                  data-city-autocomplete="true"
+                  autocomplete="off"
+                  aria-label="City name"
+                >
+              </div>
+
+              <!-- Specialization Dropdown -->
+              <div class="search-input-group">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <select name="specialization" id="heroSpecSelect" class="form-control" aria-label="Specialization">
+                  <option value="">All Specializations</option>
+                  {% for s in specializations %}
+                    <option value="{{ s }}">{{ s }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary btn-block" id="heroSearchBtn">
+                Find Doctors
+              </button>
+            </form>
+
+            <!-- Popular Cities Quick Select -->
+            <div class="popular-cities-pills">
+              <span style="font-weight: 500;">Popular Cities:</span>
+              {% for c in cities[:5] %}
+                <a href="{{ url_for('main.search', city=c) }}" class="city-pill-btn">{{ c }}</a>
+              {% endfor %}
+            </div>
+          </div>
         </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary" id="heroSearchBtn">
-          Find Doctors
-        </button>
-      </form>
-
-      <!-- Popular Cities Quick Select -->
-      <div class="popular-cities-pills">
-        <span style="font-weight: 500;">Popular Cities:</span>
-        {% for c in cities[:5] %}
-          <a href="{{ url_for('main.search', city=c) }}" class="city-pill-btn">{{ c }}</a>
-        {% endfor %}
       </div>
     </div>
   </div>
 </section>
 
 <!-- Stats Metrics Row -->
-<section style="padding: 2rem 0; background: var(--bg-body); border-bottom: 1px solid var(--border-color);">
+<section style="padding: 2rem 0; border-bottom: 1px solid var(--border-color);">
   <div class="container">
     <div class="stats-grid" style="margin-bottom: 0;">
       <div class="card stat-card">
@@ -206,7 +431,7 @@
 </section>
 
 <!-- Featured Doctors Section -->
-<section style="padding: 2.5rem 0 3.5rem; background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+<section style="padding: 2.5rem 0 3.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
   <div class="container">
     <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem;">
       <div>
@@ -333,9 +558,12 @@
 </section>
 
 <!-- Call to action for Doctors -->
-<section style="padding: 3rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color);">
+<section style="padding: 3rem 0; border-top: 1px solid var(--border-color);">
   <div class="container">
-    <div class="card" style="padding: 2.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; background: var(--bg-card);">
+    <div class="liquid-glass-wrapper" style="max-width: 100%;">
+      <div class="liquid-glow-orb liquid-glow-orb-1" aria-hidden="true"></div>
+      <div class="liquid-glow-orb liquid-glow-orb-2" aria-hidden="true"></div>
+      <div class="liquid-glass-card" style="padding: 2.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
       <div style="max-width: 600px;">
         <h2 style="font-size: 1.5rem; margin-bottom: 0.45rem;">Are you a Medical Doctor or Specialist?</h2>
         <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
@@ -350,6 +578,7 @@
           Doctor Sign In
         </a>
       </div>
+    </div>
     </div>
   </div>
 </section>

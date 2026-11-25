@@ -6,7 +6,7 @@
 <div class="container" style="padding: 2.5rem 0 4rem;">
   <div style="max-width: 640px; margin: 0 auto;">
     <!-- Doctor Summary Banner -->
-    <div class="card" style="padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
+    <div class="liquid-glass-card" style="padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
       <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;">
         <img src="{{ doctor.avatar }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/uploads/default_doctor.png'">
       </div>
@@ -25,7 +25,10 @@
     </div>
 
     <!-- Booking Form Card -->
-    <div class="card" style="padding: 1.75rem;">
+    <div class="liquid-glass-wrapper">
+      <div class="liquid-glow-orb liquid-glow-orb-1" aria-hidden="true"></div>
+      <div class="liquid-glow-orb liquid-glow-orb-2" aria-hidden="true"></div>
+      <div class="liquid-glass-card" style="padding: 1.75rem;">
       <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
         <h1 style="font-size: 1.45rem; margin-bottom: 0.25rem;">Request an Appointment</h1>
         <p style="color: var(--text-secondary); font-size: 0.88rem;">
@@ -86,6 +89,7 @@
           </button>
         </div>
       </form>
+    </div>
     </div>
   </div>
 </div>
