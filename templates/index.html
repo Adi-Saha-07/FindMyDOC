@@ -113,25 +113,92 @@
   </div>
 </section>
 
-<!-- Specializations Section -->
-<section id="specializations" style="padding: 3rem 0;">
+<!-- Specializations Section (Marquee Style) -->
+<section id="specializations" style="padding: 3.5rem 0 2.5rem; overflow: hidden;">
   <div class="container">
-    <div style="margin-bottom: 1.5rem;">
-      <h2 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Medical Specializations</h2>
-      <p style="color: var(--text-secondary); font-size: 0.95rem;">
-        Select a specialty to find hospital consultants and private practitioners.
-      </p>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem;">
+      <div>
+        <div class="hero-pill" style="margin-bottom: 0.6rem; padding: 0.25rem 0.8rem; font-size: 0.78rem;">
+          <span>Directory &bull; All Specialties</span>
+        </div>
+        <h2 style="font-size: 1.65rem; margin-bottom: 0.35rem; font-weight: 700;">Medical Specializations</h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+          Browse specialist practitioners across clinical departments. Hover to pause &bull; Click to view doctors.
+        </p>
+      </div>
+      <a href="{{ url_for('main.search') }}" class="btn btn-outline btn-sm">
+        All Specialties &rarr;
+      </a>
+    </div>
+  </div>
+
+  {% set spec_icons = {
+    'Cardiology': '🫀',
+    'Dermatology': '✨',
+    'ENT': '👂',
+    'Gastroenterology': '🩺',
+    'General Medicine': '🏥',
+    'Gynecology': '🌸',
+    'Neurology': '🧠',
+    'Oncology': '🎗️',
+    'Ophthalmology': '👁️',
+    'Orthopedics': '🦴',
+    'Pediatrics': '👶',
+    'Psychiatry': '💭'
+  } %}
+
+  <!-- Infinite Marquee Tracks -->
+  <div class="spec-marquee-container">
+    <!-- Row 1: Scrolling Left -->
+    <div class="spec-marquee-track">
+      {% for s in specializations[:6] %}
+        <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card">
+          <div class="spec-icon-box">
+            {{ spec_icons.get(s, '🩺') }}
+          </div>
+          <div>
+            <div class="spec-card-title">{{ s }}</div>
+            <div class="spec-card-link">View Doctors &rarr;</div>
+          </div>
+        </a>
+      {% endfor %}
+      <!-- Duplicated for seamless infinite loop -->
+      {% for s in specializations[:6] %}
+        <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card" aria-hidden="true" tabindex="-1">
+          <div class="spec-icon-box">
+            {{ spec_icons.get(s, '🩺') }}
+          </div>
+          <div>
+            <div class="spec-card-title">{{ s }}</div>
+            <div class="spec-card-link">View Doctors &rarr;</div>
+          </div>
+        </a>
+      {% endfor %}
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.85rem;">
-      {% for s in specializations %}
-        <a href="{{ url_for('main.search', specialization=s) }}" class="card" style="padding: 1rem; text-decoration: none; text-align: left;">
-          <div style="font-weight: 600; font-size: 0.92rem; color: var(--text-primary); margin-bottom: 0.2rem;">
-            {{ s }}
+    <!-- Row 2: Scrolling Right (Reverse) -->
+    <div class="spec-marquee-track reverse">
+      {% for s in specializations[6:] %}
+        <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card">
+          <div class="spec-icon-box">
+            {{ spec_icons.get(s, '🩺') }}
           </div>
-          <span style="font-size: 0.78rem; color: var(--brand-red); font-weight: 600;">
-            View Doctors &rarr;
-          </span>
+          <div>
+            <div class="spec-card-title">{{ s }}</div>
+            <div class="spec-card-link">View Doctors &rarr;</div>
+          </div>
+        </a>
+      {% endfor %}
+      <!-- Duplicated for seamless infinite loop -->
+      {% for s in specializations[6:] %}
+        <a href="{{ url_for('main.search', specialization=s) }}" class="spec-marquee-card" aria-hidden="true" tabindex="-1">
+          <div class="spec-icon-box">
+            {{ spec_icons.get(s, '🩺') }}
+          </div>
+          <div>
+            <div class="spec-card-title">{{ s }}</div>
+            <div class="spec-card-link">View Doctors &rarr;</div>
+          </div>
         </a>
       {% endfor %}
     </div>
