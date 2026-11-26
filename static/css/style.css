@@ -4180,3 +4180,682 @@ select.form-control {
     width: 100%;
   }
 }
+
+
+/* ==========================================================================
+   GLOBAL PROFESSIONAL POLISH — ALL INNER PAGES
+   Applied after all existing rules so nothing below overrides existing home-
+   page styles. These rules only add refinements; they do not change colours,
+   fonts, or any previously built components.
+   ========================================================================== */
+
+/* ── Page-level wrapper breathing room ──────────────────────────────────── */
+.page-content-wrap {
+  padding-top: 1.5rem;
+  padding-bottom: 4rem;
+}
+
+/* ── Consistent section spacing on inner pages ──────────────────────────── */
+.inner-page-section {
+  padding: 2rem 0 3rem;
+}
+
+/* ── Auth pages: centred, vertically breathes on all screen sizes ─────── */
+.auth-page-container {
+  padding-top: 1rem;
+}
+
+/* Better vertical rhythm for the auth card header */
+.auth-card-modern > div:first-child {
+  padding-bottom: 0.25rem;
+}
+
+/* Auth divider line refinement */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.1rem 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+/* Demo accounts bar */
+.demo-accounts-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* Demo chip button */
+.demo-account-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.38rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.15s ease;
+}
+.demo-account-chip:hover {
+  border-color: var(--brand-red-border);
+  background: var(--brand-red-light);
+  transform: translateY(-1px);
+}
+
+/* Auth form section header (steps like "1. Doctor Identity") */
+.auth-form-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  padding: 0.6rem 0.85rem;
+  margin: 1.35rem 0 0.85rem;
+  border-radius: 10px;
+  background: var(--bg-surface);
+  border-left: 3px solid var(--brand-red);
+}
+
+/* Auth trust badges row */
+.auth-trust-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+}
+.auth-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Auth tabs (Patient / Doctor toggle) */
+.auth-tabs {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--bg-surface);
+  border-radius: 14px;
+  padding: 0.3rem;
+}
+.auth-tab-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.auth-tab-btn.active {
+  background: var(--bg-card);
+  color: var(--brand-red);
+  box-shadow: 0 2px 10px -3px rgba(15, 23, 42, 0.1);
+}
+[data-theme="dark"] .auth-tab-btn.active {
+  background: rgba(255,255,255,0.08);
+  color: #fca5a5;
+}
+
+/* Avatar upload card */
+.avatar-upload-card {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.1rem 1.15rem;
+  border-radius: 14px;
+  border: 1.5px dashed var(--border-color);
+  background: var(--bg-surface);
+  transition: border-color 0.18s ease;
+}
+.avatar-upload-card:hover {
+  border-color: var(--brand-red-border);
+}
+.avatar-preview-box {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--brand-red-border);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.avatar-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.avatar-preview-box:hover .avatar-preview-overlay { opacity: 1; }
+.avatar-upload-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.25rem;
+}
+.avatar-upload-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.avatar-upload-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* Password input wrapper */
+.password-input-wrap {
+  position: relative;
+}
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+}
+.password-toggle-btn:hover { color: var(--text-primary); }
+
+/* ── Search page polish ─────────────────────────────────────────────────── */
+.search-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-no-results {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+}
+
+/* ── Doctor detail page polish ──────────────────────────────────────────── */
+.doc-detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.doc-detail-avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+/* ── Error pages (404 / 500) ────────────────────────────────────────────── */
+.error-page-wrap {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ==========================================================================
+   MOBILE-FIRST PROFESSIONAL POLISH  (≤ 768 px)
+   These rules are additive — they only override what needs fixing on mobile.
+   ========================================================================== */
+@media (max-width: 768px) {
+
+  /* ── Global container breathing room ── */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* ── Inner page top padding after navbar ── */
+  .container[style*="padding: 2rem"] {
+    padding-top: 1.5rem !important;
+  }
+
+  /* ── Auth pages ── */
+  .auth-page-container {
+    margin-top: 1.5rem !important;
+    margin-bottom: 2.5rem !important;
+    padding: 0 0.75rem !important;
+  }
+
+  .auth-card-modern {
+    padding: 1.75rem 1.25rem !important;
+    border-radius: 20px !important;
+  }
+
+  .auth-card-modern h1 {
+    font-size: 1.45rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .auth-card-modern p {
+    font-size: 0.88rem !important;
+  }
+
+  .auth-tabs {
+    padding: 0.25rem !important;
+    gap: 0.25rem !important;
+  }
+
+  .auth-tab-btn {
+    padding: 0.6rem 0.5rem !important;
+    font-size: 0.84rem !important;
+    gap: 0.35rem !important;
+  }
+
+  .auth-grid-2,
+  .auth-grid-split {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  .btn-google {
+    padding: 0.72rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .demo-accounts-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.45rem !important;
+    padding: 0.7rem !important;
+  }
+
+  .demo-account-chip {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .auth-trust-row {
+    gap: 0.5rem 1rem !important;
+    padding-top: 1rem !important;
+    margin-top: 1.1rem !important;
+  }
+
+  .avatar-upload-card {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 1.1rem !important;
+  }
+
+  .avatar-upload-btn-wrap {
+    justify-content: center !important;
+  }
+
+  .auth-form-section {
+    font-size: 0.84rem !important;
+    padding: 0.5rem 0.75rem !important;
+    margin: 1.1rem 0 0.65rem !important;
+  }
+
+  /* ── Dashboard pages ── */
+  .dashboard-header {
+    padding: 1.25rem 1.1rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .dashboard-header-inner {
+    gap: 0.85rem !important;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.35rem !important;
+  }
+
+  .dashboard-header p {
+    font-size: 0.85rem !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-card {
+    padding: 1rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-val {
+    font-size: 1.5rem !important;
+  }
+
+  .stat-label {
+    font-size: 0.75rem !important;
+  }
+
+  /* ── Appointment items ── */
+  .appointment-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.85rem !important;
+    padding: 1rem !important;
+  }
+
+  .apt-right-actions {
+    flex-direction: row !important;
+    align-items: center !important;
+    min-width: unset !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+  }
+
+  .apt-right-actions .btn {
+    flex: 1 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* Doctor appointment action buttons */
+  .apt-action-row {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  .apt-action-row .btn {
+    flex: 1 !important;
+    min-width: 100px !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* ── Search page ── */
+  .search-layout {
+    padding-top: 1.25rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .filter-sidebar {
+    position: static !important;
+    top: auto !important;
+    border-radius: 16px !important;
+    padding: 1.1rem !important;
+  }
+
+  /* ── Doctor detail page ── */
+  .doctor-detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .doctor-detail-grid > aside {
+    position: static !important;
+  }
+
+  .doc-detail-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .doc-detail-avatar {
+    width: 76px !important;
+    height: 76px !important;
+  }
+
+  /* ── Section heading rows ── */
+  .section-heading-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  /* ── Card padding reduction on mobile ── */
+  .card {
+    padding: 1.1rem !important;
+  }
+
+  /* Booking sidebar card */
+  .doctor-detail-grid aside .card {
+    padding: 1.25rem !important;
+  }
+
+  /* ── Appointment profile row ── */
+  .appointment-item > div:first-child {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+
+  /* ── Profile edit page ── */
+  .profile-edit-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE-FIRST PROFESSIONAL POLISH  (≤ 600 px — small phones)
+   ========================================================================== */
+@media (max-width: 600px) {
+
+  /* ── Auth card ── */
+  .auth-card-modern {
+    padding: 1.4rem 1rem !important;
+    border-radius: 18px !important;
+  }
+
+  .auth-card-modern h1 {
+    font-size: 1.3rem !important;
+  }
+
+  .auth-tab-btn span {
+    font-size: 0.78rem !important;
+  }
+
+  /* ── Stats: 2 col on small phones ── */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.6rem !important;
+  }
+
+  .stat-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0.9rem 0.85rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .stat-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  /* ── Dashboard header ── */
+  .dashboard-header {
+    padding: 1rem 0.95rem !important;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Dashboard CTA button: full width */
+  .dashboard-header > a.btn,
+  .dashboard-header > div:last-child {
+    width: 100% !important;
+  }
+
+  .dashboard-header > a.btn {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  /* ── Appointment item inner ── */
+  .appointment-item > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Doctor avatar in apt item */
+  .appointment-item img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  /* ── Search bar form ── */
+  .search-bar-form {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+
+  .search-bar-form .search-input-group {
+    width: 100% !important;
+  }
+
+  .search-bar-form .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── Filter sidebar ── */
+  .filter-sidebar {
+    padding: 0.9rem !important;
+  }
+
+  /* ── Doctor detail hero header ── */
+  .doc-detail-header {
+    gap: 0.85rem !important;
+  }
+
+  /* ── Booking card ── */
+  .doctor-detail-grid aside .card {
+    padding: 1.1rem !important;
+  }
+
+  /* Fee display on booking card */
+  .fee-amount {
+    font-size: 1.5rem !important;
+  }
+
+  /* ── Page section padding ── */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Auth trust items: smaller */
+  .auth-trust-item {
+    font-size: 0.74rem !important;
+  }
+
+  /* Form label size */
+  .form-label {
+    font-size: 0.84rem !important;
+  }
+
+  /* Form control height */
+  .form-control {
+    padding: 0.6rem 0.75rem !important;
+    font-size: 16px !important; /* prevents iOS zoom */
+    border-radius: 10px !important;
+  }
+
+  /* Submit button */
+  .btn-block {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* ── Patient apt view: doctor name size ── */
+  .appointment-item h3 {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ==========================================================================
+   EXTRA SMALL PHONES  (≤ 400 px)
+   ========================================================================== */
+@media (max-width: 400px) {
+
+  /* Auth tabs: icon only, no text on tiny screens */
+  .auth-tab-btn svg {
+    display: none !important;
+  }
+
+  .auth-tab-btn {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.3rem !important;
+  }
+
+  /* Stats: single column */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stat-card {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  /* Auth card padding tightest */
+  .auth-card-modern {
+    padding: 1.2rem 0.85rem !important;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.15rem !important;
+  }
+
+  .btn-lg {
+    font-size: 0.9rem !important;
+    padding: 0.7rem 0.9rem !important;
+  }
+}
