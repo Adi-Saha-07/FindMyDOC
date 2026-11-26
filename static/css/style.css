@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    FINDMYDOC - CLEAN PROFESSIONAL MEDICAL DESIGN SYSTEM
    Theme: Crisp Minimalist Slate & Crimson Red (Main Accent)
    ========================================================================== */
@@ -2295,7 +2295,7 @@ select.form-control {
 /* ==========================================================================
    FEATURED DOCTORS COVERFLOW CAROUSEL (SCOPED)
    ========================================================================== */
-/* ── Featured Doctors – section header ───────────────────────────────────── */
+/* â”€â”€ Featured Doctors â€“ section header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .featured-section-header {
   display: flex;
   align-items: flex-start;   /* button top-aligns with the heading block */
@@ -2311,7 +2311,7 @@ select.form-control {
   margin: 0;
 }
 
-/* ── Liquid Glass "View All" pill button ───────────────────────────────── */
+/* â”€â”€ Liquid Glass "View All" pill button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .featured-viewall-btn {
   display: inline-flex;
   align-items: center;
@@ -2387,7 +2387,7 @@ select.form-control {
 .featured-viewall-long  { display: inline-flex; align-items: center; gap: 0.3rem; }
 .featured-viewall-short { display: none; }
 
-/* Mobile (≤ 600 px): swap to compact icon + "All" label */
+/* Mobile (â‰¤ 600 px): swap to compact icon + "All" label */
 @media (max-width: 600px) {
   .featured-section-header {
     align-items: flex-start;
@@ -2617,7 +2617,7 @@ select.form-control {
     mask-image: none;
   }
 
-  /* Full width card on mobile – no arrow space needed */
+  /* Full width card on mobile â€“ no arrow space needed */
   .featured-coverflow-item {
     width: calc(100% - 2rem);
     max-width: 400px;
@@ -2635,7 +2635,7 @@ select.form-control {
     pointer-events: none;
   }
 
-  /* ── Hide arrow buttons on mobile – swipe to navigate ── */
+  /* â”€â”€ Hide arrow buttons on mobile â€“ swipe to navigate â”€â”€ */
   .featured-coverflow-arrow {
     display: none !important;
   }
@@ -3431,10 +3431,10 @@ select.form-control {
 }
 
 /* ==========================================================================
-   MOBILE NAVIGATION — HAMBURGER & DRAWER
+   MOBILE NAVIGATION â€” HAMBURGER & DRAWER
    ========================================================================== */
 
-/* Hamburger button — hidden on desktop, frosted circle matching theme toggle */
+/* Hamburger button â€” hidden on desktop, frosted circle matching theme toggle */
 .mobile-nav-toggle {
   display: none;
   flex-direction: column;
@@ -3508,7 +3508,7 @@ select.form-control {
   display: block;
 }
 
-/* Mobile auth links — hidden on desktop */
+/* Mobile auth links â€” hidden on desktop */
 .nav-mobile-auth {
   display: none;
 }
@@ -3524,7 +3524,7 @@ select.form-control {
    RESPONSIVE BREAKPOINTS
    ========================================================================== */
 
-/* ---- Tablet and below (≤ 900px) ---- */
+/* ---- Tablet and below (â‰¤ 900px) ---- */
 @media (max-width: 900px) {
 
   .glass-nav-header {
@@ -3626,17 +3626,17 @@ select.form-control {
     grid-template-columns: 1fr;
   }
 
-  /* Stats grid — 2 columns on tablet */
+  /* Stats grid â€” 2 columns on tablet */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Doctor cards grid — 1 column */
+  /* Doctor cards grid â€” 1 column */
   .doctors-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Search layout — sidebar collapses above content */
+  /* Search layout â€” sidebar collapses above content */
   .search-layout {
     grid-template-columns: 1fr;
   }
@@ -3654,7 +3654,7 @@ select.form-control {
   }
 }
 
-/* ---- Mobile (≤ 600px) ---- */
+/* ---- Mobile (â‰¤ 600px) ---- */
 @media (max-width: 600px) {
   html {
     font-size: 15px;
@@ -3682,7 +3682,7 @@ select.form-control {
     padding: 1rem;
   }
 
-  /* Stats grid — 1 column on small mobile */
+  /* Stats grid â€” 1 column on small mobile */
   .stats-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
@@ -3751,7 +3751,7 @@ select.form-control {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Search layout — no gap waste */
+  /* Search layout â€” no gap waste */
   .search-layout {
     gap: 1rem;
     padding: 1.25rem 0 2rem;
@@ -3781,7 +3781,7 @@ select.form-control {
   }
 }
 
-/* ---- Extra small (≤ 400px) ---- */
+/* ---- Extra small (â‰¤ 400px) ---- */
 @media (max-width: 400px) {
   .hero-stats-section .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3917,10 +3917,10 @@ select.form-control {
 }
 
 /* ============================================================
-   MOBILE RESPONSIVE — DOCTOR DETAIL + DASHBOARDS
+   MOBILE RESPONSIVE â€” DOCTOR DETAIL + DASHBOARDS
    ============================================================ */
 
-/* Doctor detail page: 2-col grid → single col */
+/* Doctor detail page: 2-col grid â†’ single col */
 .doctor-detail-grid {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -3955,7 +3955,7 @@ select.form-control {
   gap: 0.5rem;
 }
 
-/* ---- Tablet (≤ 768px): doctor detail sidebar goes below ---- */
+/* ---- Tablet (â‰¤ 768px): doctor detail sidebar goes below ---- */
 @media (max-width: 768px) {
   .doctor-detail-grid {
     grid-template-columns: 1fr !important;
@@ -3987,7 +3987,7 @@ select.form-control {
   }
 }
 
-/* ---- Mobile (≤ 600px): deeper stacking ---- */
+/* ---- Mobile (â‰¤ 600px): deeper stacking ---- */
 @media (max-width: 600px) {
 
   /* Doctor detail hero: image + text stack */
@@ -4161,7 +4161,7 @@ select.form-control {
   }
 }
 
-/* ---- Extra small (≤ 420px) ---- */
+/* ---- Extra small (â‰¤ 420px) ---- */
 @media (max-width: 420px) {
   .auth-tab-btn {
     font-size: 0.76rem !important;
@@ -4188,24 +4188,24 @@ select.form-control {
 
 
 /* ==========================================================================
-   GLOBAL PROFESSIONAL POLISH — ALL INNER PAGES
+   GLOBAL PROFESSIONAL POLISH â€” ALL INNER PAGES
    Applied after all existing rules so nothing below overrides existing home-
    page styles. These rules only add refinements; they do not change colours,
    fonts, or any previously built components.
    ========================================================================== */
 
-/* ── Page-level wrapper breathing room ──────────────────────────────────── */
+/* â”€â”€ Page-level wrapper breathing room â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .page-content-wrap {
   padding-top: 1.5rem;
   padding-bottom: 4rem;
 }
 
-/* ── Consistent section spacing on inner pages ──────────────────────────── */
+/* â”€â”€ Consistent section spacing on inner pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .inner-page-section {
   padding: 2rem 0 3rem;
 }
 
-/* ── Auth pages: centred, vertically breathes on all screen sizes ─────── */
+/* â”€â”€ Auth pages: centred, vertically breathes on all screen sizes â”€â”€â”€â”€â”€â”€â”€ */
 .auth-page-container {
   padding-top: 1rem;
 }
@@ -4416,7 +4416,7 @@ select.form-control {
 }
 .password-toggle-btn:hover { color: var(--text-primary); }
 
-/* ── Search page polish ─────────────────────────────────────────────────── */
+/* â”€â”€ Search page polish â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .search-results-header {
   display: flex;
   align-items: center;
@@ -4431,7 +4431,7 @@ select.form-control {
   padding: 3.5rem 1.5rem;
 }
 
-/* ── Doctor detail page polish ──────────────────────────────────────────── */
+/* â”€â”€ Doctor detail page polish â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .doc-detail-header {
   display: flex;
   align-items: flex-start;
@@ -4447,7 +4447,7 @@ select.form-control {
   flex-shrink: 0;
 }
 
-/* ── Error pages (404 / 500) ────────────────────────────────────────────── */
+/* â”€â”€ Error pages (404 / 500) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .error-page-wrap {
   min-height: 60vh;
   display: flex;
@@ -4458,23 +4458,23 @@ select.form-control {
 }
 
 /* ==========================================================================
-   MOBILE-FIRST PROFESSIONAL POLISH  (≤ 768 px)
-   These rules are additive — they only override what needs fixing on mobile.
+   MOBILE-FIRST PROFESSIONAL POLISH  (â‰¤ 768 px)
+   These rules are additive â€” they only override what needs fixing on mobile.
    ========================================================================== */
 @media (max-width: 768px) {
 
-  /* ── Global container breathing room ── */
+  /* â”€â”€ Global container breathing room â”€â”€ */
   .container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
 
-  /* ── Inner page top padding after navbar ── */
+  /* â”€â”€ Inner page top padding after navbar â”€â”€ */
   .container[style*="padding: 2rem"] {
     padding-top: 1.5rem !important;
   }
 
-  /* ── Auth pages ── */
+  /* â”€â”€ Auth pages â”€â”€ */
   .auth-page-container {
     margin-top: 1.5rem !important;
     margin-bottom: 2.5rem !important;
@@ -4552,7 +4552,7 @@ select.form-control {
     margin: 1.1rem 0 0.65rem !important;
   }
 
-  /* ── Dashboard pages ── */
+  /* â”€â”€ Dashboard pages â”€â”€ */
   .dashboard-header {
     padding: 1.25rem 1.1rem !important;
     gap: 0.85rem !important;
@@ -4588,7 +4588,7 @@ select.form-control {
     font-size: 0.75rem !important;
   }
 
-  /* ── Appointment items ── */
+  /* â”€â”€ Appointment items â”€â”€ */
   .appointment-item {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -4624,7 +4624,7 @@ select.form-control {
     text-align: center !important;
   }
 
-  /* ── Search page ── */
+  /* â”€â”€ Search page â”€â”€ */
   .search-layout {
     padding-top: 1.25rem !important;
     padding-bottom: 2.5rem !important;
@@ -4637,7 +4637,7 @@ select.form-control {
     padding: 1.1rem !important;
   }
 
-  /* ── Doctor detail page ── */
+  /* â”€â”€ Doctor detail page â”€â”€ */
   .doctor-detail-grid {
     grid-template-columns: 1fr !important;
     gap: 1.25rem !important;
@@ -4657,14 +4657,14 @@ select.form-control {
     height: 76px !important;
   }
 
-  /* ── Section heading rows ── */
+  /* â”€â”€ Section heading rows â”€â”€ */
   .section-heading-row {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 0.5rem !important;
   }
 
-  /* ── Card padding reduction on mobile ── */
+  /* â”€â”€ Card padding reduction on mobile â”€â”€ */
   .card {
     padding: 1.1rem !important;
   }
@@ -4674,24 +4674,24 @@ select.form-control {
     padding: 1.25rem !important;
   }
 
-  /* ── Appointment profile row ── */
+  /* â”€â”€ Appointment profile row â”€â”€ */
   .appointment-item > div:first-child {
     min-width: unset !important;
     width: 100% !important;
   }
 
-  /* ── Profile edit page ── */
+  /* â”€â”€ Profile edit page â”€â”€ */
   .profile-edit-grid {
     grid-template-columns: 1fr !important;
   }
 }
 
 /* ==========================================================================
-   MOBILE-FIRST PROFESSIONAL POLISH  (≤ 600 px — small phones)
+   MOBILE-FIRST PROFESSIONAL POLISH  (â‰¤ 600 px â€” small phones)
    ========================================================================== */
 @media (max-width: 600px) {
 
-  /* ── Auth card ── */
+  /* â”€â”€ Auth card â”€â”€ */
   .auth-card-modern {
     padding: 1.4rem 1rem !important;
     border-radius: 18px !important;
@@ -4705,7 +4705,7 @@ select.form-control {
     font-size: 0.78rem !important;
   }
 
-  /* ── Stats: 2 col on small phones ── */
+  /* â”€â”€ Stats: 2 col on small phones â”€â”€ */
   .stats-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 0.6rem !important;
@@ -4723,7 +4723,7 @@ select.form-control {
     height: 36px !important;
   }
 
-  /* ── Dashboard header ── */
+  /* â”€â”€ Dashboard header â”€â”€ */
   .dashboard-header {
     padding: 1rem 0.95rem !important;
   }
@@ -4743,7 +4743,7 @@ select.form-control {
     justify-content: center !important;
   }
 
-  /* ── Appointment item inner ── */
+  /* â”€â”€ Appointment item inner â”€â”€ */
   .appointment-item > div:first-child {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -4755,7 +4755,7 @@ select.form-control {
     height: 44px !important;
   }
 
-  /* ── Search bar form ── */
+  /* â”€â”€ Search bar form â”€â”€ */
   .search-bar-form {
     flex-direction: column !important;
     gap: 0.6rem !important;
@@ -4770,17 +4770,17 @@ select.form-control {
     justify-content: center !important;
   }
 
-  /* ── Filter sidebar ── */
+  /* â”€â”€ Filter sidebar â”€â”€ */
   .filter-sidebar {
     padding: 0.9rem !important;
   }
 
-  /* ── Doctor detail hero header ── */
+  /* â”€â”€ Doctor detail hero header â”€â”€ */
   .doc-detail-header {
     gap: 0.85rem !important;
   }
 
-  /* ── Booking card ── */
+  /* â”€â”€ Booking card â”€â”€ */
   .doctor-detail-grid aside .card {
     padding: 1.1rem !important;
   }
@@ -4790,7 +4790,7 @@ select.form-control {
     font-size: 1.5rem !important;
   }
 
-  /* ── Page section padding — only non-hero inner sections ── */
+  /* â”€â”€ Page section padding â€” only non-hero inner sections â”€â”€ */
   section:not(.hero-section):not(#specializations):not(#featured-doctors) {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
@@ -4806,7 +4806,7 @@ select.form-control {
     font-size: 0.84rem !important;
   }
 
-  /* Form control height — but NOT inside search boxes that have an icon offset */
+  /* Form control height â€” but NOT inside search boxes that have an icon offset */
   .form-control {
     font-size: 16px !important; /* prevents iOS zoom */
     border-radius: 10px !important;
@@ -4825,7 +4825,7 @@ select.form-control {
     font-size: 16px !important;
   }
 
-  /* ── Popular Cities pills: stack label above pills on mobile ── */
+  /* â”€â”€ Popular Cities pills: stack label above pills on mobile â”€â”€ */
   .popular-cities-pills {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -4856,14 +4856,14 @@ select.form-control {
     font-size: 0.95rem !important;
   }
 
-  /* ── Patient apt view: doctor name size ── */
+  /* â”€â”€ Patient apt view: doctor name size â”€â”€ */
   .appointment-item h3 {
     font-size: 0.95rem !important;
   }
 }
 
 /* ==========================================================================
-   EXTRA SMALL PHONES  (≤ 400 px)
+   EXTRA SMALL PHONES  (â‰¤ 400 px)
    ========================================================================== */
 @media (max-width: 400px) {
 
@@ -4903,10 +4903,12 @@ select.form-control {
 }
 
 
+
 /* ==========================================================================
-   SEARCH PAGE REDESIGN (SCOPED — DOES NOT AFFECT HOME OR OTHER PAGES)
+   SEARCH PAGE REDESIGN (SCOPED — FILTER MODAL + 4-COLUMN DOCTOR GRID)
    ========================================================================== */
 .search-page-container {
+  max-width: 1380px;
   padding-top: 1.5rem;
   padding-bottom: 4rem;
 }
@@ -4924,9 +4926,15 @@ select.form-control {
 
 .search-top-bar .search-bar-form {
   display: grid;
-  grid-template-columns: 1.15fr 1.6fr auto;
+  grid-template-columns: 1.05fr 1.55fr auto;
   gap: 0.75rem;
   align-items: center;
+}
+
+.search-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .search-top-submit {
@@ -4934,55 +4942,21 @@ select.form-control {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.82rem 1.45rem;
+  padding: 0.82rem 1.35rem;
   border-radius: 14px;
   font-weight: 600;
   white-space: nowrap;
 }
 
-/* ── Layout Grid ─────────────────────────────────────────────────────────── */
-.search-page-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 1.75rem;
-  align-items: start;
-  padding: 1.5rem 0 1rem;
-}
-
-/* ── Mobile Filter Toggle (Desktop Hidden) ───────────────────────────────── */
-.search-mobile-filter-toggle {
-  display: none;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1.1rem;
-  border-radius: 16px;
-  font-size: 0.94rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  cursor: pointer;
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.58) 100%);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border: 1px solid rgba(203, 213, 225, 0.75);
-  box-shadow:
-    0 6px 18px -6px rgba(15, 23, 42, 0.1),
-    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-[data-theme="dark"] .search-mobile-filter-toggle {
-  background: linear-gradient(140deg, rgba(28, 33, 48, 0.82) 0%, rgba(18, 22, 34, 0.68) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    0 8px 20px -6px rgba(0, 0, 0, 0.55),
-    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.18);
-}
-
-.search-mobile-filter-label {
+.search-filter-trigger-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.82rem 1.15rem;
+  border-radius: 14px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .search-filter-count-badge {
@@ -4997,115 +4971,14 @@ select.form-control {
   color: #fff;
   font-size: 0.72rem;
   font-weight: 700;
+  line-height: 1;
 }
 
-.search-mobile-chevron {
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+/* ── Full-Width Main Results ─────────────────────────────────────────────── */
+.search-page-main {
+  padding-top: 1.25rem;
 }
 
-.search-mobile-filter-toggle.is-open .search-mobile-chevron {
-  transform: rotate(180deg);
-}
-
-/* ── Filter Sidebar Card ─────────────────────────────────────────────────── */
-.search-filter-card {
-  padding: 1.35rem;
-  border-radius: 22px;
-  position: sticky;
-  top: 86px;
-}
-
-.search-filter-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 0.85rem;
-  margin-bottom: 1.1rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.search-filter-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.search-filter-title svg {
-  color: var(--brand-red);
-}
-
-.search-filter-reset {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  transition: color 0.18s ease, border-color 0.18s ease;
-}
-
-.search-filter-reset:hover {
-  color: var(--brand-red);
-  border-color: var(--brand-red-border);
-}
-
-.search-filter-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.95rem;
-}
-
-.search-filter-group .form-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 0.4rem;
-  display: block;
-}
-
-.search-filter-group .form-control {
-  border-radius: 12px;
-  font-size: 0.9rem;
-  padding: 0.58rem 0.8rem;
-}
-
-.search-fee-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
-}
-
-.search-fee-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-fee-prefix {
-  position: absolute;
-  left: 0.7rem;
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-.search-fee-input-wrap .form-control {
-  padding-left: 1.65rem !important;
-}
-
-.search-filter-apply-btn {
-  margin-top: 0.35rem;
-  padding: 0.62rem 1rem;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-/* ── Results Header & Active Chips ───────────────────────────────────────── */
 .search-results-bar {
   display: flex;
   flex-direction: column;
@@ -5115,7 +4988,7 @@ select.form-control {
 
 .search-results-heading {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
@@ -5132,7 +5005,7 @@ select.form-control {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 0.78rem;
   border-radius: 9999px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
@@ -5169,43 +5042,44 @@ select.form-control {
   border-color: rgba(239, 68, 68, 0.35);
 }
 
-/* ── Search Doctor Cards Grid ────────────────────────────────────────────── */
+/* ── 4-Column Doctor Cards Grid ──────────────────────────────────────────── */
 .search-doctors-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.15rem;
 }
 
 .search-doctor-card {
-  padding: 1.35rem;
-  border-radius: 22px;
+  padding: 1.15rem;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.85rem;
   height: 100%;
+  min-width: 0;
 }
 
 .search-doc-top {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .search-doc-header {
   display: flex;
   align-items: flex-start;
-  gap: 0.95rem;
+  gap: 0.75rem;
 }
 
 .search-doc-avatar-wrap {
-  width: 68px;
-  height: 68px;
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1.5px solid var(--border-color);
-  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.16);
+  box-shadow: 0 6px 14px -6px rgba(15, 23, 42, 0.16);
   background: var(--bg-surface);
 }
 
@@ -5218,16 +5092,19 @@ select.form-control {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.18rem;
+  gap: 0.4rem;
+  margin-bottom: 0.14rem;
 }
 
 .search-doc-name {
-  font-size: 1.08rem;
+  font-size: 0.98rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.28;
   margin: 0;
   color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .search-doc-name a {
@@ -5241,11 +5118,11 @@ select.form-control {
 .search-rating-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.2rem;
   flex-shrink: 0;
-  padding: 0.2rem 0.55rem;
+  padding: 0.16rem 0.46rem;
   border-radius: 9999px;
-  font-size: 0.78rem;
+  font-size: 0.73rem;
   font-weight: 700;
   color: #b45309;
   background: rgba(245, 158, 11, 0.14);
@@ -5264,14 +5141,17 @@ select.form-control {
 }
 
 .search-doc-spec {
-  font-size: 0.88rem;
+  font-size: 0.83rem;
   font-weight: 600;
   color: var(--brand-red);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-doc-qual {
-  font-size: 0.79rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -5283,9 +5163,9 @@ select.form-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.5rem 0.72rem;
-  border-radius: 12px;
+  gap: 0.45rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 11px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
 }
@@ -5293,8 +5173,8 @@ select.form-control {
 .search-doc-clinic-name {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.82rem;
+  gap: 0.4rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-primary);
   min-width: 0;
@@ -5313,8 +5193,8 @@ select.form-control {
 
 /* Bio */
 .search-doc-bio {
-  font-size: 0.84rem;
-  line-height: 1.5;
+  font-size: 0.81rem;
+  line-height: 1.45;
   color: var(--text-secondary);
   margin: 0;
   display: -webkit-box;
@@ -5327,20 +5207,27 @@ select.form-control {
 .search-doc-meta-strip {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .search-doc-meta-pill {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.42rem 0.65rem;
-  border-radius: 10px;
+  gap: 0.35rem;
+  padding: 0.36rem 0.55rem;
+  border-radius: 9px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  font-size: 0.81rem;
+  font-size: 0.77rem;
   font-weight: 500;
   color: var(--text-secondary);
+  min-width: 0;
+}
+
+.search-doc-meta-pill span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-doc-meta-pill svg {
@@ -5353,8 +5240,8 @@ select.form-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding-top: 0.85rem;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -5364,7 +5251,7 @@ select.form-control {
 }
 
 .search-doc-fee-label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -5372,7 +5259,7 @@ select.form-control {
 }
 
 .search-doc-fee-val {
-  font-size: 1.22rem;
+  font-size: 1.12rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.2;
@@ -5381,12 +5268,13 @@ select.form-control {
 .search-doc-actions {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.38rem;
 }
 
 .search-doc-actions .btn {
-  border-radius: 12px;
-  padding: 0.48rem 0.9rem;
+  border-radius: 10px;
+  padding: 0.42rem 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -5422,52 +5310,179 @@ select.form-control {
   font-size: 0.92rem;
 }
 
-/* ── Search Page Responsive (Tablet & Mobile) ────────────────────────────── */
-@media (max-width: 992px) {
-  .search-page-layout {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding-top: 1rem;
-  }
+/* ── Filter Pop-up Modal ─────────────────────────────────────────────────── */
+.search-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
 
-  .search-mobile-filter-toggle {
-    display: flex;
-  }
+.search-modal-backdrop[hidden] {
+  display: none;
+}
 
-  .search-filter-card {
-    display: none;
-    position: static;
-    top: auto;
-  }
+.search-modal-backdrop.is-open {
+  opacity: 1;
+}
 
-  .search-filter-card.is-open {
-    display: block;
-  }
+.search-modal-dialog {
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.6rem;
+  border-radius: 24px;
+  transform: translateY(14px) scale(0.96);
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  .search-top-bar .search-bar-form {
-    grid-template-columns: 1fr 1fr auto;
+.search-modal-backdrop.is-open .search-modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.search-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.15rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-filter-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.search-filter-title svg {
+  color: var(--brand-red);
+}
+
+.search-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.search-modal-close:hover {
+  color: var(--brand-red);
+  border-color: var(--brand-red-border);
+  transform: scale(1.06);
+}
+
+.search-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.search-filter-group .form-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.search-filter-group .form-control {
+  border-radius: 12px;
+  font-size: 0.92rem;
+  padding: 0.62rem 0.85rem;
+}
+
+.search-fee-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.search-fee-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-fee-prefix {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-fee-input-wrap .form-control {
+  padding-left: 1.75rem !important;
+}
+
+.search-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.85rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.search-modal-reset-btn,
+.search-modal-apply-btn {
+  flex: 1;
+  justify-content: center;
+  padding: 0.72rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* ── Responsive Breakpoints (4 → 3 → 2 → 1 columns + Mobile Search Bar) ─── */
+@media (max-width: 1200px) {
+  .search-doctors-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 768px) {
-  .search-top-bar {
-    padding: 0.85rem;
-    border-radius: 18px;
+@media (max-width: 900px) {
+  .search-doctors-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .search-top-bar .search-bar-form {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-top-actions {
+    grid-column: 1 / -1;
   }
 
   .search-top-submit {
-    width: 100%;
-    padding: 0.78rem 1.2rem;
-  }
-
-  .search-doctors-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    flex: 1;
   }
 }
 
@@ -5481,14 +5496,42 @@ select.form-control {
     padding: 0.4rem 0 0.25rem !important;
   }
 
+  .search-top-bar {
+    padding: 0.85rem;
+    border-radius: 18px;
+  }
+
+  .search-top-bar .search-bar-form {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .search-top-actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.55rem;
+    width: 100%;
+  }
+
+  .search-top-submit,
+  .search-filter-trigger-btn {
+    padding: 0.74rem 1rem;
+    border-radius: 12px;
+  }
+
   .search-results-heading h1 {
     font-size: 1.28rem;
+  }
+
+  .search-doctors-grid {
+    grid-template-columns: 1fr;
+    gap: 0.95rem;
   }
 
   .search-doctor-card {
     padding: 1.05rem !important;
     border-radius: 18px;
-    gap: 0.85rem;
+    gap: 0.8rem;
   }
 
   .search-doc-avatar-wrap {
@@ -5501,33 +5544,17 @@ select.form-control {
     font-size: 1rem;
   }
 
-  .search-doc-footer {
-    padding-top: 0.75rem;
+  .search-modal-dialog {
+    padding: 1.25rem;
+    border-radius: 20px;
   }
 
-  .search-doc-fee-val {
-    font-size: 1.12rem;
+  .search-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
 
-  .search-doc-actions .btn {
-    padding: 0.46rem 0.78rem;
-    font-size: 0.82rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .search-doc-footer {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.65rem;
-  }
-
-  .search-doc-actions {
-    width: 100%;
-  }
-
-  .search-doc-actions .btn {
-    flex: 1;
-    justify-content: center;
+  .search-modal-footer {
+    flex-direction: row;
   }
 }

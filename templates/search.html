@@ -3,6 +3,8 @@
 {% block title %}Search Doctors &bull; FindMyDOC{% endblock %}
 
 {% block content %}
+{% set active_filter_count = (1 if selected_spec else 0) + (1 if selected_type else 0) + (1 if selected_min_fee else 0) + (1 if selected_max_fee else 0) + (1 if selected_sort and selected_sort != 'rating' else 0) %}
+
 <div class="container search-page-container">
   <!-- Top Search Filter Bar -->
   <section class="search-top-shell">
@@ -51,63 +53,224 @@
             >
           </div>
 
-          <button type="submit" class="btn btn-primary search-top-submit" id="searchSubmitBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <span>Search</span>
-          </button>
+          <!-- Right Action Group: Search + Filter Popup Trigger -->
+          <div class="search-top-actions">
+            <button type="submit" class="btn btn-primary search-top-submit" id="searchSubmitBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Search</span>
+            </button>
+
+            <button type="button" class="btn btn-outline search-filter-trigger-btn" id="openFilterModal" aria-haspopup="dialog" aria-controls="searchFilterModal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+              <span>Filters</span>
+              {% if active_filter_count > 0 %}
+                <span class="search-filter-count-badge">{{ active_filter_count }}</span>
+              {% endif %}
+            </button>
+          </div>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- Search Layout with Sidebar and Grid -->
-  <div class="search-layout search-page-layout">
-    <!-- Mobile Filter Toggle Button (hidden on desktop) -->
-    <button type="button" class="search-mobile-filter-toggle" id="mobileFilterToggle" aria-expanded="false" aria-controls="searchFilterSidebar">
-      <span class="search-mobile-filter-label">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
-          <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
-          <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
-          <line x1="17" y1="16" x2="23" y2="16"></line>
-        </svg>
-        <span>Filters &amp; Sort</span>
-        {% set active_count = (1 if selected_spec else 0) + (1 if selected_type else 0) + (1 if selected_min_fee else 0) + (1 if selected_max_fee else 0) %}
-        {% if active_count > 0 %}
-          <span class="search-filter-count-badge">{{ active_count }}</span>
-        {% endif %}
-      </span>
-      <svg class="search-mobile-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </button>
-
-    <!-- Filter Sidebar -->
-    <aside class="card filter-sidebar search-filter-card" id="searchFilterSidebar">
-      <div class="search-filter-header">
-        <div class="search-filter-title">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-          </svg>
-          <span>Filters</span>
-        </div>
-        <a href="{{ url_for('main.search') }}" class="search-filter-reset">
-          Reset All
-        </a>
+  <!-- Full-Width Results Area -->
+  <main class="search-results-main search-page-main">
+    <div class="search-results-bar">
+      <div class="search-results-heading">
+        <h1>
+          {% if selected_city %}Doctors in {{ selected_city }}{% else %}All Doctors{% endif %}
+        </h1>
+        <span class="search-results-count">
+          {{ total_results }} specialist{% if total_results != 1 %}s{% endif %} found
+        </span>
       </div>
 
-      <form action="{{ url_for('main.search') }}" method="GET" id="sidebarFilterForm" class="search-filter-form">
-        <input type="hidden" name="city" value="{{ selected_city }}">
-        <input type="hidden" name="q" value="{{ query }}">
+      <!-- Active Filter Chips -->
+      {% if selected_city or selected_spec or selected_type or query or selected_min_fee or selected_max_fee %}
+        <div class="search-active-chips">
+          {% if selected_city %}
+            <a href="{{ url_for('main.search', q=query, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove city filter">
+              <span>City: {{ selected_city }}</span>
+              <span aria-hidden="true">&times;</span>
+            </a>
+          {% endif %}
+          {% if selected_spec %}
+            <a href="{{ url_for('main.search', city=selected_city, q=query, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove specialization filter">
+              <span>{{ selected_spec }}</span>
+              <span aria-hidden="true">&times;</span>
+            </a>
+          {% endif %}
+          {% if selected_type %}
+            <a href="{{ url_for('main.search', city=selected_city, q=query, specialization=selected_spec, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove practice type filter">
+              <span>{{ selected_type }}</span>
+              <span aria-hidden="true">&times;</span>
+            </a>
+          {% endif %}
+          {% if query %}
+            <a href="{{ url_for('main.search', city=selected_city, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove search query">
+              <span>&ldquo;{{ query }}&rdquo;</span>
+              <span aria-hidden="true">&times;</span>
+            </a>
+          {% endif %}
+          {% if selected_min_fee or selected_max_fee %}
+            <a href="{{ url_for('main.search', city=selected_city, q=query, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort) }}" class="search-active-chip" title="Remove fee filter">
+              <span>Fee: &#x20B9;{{ selected_min_fee or '0' }}&ndash;{{ selected_max_fee or 'Any' }}</span>
+              <span aria-hidden="true">&times;</span>
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
 
+    <!-- Doctors Grid (4 columns on desktop) -->
+    {% if doctors %}
+      <div class="doctors-grid search-doctors-grid">
+        {% for doc in doctors %}
+          <article class="card doctor-card search-doctor-card">
+            <div class="search-doc-top">
+              <div class="search-doc-header">
+                <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="search-doc-avatar-wrap">
+                  <img src="{{ doc.avatar }}" alt="{{ doc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
+                </a>
+                <div class="search-doc-identity">
+                  <div class="search-doc-title-row">
+                    <h3 class="search-doc-name">
+                      <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}">
+                        {{ doc.name }}
+                      </a>
+                    </h3>
+                    <span class="search-rating-pill" title="Patient Rating">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                      <span>{{ doc.rating }}</span>
+                      <span class="search-rating-count">({{ doc.review_count }})</span>
+                    </span>
+                  </div>
+
+                  <div class="search-doc-spec">{{ doc.specialization }}</div>
+                  {% if doc.qualifications %}
+                    <div class="search-doc-qual">{{ doc.qualifications }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Hospital & Practice Type Strip -->
+              <div class="search-doc-clinic-row">
+                <div class="search-doc-clinic-name">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path>
+                    <path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path>
+                  </svg>
+                  <span>{{ doc.hospital_or_clinic_name }}</span>
+                </div>
+                {% if doc.doctor_type == 'Hospital' %}
+                  <span class="badge badge-hospital">Hospital</span>
+                {% else %}
+                  <span class="badge badge-private">Private</span>
+                {% endif %}
+              </div>
+
+              <!-- Bio Excerpt -->
+              {% if doc.about %}
+                <p class="search-doc-bio">{{ doc.about }}</p>
+              {% endif %}
+
+              <!-- Key Metadata Pills -->
+              <div class="search-doc-meta-strip">
+                <div class="search-doc-meta-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>{{ doc.city }}</span>
+                </div>
+                <div class="search-doc-meta-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>{{ doc.experience_years }} yrs</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="search-doc-footer">
+              <div class="search-doc-fee-block">
+                <span class="search-doc-fee-label">Fee</span>
+                <span class="search-doc-fee-val">{{ doc.consultation_fee | currency }}</span>
+              </div>
+              <div class="search-doc-actions">
+                <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="btn btn-outline btn-sm">
+                  Profile
+                </a>
+                <a href="{{ url_for('appointments.request_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm">
+                  Book
+                </a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Empty State -->
+      <div class="card search-empty-state">
+        <div class="search-empty-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h3>No Doctors Found</h3>
+        <p>
+          No specialists matched your current search criteria. Try clearing some filters or searching in another city.
+        </p>
+        <a href="{{ url_for('main.search') }}" class="btn btn-primary btn-sm">
+          Reset All Filters
+        </a>
+      </div>
+    {% endif %}
+  </main>
+</div>
+
+<!-- Filter Pop-up Modal -->
+<div class="search-modal-backdrop" id="searchFilterModal" role="dialog" aria-modal="true" aria-labelledby="searchModalTitle" hidden>
+  <div class="card search-modal-dialog">
+    <div class="search-modal-header">
+      <div class="search-filter-title" id="searchModalTitle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        <span>Filter &amp; Sort Doctors</span>
+      </div>
+      <button type="button" class="search-modal-close" id="closeFilterModal" aria-label="Close filters">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form action="{{ url_for('main.search') }}" method="GET" id="sidebarFilterForm" class="search-modal-form">
+      <input type="hidden" name="city" value="{{ selected_city }}">
+      <input type="hidden" name="q" value="{{ query }}">
+
+      <div class="search-modal-grid">
         <!-- Specialization Filter -->
         <div class="search-filter-group">
           <label class="form-label" for="filterSpec">Specialization</label>
-          <select name="specialization" id="filterSpec" class="form-control" onchange="this.form.submit()">
+          <select name="specialization" id="filterSpec" class="form-control">
             <option value="">All Specializations</option>
             {% for s in specializations %}
               <option value="{{ s }}" {% if selected_spec == s %}selected{% endif %}>{{ s }}</option>
@@ -118,221 +281,65 @@
         <!-- Doctor Type Filter -->
         <div class="search-filter-group">
           <label class="form-label" for="filterType">Practice Type</label>
-          <select name="doctor_type" id="filterType" class="form-control" onchange="this.form.submit()">
+          <select name="doctor_type" id="filterType" class="form-control">
             <option value="">All Practices</option>
             <option value="Hospital" {% if selected_type == 'Hospital' %}selected{% endif %}>Hospital-Affiliated</option>
             <option value="Private" {% if selected_type == 'Private' %}selected{% endif %}>Private Practice</option>
           </select>
         </div>
-
-        <!-- Sort By -->
-        <div class="search-filter-group">
-          <label class="form-label" for="filterSort">Sort By</label>
-          <select name="sort_by" id="filterSort" class="form-control" onchange="this.form.submit()">
-            <option value="rating" {% if selected_sort == 'rating' %}selected{% endif %}>Highest Rated</option>
-            <option value="experience" {% if selected_sort == 'experience' %}selected{% endif %}>Most Experienced</option>
-            <option value="fee_asc" {% if selected_sort == 'fee_asc' %}selected{% endif %}>Fee: Low to High</option>
-            <option value="fee_desc" {% if selected_sort == 'fee_desc' %}selected{% endif %}>Fee: High to Low</option>
-          </select>
-        </div>
-
-        <!-- Fee Range -->
-        <div class="search-filter-group">
-          <label class="form-label">Consultation Fee (&#x20B9;)</label>
-          <div class="search-fee-grid">
-            <div class="search-fee-input-wrap">
-              <span class="search-fee-prefix">&#x20B9;</span>
-              <input 
-                type="number" 
-                name="min_fee" 
-                placeholder="Min" 
-                class="form-control" 
-                value="{{ selected_min_fee }}" 
-                min="0"
-                aria-label="Minimum consultation fee"
-              >
-            </div>
-            <div class="search-fee-input-wrap">
-              <span class="search-fee-prefix">&#x20B9;</span>
-              <input 
-                type="number" 
-                name="max_fee" 
-                placeholder="Max" 
-                class="form-control" 
-                value="{{ selected_max_fee }}" 
-                min="0"
-                aria-label="Maximum consultation fee"
-              >
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block btn-sm search-filter-apply-btn">
-          Apply Filters
-        </button>
-      </form>
-    </aside>
-
-    <!-- Main Results Column -->
-    <main class="search-results-main">
-      <div class="search-results-bar">
-        <div class="search-results-heading">
-          <h1>
-            {% if selected_city %}Doctors in {{ selected_city }}{% else %}All Doctors{% endif %}
-          </h1>
-          <span class="search-results-count">
-            {{ total_results }} specialist{% if total_results != 1 %}s{% endif %} found
-          </span>
-        </div>
-
-        <!-- Active Filter Chips -->
-        {% if selected_city or selected_spec or selected_type or query or selected_min_fee or selected_max_fee %}
-          <div class="search-active-chips">
-            {% if selected_city %}
-              <a href="{{ url_for('main.search', q=query, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove city filter">
-                <span>City: {{ selected_city }}</span>
-                <span aria-hidden="true">&times;</span>
-              </a>
-            {% endif %}
-            {% if selected_spec %}
-              <a href="{{ url_for('main.search', city=selected_city, q=query, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove specialization filter">
-                <span>{{ selected_spec }}</span>
-                <span aria-hidden="true">&times;</span>
-              </a>
-            {% endif %}
-            {% if selected_type %}
-              <a href="{{ url_for('main.search', city=selected_city, q=query, specialization=selected_spec, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove practice type filter">
-                <span>{{ selected_type }}</span>
-                <span aria-hidden="true">&times;</span>
-              </a>
-            {% endif %}
-            {% if query %}
-              <a href="{{ url_for('main.search', city=selected_city, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort, min_fee=selected_min_fee, max_fee=selected_max_fee) }}" class="search-active-chip" title="Remove search query">
-                <span>&ldquo;{{ query }}&rdquo;</span>
-                <span aria-hidden="true">&times;</span>
-              </a>
-            {% endif %}
-            {% if selected_min_fee or selected_max_fee %}
-              <a href="{{ url_for('main.search', city=selected_city, q=query, specialization=selected_spec, doctor_type=selected_type, sort_by=selected_sort) }}" class="search-active-chip" title="Remove fee filter">
-                <span>Fee: &#x20B9;{{ selected_min_fee or '0' }}&ndash;{{ selected_max_fee or 'Any' }}</span>
-                <span aria-hidden="true">&times;</span>
-              </a>
-            {% endif %}
-          </div>
-        {% endif %}
       </div>
 
-      <!-- Doctors Grid -->
-      {% if doctors %}
-        <div class="doctors-grid search-doctors-grid">
-          {% for doc in doctors %}
-            <article class="card doctor-card search-doctor-card">
-              <div class="search-doc-top">
-                <div class="search-doc-header">
-                  <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="search-doc-avatar-wrap">
-                    <img src="{{ doc.avatar }}" alt="{{ doc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
-                  </a>
-                  <div class="search-doc-identity">
-                    <div class="search-doc-title-row">
-                      <h3 class="search-doc-name">
-                        <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}">
-                          {{ doc.name }}
-                        </a>
-                      </h3>
-                      <span class="search-rating-pill" title="Patient Rating">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>{{ doc.rating }}</span>
-                        <span class="search-rating-count">({{ doc.review_count }})</span>
-                      </span>
-                    </div>
+      <!-- Sort By -->
+      <div class="search-filter-group">
+        <label class="form-label" for="filterSort">Sort By</label>
+        <select name="sort_by" id="filterSort" class="form-control">
+          <option value="rating" {% if selected_sort == 'rating' %}selected{% endif %}>Highest Rated</option>
+          <option value="experience" {% if selected_sort == 'experience' %}selected{% endif %}>Most Experienced</option>
+          <option value="fee_asc" {% if selected_sort == 'fee_asc' %}selected{% endif %}>Fee: Low to High</option>
+          <option value="fee_desc" {% if selected_sort == 'fee_desc' %}selected{% endif %}>Fee: High to Low</option>
+        </select>
+      </div>
 
-                    <div class="search-doc-spec">{{ doc.specialization }}</div>
-                    {% if doc.qualifications %}
-                      <div class="search-doc-qual">{{ doc.qualifications }}</div>
-                    {% endif %}
-                  </div>
-                </div>
-
-                <!-- Hospital & Practice Type Strip -->
-                <div class="search-doc-clinic-row">
-                  <div class="search-doc-clinic-name">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path>
-                      <path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path>
-                    </svg>
-                    <span>{{ doc.hospital_or_clinic_name }}</span>
-                  </div>
-                  {% if doc.doctor_type == 'Hospital' %}
-                    <span class="badge badge-hospital">Hospital</span>
-                  {% else %}
-                    <span class="badge badge-private">Private</span>
-                  {% endif %}
-                </div>
-
-                <!-- Bio Excerpt -->
-                {% if doc.about %}
-                  <p class="search-doc-bio">{{ doc.about }}</p>
-                {% endif %}
-
-                <!-- Key Metadata Pills -->
-                <div class="search-doc-meta-strip">
-                  <div class="search-doc-meta-pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <span>{{ doc.city }}</span>
-                  </div>
-                  <div class="search-doc-meta-pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <span>{{ doc.experience_years }} yrs exp</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card Footer -->
-              <div class="search-doc-footer">
-                <div class="search-doc-fee-block">
-                  <span class="search-doc-fee-label">Consultation</span>
-                  <span class="search-doc-fee-val">{{ doc.consultation_fee | currency }}</span>
-                </div>
-                <div class="search-doc-actions">
-                  <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="btn btn-outline btn-sm">
-                    Profile
-                  </a>
-                  <a href="{{ url_for('appointments.request_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm">
-                    Book Visit
-                  </a>
-                </div>
-              </div>
-            </article>
-          {% endfor %}
-        </div>
-      {% else %}
-        <!-- Empty State -->
-        <div class="card search-empty-state">
-          <div class="search-empty-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              <line x1="8" y1="11" x2="14" y2="11"></line>
-            </svg>
+      <!-- Fee Range -->
+      <div class="search-filter-group">
+        <label class="form-label">Consultation Fee (&#x20B9;)</label>
+        <div class="search-fee-grid">
+          <div class="search-fee-input-wrap">
+            <span class="search-fee-prefix">&#x20B9;</span>
+            <input 
+              type="number" 
+              name="min_fee" 
+              placeholder="Min" 
+              class="form-control" 
+              value="{{ selected_min_fee }}" 
+              min="0"
+              aria-label="Minimum consultation fee"
+            >
           </div>
-          <h3>No Doctors Found</h3>
-          <p>
-            No specialists matched your current search criteria. Try clearing some filters or searching in another city.
-          </p>
-          <a href="{{ url_for('main.search') }}" class="btn btn-primary btn-sm">
-            Reset All Filters
-          </a>
+          <div class="search-fee-input-wrap">
+            <span class="search-fee-prefix">&#x20B9;</span>
+            <input 
+              type="number" 
+              name="max_fee" 
+              placeholder="Max" 
+              class="form-control" 
+              value="{{ selected_max_fee }}" 
+              min="0"
+              aria-label="Maximum consultation fee"
+            >
+          </div>
         </div>
-      {% endif %}
-    </main>
+      </div>
+
+      <div class="search-modal-footer">
+        <a href="{{ url_for('main.search', city=selected_city, q=query) }}" class="btn btn-outline search-modal-reset-btn">
+          Reset Filters
+        </a>
+        <button type="submit" class="btn btn-primary search-modal-apply-btn">
+          Apply Filters
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}
@@ -340,15 +347,36 @@
 {% block extra_scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('mobileFilterToggle');
-  const sidebar = document.getElementById('searchFilterSidebar');
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      const isOpen = sidebar.classList.toggle('is-open');
-      toggleBtn.classList.toggle('is-open', isOpen);
-      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
+  const openBtn = document.getElementById('openFilterModal');
+  const closeBtn = document.getElementById('closeFilterModal');
+  const modal = document.getElementById('searchFilterModal');
+
+  if (!openBtn || !modal) return;
+
+  function openModal() {
+    modal.hidden = false;
+    requestAnimationFrame(() => modal.classList.add('is-open'));
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      if (!modal.classList.contains('is-open')) modal.hidden = true;
+    }, 220);
+  }
+
+  openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
 });
 </script>
 {% endblock %}
