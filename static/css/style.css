@@ -2293,11 +2293,11 @@ select.form-control {
 /* ── Featured Doctors – section header ───────────────────────────────────── */
 .featured-section-header {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;   /* button top-aligns with the heading block */
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.75rem;
-  flex-wrap: nowrap;         /* never wrap – button stays on the same row */
+  flex-wrap: nowrap;
 }
 
 .featured-section-sub {
@@ -2306,17 +2306,88 @@ select.form-control {
   margin: 0;
 }
 
-/* On PC: show full "View All Doctors" label, hide compact "All →" */
-.featured-viewall-long  { display: inline; }
+/* ── Liquid Glass "View All" pill button ───────────────────────────────── */
+.featured-viewall-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  margin-top: 0.3rem;
+  padding: 0.42rem 1.05rem;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--text-primary);
+  /* Liquid Glass */
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.84) 0%,
+    rgba(255, 255, 255, 0.54) 55%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+  backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 6px 18px -4px rgba(15, 23, 42, 0.12),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+  will-change: transform;
+}
+
+.featured-viewall-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(220, 38, 38, 0.38);
+  color: var(--brand-red);
+  box-shadow:
+    0 12px 26px -6px rgba(15, 23, 42, 0.16),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.98);
+}
+
+.featured-viewall-btn:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .featured-viewall-btn {
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.07) 55%,
+    rgba(255, 255, 255, 0.11) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: var(--text-primary);
+  box-shadow:
+    0 8px 22px -6px rgba(0, 0, 0, 0.60),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.24),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="dark"] .featured-viewall-btn:hover {
+  border-color: rgba(239, 68, 68, 0.52);
+  color: #fca5a5;
+  box-shadow:
+    0 14px 30px -6px rgba(0, 0, 0, 0.72),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.28);
+}
+
+/* PC: show long label, hide compact */
+.featured-viewall-long  { display: inline-flex; align-items: center; gap: 0.3rem; }
 .featured-viewall-short { display: none; }
 
-/* On mobile (≤ 600 px): swap to compact "All →" label so it fits on one row */
+/* Mobile (≤ 600 px): swap to compact icon + "All" label */
 @media (max-width: 600px) {
   .featured-section-header {
-    align-items: flex-start;  /* align to top since sub-text is now visible */
+    align-items: flex-start;
   }
 
-  /* Sub-text stays visible on mobile */
   .featured-section-sub {
     display: block;
   }
@@ -2325,10 +2396,8 @@ select.form-control {
   .featured-viewall-short {
     display: inline-flex;
     align-items: center;
-    white-space: nowrap;
+    gap: 0.3rem;
     font-size: 0.82rem;
-    padding: 0.3rem 0.7rem;
-    margin-top: 0.25rem;   /* small nudge to align nicely with the h2 top */
   }
 }
 
