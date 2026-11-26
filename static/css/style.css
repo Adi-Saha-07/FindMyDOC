@@ -2313,11 +2313,12 @@ select.form-control {
 /* On mobile (≤ 600 px): swap to compact "All →" label so it fits on one row */
 @media (max-width: 600px) {
   .featured-section-header {
-    align-items: center;   /* vertically centre the button with the h2 */
+    align-items: flex-start;  /* align to top since sub-text is now visible */
   }
 
+  /* Sub-text stays visible on mobile */
   .featured-section-sub {
-    display: none;         /* hide sub-text to save vertical space on mobile */
+    display: block;
   }
 
   .featured-viewall-long  { display: none; }
@@ -2327,6 +2328,7 @@ select.form-control {
     white-space: nowrap;
     font-size: 0.82rem;
     padding: 0.3rem 0.7rem;
+    margin-top: 0.25rem;   /* small nudge to align nicely with the h2 top */
   }
 }
 

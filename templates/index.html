@@ -849,18 +849,22 @@
 <!-- Specializations Section (Marquee Style) -->
 <section id="specializations" style="padding: 3.5rem 0 2.5rem; overflow: hidden;">
   <div class="container">
-    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem;">
-      <div>
+    <div class="featured-section-header">
+      <div class="featured-section-title">
         <div class="hero-pill" style="margin-bottom: 0.6rem; padding: 0.25rem 0.8rem; font-size: 0.78rem;">
           <span>Directory &bull; All Specialties</span>
         </div>
         <h2 style="font-size: 1.65rem; margin-bottom: 0.35rem; font-weight: 700;">Medical Specializations</h2>
-        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        <p class="featured-section-sub" style="font-size: 0.95rem;">
           Browse specialist practitioners across clinical departments. Hover to pause &bull; Click to view doctors.
         </p>
       </div>
-      <a href="{{ url_for('main.search') }}" class="btn btn-outline btn-sm">
-        All Specialties &rarr;
+      <a href="{{ url_for('main.search') }}" class="btn btn-outline btn-sm featured-viewall-btn">
+        <span class="featured-viewall-long">All Specialties &rarr;</span>
+        <span class="featured-viewall-short">
+          All
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-left:2px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </span>
       </a>
     </div>
   </div>
