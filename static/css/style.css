@@ -3531,7 +3531,7 @@ select.form-control {
     top: 10px;
     width: calc(100% - 1.25rem);
     margin: 10px auto 0;
-    border-radius: 20px;
+    border-radius: 9999px;
   }
 
   .glass-nav .nav-link {
@@ -6218,20 +6218,38 @@ select.form-control {
     display: none !important;
   }
 
-  /* Keep profile / sign-in button compact & visible in top navbar on mobile */
+  /* Keep profile avatar button compact (picture-only) & visible in top navbar on mobile */
   .nav-user-buttons {
     display: flex !important;
   }
 
-  .nav-profile-trigger span:not(.badge) {
-    max-width: 84px;
+  .nav-profile-trigger {
+    width: 36px;
+    height: 36px;
+    padding: 0 !important;
+    border-radius: 9999px !important;
+    justify-content: center;
+    gap: 0 !important;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  .nav-profile-trigger .badge {
-    display: none;
+  .nav-profile-trigger .nav-profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .nav-profile-trigger span,
+  .nav-profile-trigger .badge,
+  .nav-profile-trigger .nav-profile-chevron {
+    display: none !important;
+  }
+
+  .nav-profile-dropdown {
+    right: 0;
+    top: calc(100% + 14px);
+    min-width: 210px;
   }
 
   /* Leave room at bottom so floating dock never overlaps footer/actions */
@@ -6239,7 +6257,7 @@ select.form-control {
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
   }
 
-  /* Floating Liquid Glass Bottom Dock */
+  /* Floating Liquid Glass Bottom Dock (iOS 26/27 Capsule) */
   .mobile-bottom-glass-nav {
     display: block;
     position: fixed;
@@ -6250,7 +6268,7 @@ select.form-control {
     max-width: 460px;
     z-index: 995;
     padding: 6px;
-    border-radius: 28px;
+    border-radius: 9999px;
     background: linear-gradient(
       145deg,
       rgba(255, 255, 255, 0.72) 0%,
@@ -6296,7 +6314,7 @@ select.form-control {
     top: 0;
     left: 0;
     height: 100%;
-    border-radius: 22px;
+    border-radius: 9999px;
     background: linear-gradient(
       135deg,
       rgba(220, 38, 38, 0.16) 0%,
@@ -6389,7 +6407,7 @@ select.form-control {
   .mobile-bottom-glass-nav {
     width: calc(100% - 14px);
     padding: 5px;
-    border-radius: 24px;
+    border-radius: 9999px;
   }
 
   .mobile-bottom-item {
