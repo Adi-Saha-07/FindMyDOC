@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initMobileNav();
   initFeaturedCoverflow();
+  initNavDropdowns();
 });
 
 /* ==========================================================================
@@ -421,4 +422,142 @@ function initFeaturedCoverflow() {
   }, { passive: true });
 
   render();
+}
+
+
+/* ==========================================================================
+   NAVBAR NOTIFICATION BELL & PROFILE DROPDOWN
+   ========================================================================== */
+function initNavDropdowns() {
+  const notifBtn = document.getElementById('navNotifBtn');
+  const notifDropdown = document.getElementById('navNotifDropdown');
+  const notifBadge = document.getElementById('navNotifBadge');
+  const notifList = document.getElementById('navNotifList');
+  const markReadBtn = document.getElementById('navNotifMarkRead');
+
+  const profileBtn = document.getElementById('navProfileBtn');
+  const profileDropdown = document.getElementById('navProfileDropdown');
+
+  function openDropdown(btn, panel) {
+    if (!panel) return;
+    panel.hidden = false;
+    requestAnimationFrame(() => panel.classList.add('is-open'));
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown(btn, panel) {
+    if (!panel || panel.hidden) return;
+    panel.classList.remove('is-open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    setTimeout(() => {
+      if (!panel.classList.contains('is-open')) panel.hidden = true;
+    }, 180);
+  }
+
+  if (notifBtn && notifDropdown) {
+    notifBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = notifDropdown.hidden;
+      closeDropdown(profileBtn, profileDropdown);
+      if (willOpen) {
+        openDropdown(notifBtn, notifDropdown);
+      } else {
+        closeDropdown(notifBtn, notifDropdown);
+      }
+    });
+  }
+
+  if (profileBtn && profileDropdown) {
+    profileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = profileDropdown.hidden;
+      closeDropdown(notifBtn, notifDropdown);
+      if (willOpen) {
+        openDropdown(profileBtn, profileDropdown);
+      } else {
+        closeDropdown(profileBtn, profileDropdown);
+      }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (notifDropdown && !notifDropdown.hidden && !notifDropdown.contains(e.target) && e.target !== notifBtn) {
+      closeDropdown(notifBtn, notifDropdown);
+    }
+    if (profileDropdown && !profileDropdown.hidden && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
+      closeDropdown(profileBtn, profileDropdown);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDropdown(notifBtn, notifDropdown);
+      closeDropdown(profileBtn, profileDropdown);
+    }
+  });
+
+  // Track read notifications in localStorage per user
+  if (notifList && notifBadge) {
+    const userId = notifList.getAttribute('data-user-id') || 'guest';
+    const storageKey = `findmydoc-read-notifs:${userId}`;
+    const items = Array.from(notifList.querySelectorAll('.nav-notif-item[data-notif-key]'));
+
+    function getReadSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveReadSet(set) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(Array.from(set)));
+      } catch {
+        /* ignore storage quota errors */
+      }
+    }
+
+    function syncUnreadUI() {
+      const readSet = getReadSet();
+      let unreadCount = 0;
+      items.forEach((item) => {
+        const key = item.getAttribute('data-notif-key');
+        const isRead = readSet.has(key);
+        item.classList.toggle('is-read', isRead);
+        if (!isRead) unreadCount += 1;
+      });
+      if (unreadCount > 0) {
+        notifBadge.textContent = String(unreadCount);
+        notifBadge.hidden = false;
+      } else {
+        notifBadge.hidden = true;
+      }
+    }
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const key = item.getAttribute('data-notif-key');
+        if (!key) return;
+        const readSet = getReadSet();
+        readSet.add(key);
+        saveReadSet(readSet);
+      });
+    });
+
+    if (markReadBtn) {
+      markReadBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const readSet = getReadSet();
+        items.forEach((item) => {
+          const key = item.getAttribute('data-notif-key');
+          if (key) readSet.add(key);
+        });
+        saveReadSet(readSet);
+        syncUnreadUI();
+      });
+    }
+
+    syncUnreadUI();
+  }
 }

@@ -32,6 +32,9 @@
       <a href="{{ url_for('main.doctor_detail', doctor_id=doctor.id) }}" class="btn btn-outline btn-sm" target="_blank">
         View Public Profile &nearr;
       </a>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline btn-sm" style="color: var(--brand-red);">
+        Logout
+      </a>
     </div>
     </div>
   </div>

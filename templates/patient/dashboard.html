@@ -25,9 +25,14 @@
       </div>
     </div>
 
-    <a href="{{ url_for('main.search') }}" class="btn btn-primary">
-      Find &amp; Book Doctors
-    </a>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="{{ url_for('main.search') }}" class="btn btn-primary">
+        Find &amp; Book Doctors
+      </a>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline" style="color: var(--brand-red);">
+        Logout
+      </a>
+    </div>
     </div>
   </div>
 

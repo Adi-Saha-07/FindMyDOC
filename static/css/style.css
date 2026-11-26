@@ -5661,3 +5661,337 @@ select.form-control {
     border-radius: 10px;
   }
 }
+
+
+/* ==========================================================================
+   NAVBAR NOTIFICATION BELL & PROFILE DROPDOWN (SCOPED & RESPONSIVE)
+   ========================================================================== */
+.nav-notif-wrap,
+.nav-profile-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-notif-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.56) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.72);
+  box-shadow:
+    0 4px 12px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.92);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, color 0.18s ease;
+}
+
+.nav-notif-btn:hover {
+  color: var(--brand-red);
+  border-color: var(--brand-red-border);
+}
+
+.nav-notif-btn:active {
+  transform: scale(0.94);
+}
+
+[data-theme="dark"] .nav-notif-btn {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-primary);
+  box-shadow:
+    0 8px 20px -6px rgba(0, 0, 0, 0.52),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .nav-notif-btn:hover {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.nav-notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  background: var(--brand-red);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.45);
+  border: 1.5px solid var(--bg-body);
+}
+
+.nav-notif-badge[hidden] {
+  display: none !important;
+}
+
+/* ── Notification Dropdown ───────────────────────────────────────────────── */
+.nav-notif-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 340px;
+  max-width: calc(100vw - 24px);
+  padding: 0 !important;
+  border-radius: 18px;
+  z-index: 1100;
+  overflow: hidden;
+  transform-origin: top right;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  transition: opacity 0.18s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-notif-dropdown[hidden] {
+  display: none;
+}
+
+.nav-notif-dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.nav-notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-notif-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nav-notif-mark-read {
+  background: none;
+  border: none;
+  padding: 0.2rem 0.45rem;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--brand-red);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.nav-notif-mark-read:hover {
+  background: var(--brand-red-light);
+}
+
+.nav-notif-list {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.nav-notif-item:last-child {
+  border-bottom: none;
+}
+
+.nav-notif-item:hover {
+  background: var(--bg-surface);
+}
+
+.nav-notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 0.38rem;
+  flex-shrink: 0;
+  background: var(--brand-red);
+}
+
+.nav-notif-item.status-confirmed .nav-notif-dot {
+  background: #10b981;
+}
+
+.nav-notif-item.status-pending .nav-notif-dot {
+  background: #f59e0b;
+}
+
+.nav-notif-item.is-read .nav-notif-dot {
+  opacity: 0.3;
+}
+
+.nav-notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-notif-item-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.nav-notif-item-msg {
+  font-size: 0.79rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.nav-notif-item-time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.nav-notif-empty {
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* ── Profile Pill Trigger & Dropdown (PC) ────────────────────────────────── */
+.nav-profile-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  padding: 0.3rem 0.72rem !important;
+}
+
+.nav-profile-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--brand-red);
+}
+
+.nav-profile-chevron {
+  transition: transform 0.2s ease;
+  opacity: 0.75;
+}
+
+.nav-profile-trigger[aria-expanded="true"] .nav-profile-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 228px;
+  padding: 0 !important;
+  border-radius: 16px;
+  z-index: 1100;
+  overflow: hidden;
+  transform-origin: top right;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  transition: opacity 0.18s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-profile-dropdown[hidden] {
+  display: none;
+}
+
+.nav-profile-dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.nav-profile-dd-head {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-profile-dd-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-profile-dd-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nav-profile-dd-links {
+  padding: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.nav-profile-dd-link,
+.nav-profile-dd-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-profile-dd-link:hover {
+  background: var(--bg-surface);
+  color: var(--brand-red);
+}
+
+.nav-profile-dd-footer {
+  padding: 0.35rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-profile-dd-logout {
+  color: var(--brand-red);
+}
+
+.nav-profile-dd-logout:hover {
+  background: var(--brand-red-light);
+}
+
+/* ── Mobile Responsive Navbar Bell Dropdown ──────────────────────────────── */
+@media (max-width: 600px) {
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .nav-notif-dropdown {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+}

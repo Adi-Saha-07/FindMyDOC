@@ -11,7 +11,7 @@ except ImportError:
     pass
 
 from config import config_by_name
-from repositories import user_repo, get_datastore, use_mongo
+from repositories import user_repo, doctor_repo, patient_repo, appointment_repo, get_datastore, use_mongo
 from blueprints.main import main_bp
 from blueprints.auth import auth_bp
 from blueprints.patient import patient_bp
@@ -76,12 +76,61 @@ def create_app(config_name=None):
             role = session.get('user_role')
             user_avatar = '/static/uploads/default_doctor.png' if role == 'doctor' else '/static/uploads/default_patient.png'
 
+        # Compute live appointment notifications for logged-in user
+        nav_notifications = []
+        if user_id:
+            role = session.get('user_role')
+            try:
+                if role == 'doctor':
+                    doc = doctor_repo.get_by_user_id(user_id)
+                    if doc:
+                        apts = appointment_repo.get_by_doctor_id(doc['id'])
+                        for a in apts:
+                            if a.get('status') == 'Pending':
+                                pref_date = a.get('preferred_date') or 'Flexible'
+                                pref_time = a.get('preferred_time') or ''
+                                nav_notifications.append({
+                                    'key': f"{a.get('id')}:Pending",
+                                    'title': 'New Appointment Request',
+                                    'message': f"{a.get('patient_name', 'A patient')} requested a visit ({pref_date} • {pref_time})".strip(),
+                                    'status': 'Pending',
+                                    'time': (a.get('created_at') or '')[:10],
+                                    'url': '/doctor/dashboard'
+                                })
+                elif role == 'patient':
+                    pat = patient_repo.get_by_user_id(user_id)
+                    if pat:
+                        apts = appointment_repo.get_by_patient_id(pat['id'])
+                        for a in apts:
+                            st = a.get('status')
+                            if st == 'Confirmed':
+                                nav_notifications.append({
+                                    'key': f"{a.get('id')}:Confirmed",
+                                    'title': 'Appointment Approved',
+                                    'message': f"{a.get('doctor_name', 'Doctor')} confirmed your visit for {a.get('assigned_date', '')} at {a.get('assigned_time', '')}".strip(),
+                                    'status': 'Confirmed',
+                                    'time': (a.get('created_at') or '')[:10],
+                                    'url': '/patient/dashboard'
+                                })
+                            elif st == 'Rejected':
+                                nav_notifications.append({
+                                    'key': f"{a.get('id')}:Rejected",
+                                    'title': 'Appointment Declined',
+                                    'message': f"{a.get('doctor_name', 'Doctor')} declined your request.",
+                                    'status': 'Rejected',
+                                    'time': (a.get('created_at') or '')[:10],
+                                    'url': '/patient/dashboard'
+                                })
+            except Exception:
+                nav_notifications = []
+
         return {
             'current_user': current_user,
             'current_year': datetime.utcnow().year,
             'user_role': session.get('user_role'),
             'user_name': session.get('user_name'),
             'user_avatar': user_avatar,
+            'nav_notifications': nav_notifications,
             'use_mongo': use_mongo,
             'has_mongo_uri': bool(os.environ.get('MONGO_URI')),
             'has_google_auth': bool(app.config.get('GOOGLE_CLIENT_ID')),
