@@ -30,7 +30,7 @@ def search():
     min_fee = float(min_fee_arg) if min_fee_arg and min_fee_arg.isnumeric() else None
     max_fee = float(max_fee_arg) if max_fee_arg and max_fee_arg.isnumeric() else None
 
-    doctors = doctor_repo.search(
+    all_doctors = doctor_repo.search(
         city=city if city else None,
         specialization=specialization if specialization else None,
         doctor_type=doctor_type if doctor_type else None,
@@ -39,6 +39,15 @@ def search():
         sort_by=sort_by,
         search_term=query if query else None
     )
+
+    per_page = 12
+    total_results = len(all_doctors)
+    total_pages = max(1, (total_results + per_page - 1) // per_page)
+    page = request.args.get('page', 1, type=int) or 1
+    page = max(1, min(page, total_pages))
+
+    start = (page - 1) * per_page
+    doctors = all_doctors[start:start + per_page]
 
     all_cities = doctor_repo.get_all_cities()
     all_specs = doctor_repo.get_all_specializations()
@@ -55,7 +64,9 @@ def search():
         query=query,
         cities=all_cities,
         specializations=all_specs,
-        total_results=len(doctors)
+        total_results=total_results,
+        page=page,
+        total_pages=total_pages
     )
 
 @main_bp.route('/doctor/<doctor_id>')

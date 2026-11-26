@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    FINDMYDOC - CLEAN PROFESSIONAL MEDICAL DESIGN SYSTEM
    Theme: Crisp Minimalist Slate & Crimson Red (Main Accent)
    ========================================================================== */
@@ -4908,7 +4908,7 @@ select.form-control {
    SEARCH PAGE REDESIGN (SCOPED — FILTER MODAL + 4-COLUMN DOCTOR GRID)
    ========================================================================== */
 .search-page-container {
-  max-width: 1380px;
+  max-width: 1260px;
   padding-top: 1.5rem;
   padding-bottom: 4rem;
 }
@@ -5042,11 +5042,11 @@ select.form-control {
   border-color: rgba(239, 68, 68, 0.35);
 }
 
-/* ── 4-Column Doctor Cards Grid ──────────────────────────────────────────── */
+/* ── 3-Column Doctor Cards Grid (12 per page = 3 x 4) ────────────────────── */
 .search-doctors-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.15rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
 .search-doctor-card {
@@ -5556,5 +5556,108 @@ select.form-control {
 
   .search-modal-footer {
     flex-direction: row;
+  }
+}
+
+
+/* ── Search Pagination (Liquid Glass) ────────────────────────────────────── */
+.search-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 2.25rem;
+  padding-top: 0.5rem;
+}
+
+.search-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.search-page-btn.is-disabled {
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.search-page-numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-page-num {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 0.6rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.52) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.72);
+  box-shadow:
+    0 4px 12px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.92);
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.search-page-num:hover {
+  transform: translateY(-1px);
+  border-color: var(--brand-red-border);
+  color: var(--brand-red);
+}
+
+.search-page-num.is-active {
+  background: linear-gradient(160deg, rgba(239, 68, 68, 0.92) 0%, rgba(220, 38, 38, 0.9) 100%);
+  border-color: rgba(255, 255, 255, 0.36);
+  color: #ffffff;
+  box-shadow:
+    0 8px 20px -6px rgba(220, 38, 38, 0.44),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .search-page-num {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--text-primary);
+  box-shadow:
+    0 6px 16px -4px rgba(0, 0, 0, 0.5),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .search-page-num.is-active {
+  background: linear-gradient(160deg, rgba(239, 68, 68, 0.92) 0%, rgba(220, 38, 38, 0.9) 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .search-pagination {
+    gap: 0.45rem;
+    margin-top: 1.75rem;
+  }
+
+  .search-page-btn {
+    padding: 0.48rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  .search-page-num {
+    min-width: 34px;
+    height: 34px;
+    font-size: 0.82rem;
+    border-radius: 10px;
   }
 }
