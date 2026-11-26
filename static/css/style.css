@@ -6200,3 +6200,205 @@ select.form-control {
     padding: 0.85rem 1rem;
   }
 }
+
+
+/* ==========================================================================
+   MOBILE BOTTOM LIQUID GLASS NAVBAR (Replaces 3-bar hamburger menu)
+   ========================================================================== */
+.mobile-bottom-glass-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* Remove 3-bar drawer completely on mobile */
+  .mobile-nav-toggle,
+  .mobile-nav-backdrop,
+  .nav-links,
+  .nav-mobile-auth {
+    display: none !important;
+  }
+
+  /* Keep profile / sign-in button compact & visible in top navbar on mobile */
+  .nav-user-buttons {
+    display: flex !important;
+  }
+
+  .nav-profile-trigger span:not(.badge) {
+    max-width: 84px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-profile-trigger .badge {
+    display: none;
+  }
+
+  /* Leave room at bottom so floating dock never overlaps footer/actions */
+  body {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Floating Liquid Glass Bottom Dock */
+  .mobile-bottom-glass-nav {
+    display: block;
+    position: fixed;
+    left: 50%;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    max-width: 460px;
+    z-index: 995;
+    padding: 6px;
+    border-radius: 28px;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(248, 250, 252, 0.56) 100%
+    );
+    backdrop-filter: blur(26px) saturate(195%);
+    -webkit-backdrop-filter: blur(26px) saturate(195%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 14px 38px rgba(15, 23, 42, 0.16),
+      0 2px 10px rgba(15, 23, 42, 0.08),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+      inset 0 -1px 1px rgba(15, 23, 42, 0.05);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  [data-theme="dark"] .mobile-bottom-glass-nav {
+    background: linear-gradient(
+      145deg,
+      rgba(26, 30, 42, 0.78) 0%,
+      rgba(15, 18, 26, 0.68) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+      0 16px 42px rgba(0, 0, 0, 0.52),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.18),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+  }
+
+  .mobile-bottom-glass-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* Sliding / Swipeable Liquid Glass Active Pill */
+  .mobile-bottom-glass-pill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 22px;
+    background: linear-gradient(
+      135deg,
+      rgba(220, 38, 38, 0.16) 0%,
+      rgba(255, 255, 255, 0.78) 100%
+    );
+    border: 1px solid rgba(220, 38, 38, 0.28);
+    box-shadow:
+      0 4px 14px rgba(220, 38, 38, 0.16),
+      inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.2s ease;
+    z-index: 0;
+  }
+
+  .mobile-bottom-glass-pill.is-visible {
+    opacity: 1;
+  }
+
+  .mobile-bottom-glass-pill.is-dragging {
+    transition: width 0.12s ease, opacity 0.15s ease;
+    transform-origin: center;
+    box-shadow:
+      0 8px 22px rgba(220, 38, 38, 0.24),
+      inset 0 1.5px 1px rgba(255, 255, 255, 1);
+  }
+
+  [data-theme="dark"] .mobile-bottom-glass-pill {
+    background: linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.26) 0%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+    border: 1px solid rgba(239, 68, 68, 0.42);
+    box-shadow:
+      0 4px 16px rgba(239, 68, 68, 0.22),
+      inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  }
+
+  .mobile-bottom-item {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 4px;
+    border-radius: 22px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.18s ease, transform 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-bottom-item svg {
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-bottom-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .mobile-bottom-item.is-active,
+  .mobile-bottom-item.is-hovered {
+    color: var(--brand-red);
+  }
+
+  .mobile-bottom-item.is-active svg,
+  .mobile-bottom-item.is-hovered svg {
+    transform: translateY(-1px) scale(1.08);
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-bottom-glass-nav {
+    width: calc(100% - 14px);
+    padding: 5px;
+    border-radius: 24px;
+  }
+
+  .mobile-bottom-item {
+    font-size: 0.63rem;
+    padding: 7px 2px;
+  }
+
+  .mobile-bottom-item svg {
+    width: 17px;
+    height: 17px;
+  }
+}

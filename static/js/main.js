@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFlashToasts();
   initModals();
   initMobileNav();
+  initMobileBottomNav();
   initFeaturedCoverflow();
   initNavDropdowns();
 });
@@ -592,4 +593,184 @@ function initNavDropdowns() {
 
     syncUnreadUI();
   }
+}
+
+
+/* ==========================================================================
+   MOBILE BOTTOM LIQUID GLASS NAVBAR (Tap + Swipe/Drag Selection)
+   ========================================================================== */
+function initMobileBottomNav() {
+  const nav = document.getElementById('mobileBottomNav');
+  const track = document.getElementById('mobileBottomTrack');
+  const pill = document.getElementById('mobileBottomPill');
+  if (!nav || !track || !pill) return;
+
+  const items = Array.from(track.querySelectorAll('.mobile-bottom-item'));
+  if (!items.length) return;
+
+  // Highlight hash tab if currently on home page with matching hash
+  function syncActiveFromLocation() {
+    const hash = window.location.hash;
+    if (hash) {
+      const hashItem = items.find(el => el.dataset.navHash === hash);
+      if (hashItem) {
+        items.forEach(el => el.classList.remove('is-active'));
+        hashItem.classList.add('is-active');
+      }
+    }
+  }
+
+  function movePillToItem(item, immediate = false) {
+    if (!item) {
+      pill.classList.remove('is-visible');
+      return;
+    }
+    const trackRect = track.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    if (trackRect.width === 0 || itemRect.width === 0) return;
+
+    const offsetLeft = itemRect.left - trackRect.left;
+    if (immediate) pill.classList.add('is-dragging');
+    pill.style.width = `${itemRect.width}px`;
+    pill.style.transform = `translate3d(${offsetLeft}px, 0, 0)`;
+    pill.classList.add('is-visible');
+    if (immediate) {
+      requestAnimationFrame(() => pill.classList.remove('is-dragging'));
+    }
+  }
+
+  function getActiveItem() {
+    return items.find(el => el.classList.contains('is-active')) || null;
+  }
+
+  function selectAndNavigate(item) {
+    if (!item) return;
+    items.forEach(el => {
+      el.classList.remove('is-active', 'is-hovered');
+    });
+    item.classList.add('is-active');
+    movePillToItem(item);
+
+    const href = item.getAttribute('href');
+    if (!href) return;
+
+    // Brief visual snap so user sees the liquid pill land before navigating
+    setTimeout(() => {
+      window.location.href = href;
+    }, 140);
+  }
+
+  // Initial pill placement
+  syncActiveFromLocation();
+  const initialActive = getActiveItem();
+  if (initialActive) {
+    movePillToItem(initialActive, true);
+  }
+
+  window.addEventListener('resize', () => {
+    const active = getActiveItem();
+    if (active) movePillToItem(active, true);
+  });
+
+  window.addEventListener('hashchange', () => {
+    syncActiveFromLocation();
+    const active = getActiveItem();
+    if (active) movePillToItem(active);
+  });
+
+  // ── Touch Swipe / Drag across the Liquid Glass Dock ────────────────────────
+  let startX = 0;
+  let startY = 0;
+  let isSwiping = false;
+  let hoveredItem = null;
+
+  function itemAtPoint(clientX) {
+    const trackRect = track.getBoundingClientRect();
+    const clampedX = Math.max(trackRect.left + 1, Math.min(clientX, trackRect.right - 1));
+    for (const item of items) {
+      const r = item.getBoundingClientRect();
+      if (clampedX >= r.left && clampedX <= r.right) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  track.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isSwiping = false;
+    hoveredItem = itemAtPoint(startX);
+  }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    if (e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+
+    if (!isSwiping && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+      isSwiping = true;
+      pill.classList.add('is-dragging');
+    }
+
+    if (isSwiping) {
+      e.preventDefault();
+      const target = itemAtPoint(e.touches[0].clientX);
+      if (target) {
+        const trackRect = track.getBoundingClientRect();
+        const itemRect = target.getBoundingClientRect();
+        const rawLeft = e.touches[0].clientX - trackRect.left - itemRect.width / 2;
+        const maxLeft = trackRect.width - itemRect.width;
+        const clampedLeft = Math.max(0, Math.min(rawLeft, maxLeft));
+
+        pill.style.width = `${itemRect.width}px`;
+        pill.style.transform = `translate3d(${clampedLeft}px, 0, 0) scale(1.04)`;
+        pill.classList.add('is-visible');
+
+        if (hoveredItem !== target) {
+          items.forEach(el => el.classList.remove('is-hovered'));
+          target.classList.add('is-hovered');
+          hoveredItem = target;
+        }
+      }
+    }
+  }, { passive: false });
+
+  track.addEventListener('touchend', (e) => {
+    pill.classList.remove('is-dragging');
+    if (isSwiping) {
+      const endX = e.changedTouches[0].clientX;
+      const target = itemAtPoint(endX) || hoveredItem;
+      isSwiping = false;
+      hoveredItem = null;
+      if (target) {
+        selectAndNavigate(target);
+      } else {
+        movePillToItem(getActiveItem());
+      }
+    }
+  }, { passive: true });
+
+  track.addEventListener('touchcancel', () => {
+    pill.classList.remove('is-dragging');
+    items.forEach(el => el.classList.remove('is-hovered'));
+    isSwiping = false;
+    hoveredItem = null;
+    movePillToItem(getActiveItem());
+  }, { passive: true });
+
+  // Also animate pill on normal tap before navigation
+  items.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      if (item.dataset.navHash && window.location.pathname === '/') {
+        items.forEach(el => el.classList.remove('is-active'));
+        item.classList.add('is-active');
+        movePillToItem(item);
+        return;
+      }
+      e.preventDefault();
+      selectAndNavigate(item);
+    });
+  });
 }
