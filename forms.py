@@ -97,6 +97,14 @@ class DoctorProfileEditForm(FlaskForm):
     submit = SubmitField('Save Profile Changes')
 
 
+class PatientProfileEditForm(FlaskForm):
+    name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
+    phone = StringField('Phone Number', validators=[DataRequired(), Length(min=7, max=20)])
+    city = StringField('City', validators=[DataRequired(), Length(min=2, max=60)])
+    avatar_file = FileField('Profile Photo', validators=[Optional(), FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only (jpg, png, webp)')])
+    submit = SubmitField('Save Profile')
+
+
 class AppointmentRequestForm(FlaskForm):
     preferred_date = StringField('Preferred Date', validators=[Optional()])
     preferred_time = SelectField('Preferred Time of Day', choices=[
