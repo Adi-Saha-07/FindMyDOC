@@ -2054,6 +2054,11 @@ select.form-control {
   z-index: 1;
 }
 
+/* Inner row wraps the pill links */
+.popular-cities-pills-row {
+  display: contents; /* on PC, pills flow inline with the label */
+}
+
 /* Liquid Frosted City Chips */
 .city-pill-btn {
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.56) 100%);
@@ -4785,8 +4790,8 @@ select.form-control {
     font-size: 1.5rem !important;
   }
 
-  /* ── Page section padding ── */
-  section {
+  /* ── Page section padding — only non-hero inner sections ── */
+  section:not(.hero-section):not(#specializations):not(#featured-doctors) {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
   }
@@ -4801,11 +4806,48 @@ select.form-control {
     font-size: 0.84rem !important;
   }
 
-  /* Form control height */
+  /* Form control height — but NOT inside search boxes that have an icon offset */
   .form-control {
-    padding: 0.6rem 0.75rem !important;
     font-size: 16px !important; /* prevents iOS zoom */
     border-radius: 10px !important;
+  }
+
+  /* Only reduce padding on plain inputs (auth/dashboard), not icon-prefixed search inputs */
+  :not(.search-input-group) > .form-control {
+    padding: 0.6rem 0.75rem !important;
+  }
+
+  /* Search inputs keep their left padding so icon never overlaps text */
+  .search-input-group > .form-control,
+  .hero-search-card .form-control,
+  .liquid-glass-search .form-control {
+    padding-left: 2.85rem !important;
+    font-size: 16px !important;
+  }
+
+  /* ── Popular Cities pills: stack label above pills on mobile ── */
+  .popular-cities-pills {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.55rem !important;
+    margin-top: 1rem !important;
+  }
+
+  .popular-cities-pills > span {
+    font-size: 0.8rem !important;
+    color: var(--text-secondary) !important;
+  }
+
+  /* Pills row wraps inside a flex row */
+  .popular-cities-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .city-pill-btn {
+    font-size: 0.8rem !important;
+    padding: 0.28rem 0.75rem !important;
   }
 
   /* Submit button */

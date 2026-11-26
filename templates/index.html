@@ -788,9 +788,11 @@
             <!-- Popular Cities Quick Select -->
             <div class="popular-cities-pills">
               <span style="font-weight: 500;">Popular Cities:</span>
-              {% for c in cities[:5] %}
-                <a href="{{ url_for('main.search', city=c) }}" class="city-pill-btn">{{ c }}</a>
-              {% endfor %}
+              <div class="popular-cities-pills-row">
+                {% for c in cities[:5] %}
+                  <a href="{{ url_for('main.search', city=c) }}" class="city-pill-btn">{{ c }}</a>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
