@@ -372,17 +372,52 @@ function initFeaturedCoverflow() {
     dot.addEventListener('click', () => goTo(idx));
   });
 
-  // Touch swipe support on mobile
+  // ── Touch / swipe navigation (mobile) ──────────────────────────────────────
+  // On mobile, arrows are hidden; users swipe left/right to navigate.
+  // We also add a subtle drag-translate while the finger is moving so the
+  // carousel feels physically responsive, then snap on touchend.
   let touchStartX = 0;
+  let touchStartY = 0;
+  let isDraggingH = false;   // true once we confirmed a horizontal drag
+
+  const stage = root.querySelector('.featured-coverflow-stage');
+
   root.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+    isDraggingH = false;
+  }, { passive: true });
+
+  root.addEventListener('touchmove', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+
+    // Determine drag axis on first meaningful move
+    if (!isDraggingH && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      isDraggingH = Math.abs(dx) > Math.abs(dy);
+    }
+
+    if (isDraggingH) {
+      // Live drag: shift the active card slightly for tactile feedback
+      const activeEl = items[activeIndex];
+      if (activeEl) {
+        const pct = Math.min(Math.abs(dx) / 300, 0.35) * Math.sign(dx);
+        activeEl.style.transform =
+          `translate3d(calc(-50% + ${dx * 0.18}px), -50%, 0) scale(${1 - Math.abs(pct) * 0.08})`;
+      }
+    }
   }, { passive: true });
 
   root.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 42) {
+
+    // Reset any inline transform on the active card before CSS re-applies
+    if (items[activeIndex]) items[activeIndex].style.transform = '';
+
+    if (isDraggingH && Math.abs(dx) > 40) {
       goTo(dx < 0 ? activeIndex + 1 : activeIndex - 1);
     }
+    isDraggingH = false;
   }, { passive: true });
 
   render();
