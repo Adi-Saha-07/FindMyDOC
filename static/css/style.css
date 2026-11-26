@@ -5763,8 +5763,9 @@ select.form-control {
 .nav-notif-dropdown {
   position: relative;
   width: 100%;
-  max-width: 540px;
-  max-height: 82vh;
+  max-width: 680px;
+  min-height: 440px;
+  max-height: 86vh;
   display: flex;
   flex-direction: column;
   padding: 0 !important;
@@ -5890,7 +5891,9 @@ select.form-control {
 }
 
 .nav-notif-list {
-  max-height: 420px;
+  flex: 1;
+  min-height: 300px;
+  max-height: 560px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
