@@ -800,7 +800,7 @@
 </section>
 
 <!-- Stats Metrics Row -->
-<section style="padding: 2rem 0; border-bottom: 1px solid var(--border-color);">
+<section class="hero-stats-section">
   <div class="container">
     <div class="stats-grid" style="margin-bottom: 0;">
       <div class="card stat-card">
@@ -924,70 +924,90 @@
       </a>
     </div>
 
-    <div class="doctors-grid">
-      {% for doc in featured_doctors %}
-        <div class="card doctor-card">
-          <div>
-            <div class="doc-card-header">
-              <div class="doc-avatar-wrap">
-                <img src="{{ doc.avatar }}" alt="{{ doc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
+    <div class="featured-coverflow-shell" id="featuredCoverflow">
+      <button type="button" class="featured-coverflow-arrow featured-coverflow-arrow--prev" aria-label="Previous doctor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="featured-coverflow-stage">
+        {% for doc in featured_doctors %}
+          <div class="featured-coverflow-item {% if loop.first %}is-active{% endif %}" data-index="{{ loop.index0 }}">
+            <div class="card doctor-card">
+              <div>
+                <div class="doc-card-header">
+                  <div class="doc-avatar-wrap">
+                    <img src="{{ doc.avatar }}" alt="{{ doc.name }}" class="doc-avatar-img" onerror="this.src='/static/uploads/default_doctor.png'">
+                  </div>
+                  <div class="doc-info">
+                    <h3 class="doc-name">
+                      <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" style="color: inherit;">
+                        {{ doc.name }}
+                      </a>
+                    </h3>
+                    <div class="doc-spec">{{ doc.specialization }}</div>
+                    <div class="doc-badges-row">
+                      {% if doc.doctor_type == 'Hospital' %}
+                        <span class="badge badge-hospital">Hospital</span>
+                      {% else %}
+                        <span class="badge badge-private">Private</span>
+                      {% endif %}
+                      <span class="badge" style="background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-color);">
+                        {{ doc.rating }} ({{ doc.review_count }} reviews)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 0.65rem;">
+                  {{ doc.about[:100] }}...
+                </p>
+
+                <div class="doc-meta-grid">
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+                    <span>{{ doc.city }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>{{ doc.experience_years }} yrs exp</span>
+                  </div>
+                </div>
+                
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                  {{ doc.hospital_or_clinic_name }}
+                </div>
               </div>
-              <div class="doc-info">
-                <h3 class="doc-name">
-                  <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" style="color: inherit;">
-                    {{ doc.name }}
+
+              <div class="doc-card-footer">
+                <div>
+                  <div class="fee-tag">Consultation Fee</div>
+                  <div class="fee-amount">{{ doc.consultation_fee | currency }}</div>
+                </div>
+                <div style="display: flex; gap: 0.4rem;">
+                  <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="btn btn-outline btn-sm">
+                    Profile
                   </a>
-                </h3>
-                <div class="doc-spec">{{ doc.specialization }}</div>
-                <div class="doc-badges-row">
-                  {% if doc.doctor_type == 'Hospital' %}
-                    <span class="badge badge-hospital">Hospital</span>
-                  {% else %}
-                    <span class="badge badge-private">Private</span>
-                  {% endif %}
-                  <span class="badge" style="background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-color);">
-                    {{ doc.rating }} ({{ doc.review_count }} reviews)
-                  </span>
+                  <a href="{{ url_for('appointments.request_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm">
+                    Book Visit
+                  </a>
                 </div>
               </div>
             </div>
-
-            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 0.65rem;">
-              {{ doc.about[:100] }}...
-            </p>
-
-            <div class="doc-meta-grid">
-              <div class="meta-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
-                <span>{{ doc.city }}</span>
-              </div>
-              <div class="meta-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span>{{ doc.experience_years }} yrs exp</span>
-              </div>
-            </div>
-            
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-              {{ doc.hospital_or_clinic_name }}
-            </div>
           </div>
+        {% endfor %}
+      </div>
 
-          <div class="doc-card-footer">
-            <div>
-              <div class="fee-tag">Consultation Fee</div>
-              <div class="fee-amount">{{ doc.consultation_fee | currency }}</div>
-            </div>
-            <div style="display: flex; gap: 0.4rem;">
-              <a href="{{ url_for('main.doctor_detail', doctor_id=doc.id) }}" class="btn btn-outline btn-sm">
-                Profile
-              </a>
-              <a href="{{ url_for('appointments.request_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm">
-                Book Visit
-              </a>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
+      <button type="button" class="featured-coverflow-arrow featured-coverflow-arrow--next" aria-label="Next doctor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      {% if featured_doctors|length > 1 %}
+      <div class="featured-coverflow-dots" aria-label="Carousel pagination">
+        {% for doc in featured_doctors %}
+          <button type="button" class="featured-coverflow-dot {% if loop.first %}is-active{% endif %}" data-index="{{ loop.index0 }}" aria-label="Show {{ doc.name }}"></button>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>

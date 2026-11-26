@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFlashToasts();
   initModals();
   initMobileNav();
+  initFeaturedCoverflow();
 });
 
 /* ==========================================================================
@@ -26,8 +27,10 @@ function initTheme() {
     toggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem('findmydoc-theme', newTheme);
+      requestAnimationFrame(() => {
+        applyTheme(newTheme);
+        localStorage.setItem('findmydoc-theme', newTheme);
+      });
     });
   }
 }
@@ -306,4 +309,81 @@ function initMobileNav() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeNav();
   });
+}
+
+/* ==========================================================================
+   FEATURED DOCTORS COVERFLOW CAROUSEL
+   ========================================================================== */
+function initFeaturedCoverflow() {
+  const root = document.getElementById('featuredCoverflow');
+  if (!root) return;
+
+  const items = Array.from(root.querySelectorAll('.featured-coverflow-item'));
+  const dots = Array.from(root.querySelectorAll('.featured-coverflow-dot'));
+  const prevBtn = root.querySelector('.featured-coverflow-arrow--prev');
+  const nextBtn = root.querySelector('.featured-coverflow-arrow--next');
+  const total = items.length;
+  if (total === 0) return;
+
+  let activeIndex = 0;
+
+  function render() {
+    items.forEach((item, idx) => {
+      item.classList.remove('is-active', 'is-prev', 'is-next', 'is-far-prev', 'is-far-next', 'is-hidden');
+      let offset = idx - activeIndex;
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      if (offset === 0) {
+        item.classList.add('is-active');
+      } else if (offset === -1) {
+        item.classList.add('is-prev');
+      } else if (offset === 1) {
+        item.classList.add('is-next');
+      } else if (offset === -2 && total >= 5) {
+        item.classList.add('is-far-prev');
+      } else if (offset === 2 && total >= 5) {
+        item.classList.add('is-far-next');
+      } else {
+        item.classList.add('is-hidden');
+      }
+    });
+
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('is-active', idx === activeIndex);
+    });
+  }
+
+  function goTo(index) {
+    activeIndex = ((index % total) + total) % total;
+    render();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(activeIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(activeIndex + 1));
+
+  items.forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      if (idx !== activeIndex) goTo(idx);
+    });
+  });
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => goTo(idx));
+  });
+
+  // Touch swipe support on mobile
+  let touchStartX = 0;
+  root.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  root.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 42) {
+      goTo(dx < 0 ? activeIndex + 1 : activeIndex - 1);
+    }
+  }, { passive: true });
+
+  render();
 }
