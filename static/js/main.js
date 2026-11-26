@@ -426,17 +426,38 @@ function initFeaturedCoverflow() {
 
 
 /* ==========================================================================
-   NAVBAR NOTIFICATION BELL & PROFILE DROPDOWN
+   NAVBAR NOTIFICATION MODAL & PROFILE DROPDOWN
    ========================================================================== */
 function initNavDropdowns() {
   const notifBtn = document.getElementById('navNotifBtn');
-  const notifDropdown = document.getElementById('navNotifDropdown');
+  const notifBackdrop = document.getElementById('navNotifBackdrop');
+  const notifClose = document.getElementById('navNotifClose');
   const notifBadge = document.getElementById('navNotifBadge');
+  const notifHeaderCount = document.getElementById('navNotifHeaderCount');
   const notifList = document.getElementById('navNotifList');
   const markReadBtn = document.getElementById('navNotifMarkRead');
 
   const profileBtn = document.getElementById('navProfileBtn');
   const profileDropdown = document.getElementById('navProfileDropdown');
+
+  function openNotifModal() {
+    if (!notifBackdrop) return;
+    closeDropdown(profileBtn, profileDropdown);
+    notifBackdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => notifBackdrop.classList.add('is-open'));
+    if (notifBtn) notifBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeNotifModal() {
+    if (!notifBackdrop || notifBackdrop.hidden) return;
+    notifBackdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (notifBtn) notifBtn.setAttribute('aria-expanded', 'false');
+    setTimeout(() => {
+      if (!notifBackdrop.classList.contains('is-open')) notifBackdrop.hidden = true;
+    }, 200);
+  }
 
   function openDropdown(btn, panel) {
     if (!panel) return;
@@ -454,16 +475,24 @@ function initNavDropdowns() {
     }, 180);
   }
 
-  if (notifBtn && notifDropdown) {
+  if (notifBtn && notifBackdrop) {
     notifBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const willOpen = notifDropdown.hidden;
-      closeDropdown(profileBtn, profileDropdown);
-      if (willOpen) {
-        openDropdown(notifBtn, notifDropdown);
+      if (notifBackdrop.hidden) {
+        openNotifModal();
       } else {
-        closeDropdown(notifBtn, notifDropdown);
+        closeNotifModal();
       }
+    });
+  }
+
+  if (notifClose) {
+    notifClose.addEventListener('click', closeNotifModal);
+  }
+
+  if (notifBackdrop) {
+    notifBackdrop.addEventListener('click', (e) => {
+      if (e.target === notifBackdrop) closeNotifModal();
     });
   }
 
@@ -471,7 +500,7 @@ function initNavDropdowns() {
     profileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       const willOpen = profileDropdown.hidden;
-      closeDropdown(notifBtn, notifDropdown);
+      closeNotifModal();
       if (willOpen) {
         openDropdown(profileBtn, profileDropdown);
       } else {
@@ -481,9 +510,6 @@ function initNavDropdowns() {
   }
 
   document.addEventListener('click', (e) => {
-    if (notifDropdown && !notifDropdown.hidden && !notifDropdown.contains(e.target) && e.target !== notifBtn) {
-      closeDropdown(notifBtn, notifDropdown);
-    }
     if (profileDropdown && !profileDropdown.hidden && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
       closeDropdown(profileBtn, profileDropdown);
     }
@@ -491,7 +517,7 @@ function initNavDropdowns() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      closeDropdown(notifBtn, notifDropdown);
+      closeNotifModal();
       closeDropdown(profileBtn, profileDropdown);
     }
   });
@@ -530,8 +556,13 @@ function initNavDropdowns() {
       if (unreadCount > 0) {
         notifBadge.textContent = String(unreadCount);
         notifBadge.hidden = false;
+        if (notifHeaderCount) {
+          notifHeaderCount.textContent = String(unreadCount);
+          notifHeaderCount.hidden = false;
+        }
       } else {
         notifBadge.hidden = true;
+        if (notifHeaderCount) notifHeaderCount.hidden = true;
       }
     }
 
@@ -542,6 +573,7 @@ function initNavDropdowns() {
         const readSet = getReadSet();
         readSet.add(key);
         saveReadSet(readSet);
+        syncUnreadUI();
       });
     });
 
