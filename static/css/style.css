@@ -2595,8 +2595,19 @@ select.form-control {
 }
 
 @media (max-width: 768px) {
+  .featured-coverflow-shell {
+    overflow-x: hidden;    /* prevent side-cards from causing page scroll */
+  }
+
   .featured-coverflow-stage {
-    height: 390px;
+    /* Let the stage height adapt to the card instead of clipping it.
+       The active card is position:absolute centred at top:50%, so the
+       shell needs an explicit height or the stage collapses.
+       We set a tall-enough min-height and allow overflow so shadows/
+       rounded corners never get cut at top or bottom. */
+    height: auto;
+    min-height: 440px;
+    overflow: visible;
     -webkit-mask-image: none;
     mask-image: none;
   }
