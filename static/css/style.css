@@ -2290,6 +2290,46 @@ select.form-control {
 /* ==========================================================================
    FEATURED DOCTORS COVERFLOW CAROUSEL (SCOPED)
    ========================================================================== */
+/* ── Featured Doctors – section header ───────────────────────────────────── */
+.featured-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: nowrap;         /* never wrap – button stays on the same row */
+}
+
+.featured-section-sub {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* On PC: show full "View All Doctors" label, hide compact "All →" */
+.featured-viewall-long  { display: inline; }
+.featured-viewall-short { display: none; }
+
+/* On mobile (≤ 600 px): swap to compact "All →" label so it fits on one row */
+@media (max-width: 600px) {
+  .featured-section-header {
+    align-items: center;   /* vertically centre the button with the h2 */
+  }
+
+  .featured-section-sub {
+    display: none;         /* hide sub-text to save vertical space on mobile */
+  }
+
+  .featured-viewall-long  { display: none; }
+  .featured-viewall-short {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
 .featured-coverflow-shell {
   position: relative;
   width: 100%;

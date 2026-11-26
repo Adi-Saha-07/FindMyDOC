@@ -914,13 +914,17 @@
 <!-- Featured Doctors Section -->
 <section style="padding: 2.5rem 0 3.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
   <div class="container">
-    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem;">
-      <div>
+    <div class="featured-section-header">
+      <div class="featured-section-title">
         <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Featured Doctors</h2>
-        <p style="color: var(--text-secondary); font-size: 0.92rem;">Top-rated medical specialists across key hospital centers and clinics.</p>
+        <p class="featured-section-sub">Top-rated medical specialists across key hospital centers and clinics.</p>
       </div>
-      <a href="{{ url_for('main.search') }}" class="btn btn-outline btn-sm">
-        View All Doctors
+      <a href="{{ url_for('main.search') }}" class="btn btn-outline btn-sm featured-viewall-btn">
+        <span class="featured-viewall-long">View All Doctors</span>
+        <span class="featured-viewall-short">
+          All
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-left:2px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </span>
       </a>
     </div>
 
