@@ -146,12 +146,32 @@
           </div>
         {% else %}
           <div class="nav-user-buttons">
-            <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-sm" id="loginBtn">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-sm nav-guest-desktop-btn" id="loginBtn">
               Sign In
             </a>
-            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm" id="registerBtn">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm nav-guest-desktop-btn" id="registerBtn">
               Register
             </a>
+
+            <!-- Mobile Guest Profile Icon (opens Sign In / Register dropdown) -->
+            <div class="nav-profile-wrap nav-guest-mobile-wrap" id="navGuestWrap">
+              <button type="button" class="nav-guest-profile-btn" id="navGuestBtn" aria-label="Account options" aria-expanded="false" aria-haspopup="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </button>
+              <div class="card nav-profile-dropdown nav-guest-dropdown" id="navGuestDropdown" hidden>
+                <div class="nav-profile-dd-head">
+                  <div class="nav-profile-dd-name">Welcome</div>
+                  <div class="nav-profile-dd-role">Sign in or create an account</div>
+                </div>
+                <div class="nav-guest-dd-actions">
+                  <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center;">Sign In</a>
+                  <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm" style="width: 100%; justify-content: center;">Register</a>
+                </div>
+              </div>
+            </div>
           </div>
         {% endif %}
 

@@ -6469,3 +6469,69 @@ select.form-control {
     height: 17px;
   }
 }
+
+
+/* ==========================================================================
+   MOBILE GUEST PROFILE ICON BUTTON & DROPDOWN
+   ========================================================================== */
+.nav-guest-mobile-wrap {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .nav-guest-desktop-btn {
+    display: none !important;
+  }
+
+  .nav-guest-mobile-wrap {
+    display: block;
+    position: relative;
+  }
+
+  .nav-guest-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(203, 213, 225, 0.85);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-guest-profile-btn:hover,
+  .nav-guest-profile-btn:active {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: var(--brand-red-border);
+    color: var(--brand-red);
+  }
+
+  [data-theme="dark"] .nav-guest-profile-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+  }
+
+  [data-theme="dark"] .nav-guest-profile-btn:hover,
+  [data-theme="dark"] .nav-guest-profile-btn:active {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(239, 68, 68, 0.45);
+    color: var(--brand-red);
+  }
+
+  .nav-guest-dd-actions {
+    padding: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

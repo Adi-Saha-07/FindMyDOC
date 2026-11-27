@@ -440,6 +440,8 @@ function initNavDropdowns() {
 
   const profileBtn = document.getElementById('navProfileBtn');
   const profileDropdown = document.getElementById('navProfileDropdown');
+  const guestBtn = document.getElementById('navGuestBtn');
+  const guestDropdown = document.getElementById('navGuestDropdown');
 
   function openNotifModal() {
     if (!notifBackdrop) return;
@@ -510,9 +512,25 @@ function initNavDropdowns() {
     });
   }
 
+  if (guestBtn && guestDropdown) {
+    guestBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = guestDropdown.hidden;
+      closeNotifModal();
+      if (willOpen) {
+        openDropdown(guestBtn, guestDropdown);
+      } else {
+        closeDropdown(guestBtn, guestDropdown);
+      }
+    });
+  }
+
   document.addEventListener('click', (e) => {
-    if (profileDropdown && !profileDropdown.hidden && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
+    if (profileDropdown && !profileDropdown.hidden && !profileDropdown.contains(e.target) && !profileBtn.contains(e.target)) {
       closeDropdown(profileBtn, profileDropdown);
+    }
+    if (guestDropdown && !guestDropdown.hidden && !guestDropdown.contains(e.target) && !guestBtn.contains(e.target)) {
+      closeDropdown(guestBtn, guestDropdown);
     }
   });
 
@@ -520,6 +538,7 @@ function initNavDropdowns() {
     if (e.key === 'Escape') {
       closeNotifModal();
       closeDropdown(profileBtn, profileDropdown);
+      closeDropdown(guestBtn, guestDropdown);
     }
   });
 
