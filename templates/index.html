@@ -924,10 +924,29 @@
   <div class="container">
     <div class="featured-section-header">
       <div class="featured-section-title">
-        <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Featured Doctors</h2>
-        <p class="featured-section-sub">Top-rated medical specialists across key hospital centers and clinics.</p>
+        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+          <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Featured Doctors</h2>
+          {% if selected_location %}
+            <span class="badge badge-hospital" style="font-size: 0.78rem; margin-bottom: 0.2rem;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -1px; margin-right: 3px;">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              {{ selected_location }}
+            </span>
+          {% endif %}
+        </div>
+        <p class="featured-section-sub">
+          {% if selected_location and not location_fallback %}
+            Top-rated medical specialists available in {{ selected_location }}.
+          {% elif selected_location and location_fallback %}
+            No specialists found in {{ selected_location }} yet — showing top-rated doctors overall.
+          {% else %}
+            Top-rated medical specialists across key hospital centers and clinics.
+          {% endif %}
+        </p>
       </div>
-      <a href="{{ url_for('main.search') }}" class="btn btn-sm featured-viewall-btn">
+      <a href="{{ url_for('main.search', city=selected_location) if selected_location else url_for('main.search') }}" class="btn btn-sm featured-viewall-btn">
         <span class="featured-viewall-long">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:5px;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>View All Doctors
         </span>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from repositories import doctor_repo
 
 main_bp = Blueprint('main', __name__)
@@ -7,14 +7,37 @@ main_bp = Blueprint('main', __name__)
 def index():
     cities = doctor_repo.get_all_cities()
     specializations = doctor_repo.get_all_specializations()
-    # Featured top rated doctors for landing showcase
-    featured_doctors = doctor_repo.search(sort_by='rating')[:6]
+    selected_location = session.get('selected_location', '').strip()
+
+    # Featured top rated doctors (filtered by user's selected location if set)
+    location_fallback = False
+    if selected_location:
+        city_doctors = doctor_repo.search(city=selected_location, sort_by='rating')[:6]
+        if city_doctors:
+            featured_doctors = city_doctors
+        else:
+            featured_doctors = doctor_repo.search(sort_by='rating')[:6]
+            location_fallback = True
+    else:
+        featured_doctors = doctor_repo.search(sort_by='rating')[:6]
+
     return render_template(
         'index.html',
         cities=cities,
         specializations=specializations,
-        featured_doctors=featured_doctors
+        featured_doctors=featured_doctors,
+        location_fallback=location_fallback
     )
+
+
+@main_bp.route('/set-location', methods=['GET', 'POST'])
+def set_location():
+    city = (request.values.get('city') or '').strip()
+    session['selected_location'] = city
+    if request.args.get('ajax') == '1' or request.is_json:
+        return jsonify({'ok': True, 'location': city})
+    next_url = request.referrer or url_for('main.index')
+    return redirect(next_url)
 
 @main_bp.route('/search')
 def search():

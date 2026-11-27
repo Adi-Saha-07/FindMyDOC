@@ -58,7 +58,7 @@
 
         <!-- Auth links shown inside drawer on mobile -->
         <li class="nav-mobile-auth">
-          {% if current_user %}
+        {% if current_user %}
           <div
             style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.25rem; font-size: 0.88rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-subtle); margin-bottom: 0.5rem;">
             <img
@@ -110,6 +110,42 @@
             <span class="nav-notif-badge" id="navNotifBadge" {% if not nav_notifications %}hidden{% endif %}>{{
               nav_notifications|length }}</span>
           </button>
+        </div>
+
+        <!-- Location Picker Button (right next to Profile) -->
+        <div class="nav-location-wrap" id="navLocationWrap">
+          <button type="button" class="nav-location-btn {% if selected_location %}has-location{% endif %}" id="navLocationBtn" aria-label="Set location" aria-expanded="false" aria-haspopup="true" title="{{ selected_location or 'Set Location' }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span class="nav-location-label">{{ selected_location or 'Location' }}</span>
+            {% if selected_location %}
+              <span class="nav-location-dot" aria-hidden="true"></span>
+            {% endif %}
+          </button>
+
+          <div class="card nav-profile-dropdown nav-location-dropdown" id="navLocationDropdown" hidden>
+            <div class="nav-profile-dd-head">
+              <div class="nav-profile-dd-name">Set Location</div>
+              <div class="nav-profile-dd-role">Featured Doctors will show for this city</div>
+            </div>
+            <div class="nav-location-dd-body">
+              <input type="text" id="navLocationFilter" class="form-control nav-location-search" placeholder="Search city..." autocomplete="off">
+              <div class="nav-location-list" id="navLocationList">
+                <a href="{{ url_for('main.set_location', city='') }}" class="nav-location-option {% if not selected_location %}is-selected{% endif %}" data-city="">
+                  <span>All Cities</span>
+                  {% if not selected_location %}<span class="nav-location-check">&#10003;</span>{% endif %}
+                </a>
+                {% for city in nav_cities %}
+                  <a href="{{ url_for('main.set_location', city=city) }}" class="nav-location-option {% if selected_location|lower == city|lower %}is-selected{% endif %}" data-city="{{ city|lower }}">
+                    <span>{{ city }}</span>
+                    {% if selected_location|lower == city|lower %}<span class="nav-location-check">&#10003;</span>{% endif %}
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
         </div>
 
         {% if current_user %}

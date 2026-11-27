@@ -5750,7 +5750,7 @@ select.form-control {
   position: relative;
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-md);
+  border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -6587,5 +6587,160 @@ select.form-control {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+}
+
+
+/* ==========================================================================
+   NAVBAR LOCATION PICKER (Right next to Profile)
+   ========================================================================== */
+.nav-location-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-location-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 36px;
+  padding: 0 0.72rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.56) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.72);
+  box-shadow:
+    0 4px 12px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.92);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, color 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-location-btn:hover,
+.nav-location-btn.has-location {
+  color: var(--brand-red);
+  border-color: var(--brand-red-border);
+}
+
+.nav-location-btn:active {
+  transform: scale(0.95);
+}
+
+.nav-location-label {
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-location-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-red);
+  border: 1.5px solid #ffffff;
+  display: none;
+}
+
+[data-theme="dark"] .nav-location-btn {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-primary);
+  box-shadow:
+    0 8px 20px -6px rgba(0, 0, 0, 0.52),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .nav-location-btn:hover,
+[data-theme="dark"] .nav-location-btn.has-location {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+[data-theme="dark"] .nav-location-dot {
+  border-color: #0f131d;
+}
+
+.nav-location-dropdown {
+  min-width: 245px;
+  right: 0;
+}
+
+.nav-location-dd-body {
+  padding: 0.65rem;
+}
+
+.nav-location-search {
+  width: 100%;
+  padding: 0.48rem 0.72rem !important;
+  font-size: 0.84rem !important;
+  border-radius: 10px !important;
+  margin-bottom: 0.5rem;
+}
+
+.nav-location-list {
+  max-height: 210px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nav-location-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.48rem 0.68rem;
+  border-radius: 9px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-location-option:hover {
+  background: var(--bg-surface);
+  color: var(--brand-red);
+}
+
+.nav-location-option.is-selected {
+  background: var(--brand-red-light);
+  color: var(--brand-red);
+  font-weight: 600;
+}
+
+.nav-location-check {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .nav-location-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .nav-location-label {
+    display: none;
+  }
+
+  .nav-location-dot {
+    display: block;
+  }
+
+  .nav-location-dropdown {
+    right: -42px;
+    min-width: 235px;
   }
 }

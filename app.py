@@ -125,6 +125,11 @@ def create_app(config_name=None):
             except Exception:
                 nav_notifications = []
 
+        try:
+            nav_cities = doctor_repo.get_all_cities()
+        except Exception:
+            nav_cities = []
+
         return {
             'current_user': current_user,
             'current_year': datetime.utcnow().year,
@@ -132,6 +137,8 @@ def create_app(config_name=None):
             'user_name': session.get('user_name'),
             'user_avatar': user_avatar,
             'nav_notifications': nav_notifications,
+            'selected_location': session.get('selected_location', ''),
+            'nav_cities': nav_cities,
             'use_mongo': use_mongo,
             'has_mongo_uri': bool(os.environ.get('MONGO_URI')),
             'has_google_auth': bool(app.config.get('GOOGLE_CLIENT_ID')),
