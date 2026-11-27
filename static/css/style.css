@@ -4035,7 +4035,8 @@ select.form-control {
   }
 
   .dashboard-header>div:last-child .btn {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: max-content;
     justify-content: center;
     text-align: center;
   }
