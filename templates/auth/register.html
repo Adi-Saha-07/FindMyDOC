@@ -418,7 +418,7 @@
     <!-- Footer Links -->
     <div style="text-align: center; margin-top: 1.75rem; font-size: 0.9rem; color: var(--text-secondary);">
       Already have an account?
-      <a href="{{ url_for('auth.login') }}" style="font-weight: 600; color: var(--brand-red); text-decoration: none;">
+      <a href="{{ url_for('auth.login', add_profile='1' if request.args.get('add_profile') == '1' else None) }}" style="font-weight: 600; color: var(--brand-red); text-decoration: none;">
         Sign In &rarr;
       </a>
     </div>

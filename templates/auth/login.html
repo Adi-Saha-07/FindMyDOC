@@ -112,7 +112,7 @@
     <!-- Footer Links -->
     <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
       Don't have an account yet?
-      <a href="{{ url_for('auth.register') }}" style="font-weight: 600; color: var(--brand-red); text-decoration: none;">
+      <a href="{{ url_for('auth.register', add_profile='1' if request.args.get('add_profile') == '1' else None) }}" style="font-weight: 600; color: var(--brand-red); text-decoration: none;">
         Create Account &rarr;
       </a>
     </div>

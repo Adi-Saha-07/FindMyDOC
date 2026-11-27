@@ -11,6 +11,39 @@ from forms import LoginForm, RegisterPatientForm, RegisterDoctorForm
 from utils.image_utils import process_avatar_image
 
 auth_bp = Blueprint('auth', __name__)
+MAX_PROFILES = 2
+
+
+def _activate_user_session(user):
+    """Set active user in session while preserving saved_profiles (max 2), csrf_token, and selected_location."""
+    csrf_tok = session.get('csrf_token')
+    selected_loc = session.get('selected_location')
+    saved_profiles = list(session.get('saved_profiles') or [])
+
+    # Ensure current active user (if any) is in saved_profiles before switching
+    prev_uid = session.get('user_id')
+    if prev_uid and prev_uid not in saved_profiles and len(saved_profiles) < MAX_PROFILES:
+        saved_profiles.append(prev_uid)
+
+    uid = user['id']
+    if uid not in saved_profiles:
+        if len(saved_profiles) >= MAX_PROFILES:
+            # Replace oldest non-current or cap at 2
+            saved_profiles = saved_profiles[-(MAX_PROFILES - 1):] + [uid]
+        else:
+            saved_profiles.append(uid)
+
+    session.clear()
+    if csrf_tok:
+        session['csrf_token'] = csrf_tok
+    if selected_loc:
+        session['selected_location'] = selected_loc
+    session['saved_profiles'] = saved_profiles[:MAX_PROFILES]
+    session['user_id'] = user['id']
+    session['user_role'] = user['role']
+    session['user_name'] = user['name']
+    session['user_email'] = user['email']
+    session.permanent = True
 
 
 def _handle_google_user(userinfo, chosen_role=None):
@@ -45,16 +78,7 @@ def _handle_google_user(userinfo, chosen_role=None):
             except Exception:
                 pass
 
-        csrf_tok = session.get('csrf_token')
-        session.clear()
-        if csrf_tok:
-            session['csrf_token'] = csrf_tok
-
-        session['user_id'] = user['id']
-        session['user_role'] = user['role']
-        session['user_name'] = user['name']
-        session['user_email'] = user['email']
-        session.permanent = True
+        _activate_user_session(user)
 
         flash(f'Welcome back, {user["name"]}! Signed in with Google.', 'success')
         if next_url and next_url.startswith('/'):
@@ -114,16 +138,7 @@ def _handle_google_user(userinfo, chosen_role=None):
         flash(f'Database error during registration: {str(e)}', 'danger')
         return redirect(url_for('auth.register'))
 
-    csrf_tok = session.get('csrf_token')
-    session.clear()
-    if csrf_tok:
-        session['csrf_token'] = csrf_tok
-
-    session['user_id'] = new_user['id']
-    session['user_role'] = new_user['role']
-    session['user_name'] = new_user['name']
-    session['user_email'] = new_user['email']
-    session.permanent = True
+    _activate_user_session(new_user)
 
     flash(f'Welcome to FindMyDOC, {new_user["name"]}! Your {role} account has been created with Google.', 'success')
     if next_url and next_url.startswith('/'):
@@ -248,11 +263,16 @@ def google_simulate():
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if 'user_id' in session:
+    is_adding_profile = request.args.get('add_profile') == '1' or request.form.get('add_profile') == '1'
+    if 'user_id' in session and not is_adding_profile:
         role = session.get('user_role')
         if role == 'doctor':
             return redirect(url_for('doctor.dashboard'))
         return redirect(url_for('patient.dashboard'))
+
+    if is_adding_profile and len(session.get('saved_profiles') or []) >= MAX_PROFILES:
+        flash('You can have a maximum of 2 profiles only.', 'warning')
+        return redirect(url_for('doctor.dashboard' if session.get('user_role') == 'doctor' else 'patient.dashboard'))
 
     form = LoginForm()
     selected_role = request.args.get('role', 'auto')
@@ -275,15 +295,7 @@ def login():
             return render_template('auth/login.html', form=form)
 
         # Establish session
-        csrf_tok = session.get('csrf_token')
-        session.clear()
-        if csrf_tok:
-            session['csrf_token'] = csrf_tok
-        session['user_id'] = user['id']
-        session['user_role'] = user['role']
-        session['user_name'] = user['name']
-        session['user_email'] = user['email']
-        session.permanent = True
+        _activate_user_session(user)
 
         flash(f'Welcome back, {user["name"]}!', 'success')
 
@@ -300,11 +312,16 @@ def login():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    if 'user_id' in session:
+    is_adding_profile = request.args.get('add_profile') == '1' or request.form.get('add_profile') == '1'
+    if 'user_id' in session and not is_adding_profile:
         role = session.get('user_role')
         if role == 'doctor':
             return redirect(url_for('doctor.dashboard'))
         return redirect(url_for('patient.dashboard'))
+
+    if is_adding_profile and len(session.get('saved_profiles') or []) >= MAX_PROFILES:
+        flash('You can have a maximum of 2 profiles only.', 'warning')
+        return redirect(url_for('doctor.dashboard' if session.get('user_role') == 'doctor' else 'patient.dashboard'))
 
     tab = request.args.get('tab', 'patient')
     patient_form = RegisterPatientForm(prefix="pat")
@@ -346,15 +363,7 @@ def register():
                 })
 
                 # Auto login (keep cookie lightweight and well within 4KB browser limit)
-                csrf_tok = session.get('csrf_token')
-                session.clear()
-                if csrf_tok:
-                    session['csrf_token'] = csrf_tok
-                session['user_id'] = new_user['id']
-                session['user_role'] = 'patient'
-                session['user_name'] = new_user['name']
-                session['user_email'] = new_user['email']
-                session.permanent = True
+                _activate_user_session(new_user)
 
                 flash('Welcome to FindMyDOC! Your patient account has been created.', 'success')
                 return redirect(url_for('patient.dashboard'))
@@ -412,15 +421,7 @@ def register():
                 })
 
                 # Auto login (keep cookie lightweight and well within 4KB browser limit)
-                csrf_tok = session.get('csrf_token')
-                session.clear()
-                if csrf_tok:
-                    session['csrf_token'] = csrf_tok
-                session['user_id'] = new_user['id']
-                session['user_role'] = 'doctor'
-                session['user_name'] = new_user['name']
-                session['user_email'] = new_user['email']
-                session.permanent = True
+                _activate_user_session(new_user)
 
                 flash('Welcome Dr. ' + new_user['name'] + '! Your professional doctor profile is ready.', 'success')
                 return redirect(url_for('doctor.dashboard'))
@@ -438,11 +439,52 @@ def register():
     )
 
 
+@auth_bp.route('/add-profile')
+def add_profile():
+    saved_profiles = list(session.get('saved_profiles') or [])
+    uid = session.get('user_id')
+    if uid and uid not in saved_profiles:
+        saved_profiles.append(uid)
+        session['saved_profiles'] = saved_profiles[:MAX_PROFILES]
+
+    if len(saved_profiles) >= MAX_PROFILES:
+        flash('You can have a maximum of 2 profiles only.', 'warning')
+        return redirect(request.referrer or url_for('main.index'))
+
+    return redirect(url_for('auth.login', add_profile=1))
+
+
+@auth_bp.route('/switch-profile/<target_user_id>')
+def switch_profile(target_user_id):
+    saved_profiles = list(session.get('saved_profiles') or [])
+    if target_user_id not in saved_profiles:
+        flash('Profile not found in your saved profiles.', 'warning')
+        return redirect(request.referrer or url_for('main.index'))
+
+    user = user_repo.get_by_id(target_user_id)
+    if not user:
+        saved_profiles = [pid for pid in saved_profiles if pid != target_user_id]
+        session['saved_profiles'] = saved_profiles
+        flash('That profile is no longer available.', 'warning')
+        return redirect(request.referrer or url_for('main.index'))
+
+    _activate_user_session(user)
+    flash(f'Switched to {user["name"]} ({user["role"].capitalize()}).', 'success')
+    return redirect(url_for('doctor.dashboard' if user['role'] == 'doctor' else 'patient.dashboard'))
+
+
 @auth_bp.route('/logout')
 def logout():
     csrf_tok = session.get('csrf_token')
+    selected_loc = session.get('selected_location')
+    uid = session.get('user_id')
+    saved_profiles = [pid for pid in (session.get('saved_profiles') or []) if pid != uid]
     session.clear()
     if csrf_tok:
         session['csrf_token'] = csrf_tok
+    if selected_loc:
+        session['selected_location'] = selected_loc
+    if saved_profiles:
+        session['saved_profiles'] = saved_profiles
     flash('You have been safely logged out.', 'info')
     return redirect(url_for('main.index'))

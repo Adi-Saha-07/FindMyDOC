@@ -130,6 +130,37 @@ def create_app(config_name=None):
         except Exception:
             nav_cities = []
 
+        linked_profiles = []
+        if current_user:
+            saved_ids = list(session.get('saved_profiles') or [])
+            if current_user['id'] not in saved_ids:
+                saved_ids = ([current_user['id']] + saved_ids)[:2]
+                session['saved_profiles'] = saved_ids
+            for pid in saved_ids[:2]:
+                if pid == current_user['id']:
+                    linked_profiles.append({
+                        'id': current_user['id'],
+                        'name': session.get('user_name') or current_user.get('name', 'User'),
+                        'role': session.get('user_role') or current_user.get('role', 'patient'),
+                        'avatar': user_avatar,
+                        'is_active': True
+                    })
+                else:
+                    try:
+                        p_user = user_repo.get_by_id(pid)
+                        if p_user:
+                            p_role = p_user.get('role', 'patient')
+                            p_avatar = p_user.get('avatar') or ('/static/uploads/default_doctor.png' if p_role == 'doctor' else '/static/uploads/default_patient.png')
+                            linked_profiles.append({
+                                'id': p_user['id'],
+                                'name': p_user.get('name', 'User'),
+                                'role': p_role,
+                                'avatar': p_avatar,
+                                'is_active': False
+                            })
+                    except Exception:
+                        pass
+
         return {
             'current_user': current_user,
             'current_year': datetime.utcnow().year,
@@ -139,6 +170,8 @@ def create_app(config_name=None):
             'nav_notifications': nav_notifications,
             'selected_location': session.get('selected_location', ''),
             'nav_cities': nav_cities,
+            'linked_profiles': linked_profiles,
+            'can_add_profile': len(linked_profiles) < 2,
             'use_mongo': use_mongo,
             'has_mongo_uri': bool(os.environ.get('MONGO_URI')),
             'has_google_auth': bool(app.config.get('GOOGLE_CLIENT_ID')),

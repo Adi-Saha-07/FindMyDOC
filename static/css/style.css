@@ -6792,3 +6792,100 @@ select.form-control {
     white-space: nowrap;
   }
 }
+
+
+/* ==========================================================================
+   MULTI-PROFILE SWITCHER & ADD PROFILE (Max 2 Profiles)
+   ========================================================================== */
+.nav-profile-switcher {
+  padding: 0.45rem 0.45rem 0.35rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.nav-profile-switch-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.nav-profile-count {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  padding: 0.05rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.nav-profile-switch-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.nav-profile-switch-item:hover {
+  border-color: var(--brand-red-border);
+  background: var(--brand-red-light);
+}
+
+.nav-profile-switch-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nav-profile-switch-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-profile-switch-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-profile-switch-role {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.nav-profile-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px dashed var(--border-color);
+  transition: all 0.15s ease;
+}
+
+.nav-profile-add-btn:hover {
+  color: var(--brand-red);
+  border-color: var(--brand-red-border);
+  background: var(--brand-red-light);
+}
