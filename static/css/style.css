@@ -312,7 +312,7 @@ body {
   position: sticky;
   top: 14px;
   z-index: 1000;
-  max-width: 1140px;
+  max-width: 1220px;
   width: calc(100% - 2rem);
   margin: 14px auto 0;
   border-radius: 9999px;
@@ -475,16 +475,18 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.65rem;
   list-style: none;
+  flex-shrink: 0;
 }
 
 .nav-link {
   color: var(--text-secondary);
   font-weight: 500;
-  font-size: 0.92rem;
-  padding: 0.4rem 0.65rem;
+  font-size: 0.91rem;
+  padding: 0.42rem 0.78rem;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
   transition: all 0.18s ease;
 }
 
@@ -497,7 +499,8 @@ body {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
 
 .theme-toggle-btn {
@@ -6742,5 +6745,49 @@ select.form-control {
   .nav-location-dropdown {
     right: -42px;
     min-width: 235px;
+  }
+}
+
+
+/* ==========================================================================
+   DESKTOP / COMPACT LAPTOP NAVBAR SINGLE-LINE GUARD (901px - 1160px)
+   ========================================================================== */
+@media (min-width: 901px) and (max-width: 1160px) {
+  .glass-nav-header .container {
+    padding: 0 0.9rem;
+  }
+
+  .nav-links {
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    padding: 0.38rem 0.58rem;
+  }
+
+  .nav-actions {
+    gap: 0.45rem;
+  }
+
+  .nav-location-btn {
+    padding: 0 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .nav-location-label {
+    max-width: 68px;
+  }
+
+  .nav-profile-trigger {
+    max-width: 185px;
+    padding-right: 0.55rem;
+  }
+
+  .nav-profile-trigger span:not(.badge) {
+    max-width: 78px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
