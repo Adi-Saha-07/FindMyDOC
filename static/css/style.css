@@ -330,11 +330,9 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0.14) 100%
-  );
+  background: linear-gradient(160deg,
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0.14) 100%);
   backdrop-filter: blur(22px) saturate(210%);
   -webkit-backdrop-filter: blur(22px) saturate(210%);
   z-index: -1;
@@ -354,11 +352,9 @@ body {
 }
 
 [data-theme="dark"] .glass-nav-header::before {
-  background: linear-gradient(
-    160deg,
-    rgba(24, 28, 40, 0.34) 0%,
-    rgba(14, 17, 26, 0.20) 100%
-  );
+  background: linear-gradient(160deg,
+      rgba(24, 28, 40, 0.34) 0%,
+      rgba(14, 17, 26, 0.20) 100%);
 }
 
 [data-theme="dark"] .glass-nav-header:hover {
@@ -1047,6 +1043,7 @@ select.form-control {
     opacity: 0.35;
     transform: scale(0.85);
   }
+
   100% {
     opacity: 1;
     transform: scale(1.15);
@@ -1217,6 +1214,7 @@ select.form-control {
   0% {
     opacity: 0.82;
   }
+
   100% {
     opacity: 1;
   }
@@ -1344,6 +1342,7 @@ select.form-control {
   0% {
     opacity: 0.78;
   }
+
   100% {
     opacity: 1;
   }
@@ -1353,18 +1352,23 @@ select.form-control {
   0% {
     transform: translateX(0);
   }
+
   19% {
     transform: translateX(610px);
   }
+
   23% {
     transform: translateX(630px);
   }
+
   62% {
     transform: translateX(630px);
   }
+
   67% {
     transform: translateX(675px);
   }
+
   100% {
     transform: translateX(calc(100vw + 430px));
   }
@@ -1374,35 +1378,43 @@ select.form-control {
   0% {
     transform: rotate(0deg);
   }
+
   23% {
     transform: rotate(1620deg);
   }
+
   62% {
     transform: rotate(1620deg);
   }
+
   100% {
     transform: rotate(4320deg);
   }
 }
 
 @keyframes patientTransferStory {
+
   0%,
   22% {
     opacity: 0;
     transform: translate(115px, -10px) scale(0.92);
   }
+
   26% {
     opacity: 1;
     transform: translate(92px, -6px) scale(0.96);
   }
+
   32% {
     opacity: 1;
     transform: translate(76px, 0px) scale(1);
   }
+
   52% {
     opacity: 1;
     transform: translate(12px, -14px) scale(0.84);
   }
+
   58%,
   100% {
     opacity: 0;
@@ -1414,6 +1426,7 @@ select.form-control {
   from {
     transform: rotate(-14deg);
   }
+
   to {
     transform: rotate(14deg);
   }
@@ -1423,6 +1436,7 @@ select.form-control {
   from {
     transform: rotate(14deg);
   }
+
   to {
     transform: rotate(-14deg);
   }
@@ -1552,6 +1566,7 @@ select.form-control {
 }
 
 @media (max-width: 600px) {
+
   .hero-sun,
   .hero-moon {
     width: 68px;
@@ -1625,18 +1640,23 @@ select.form-control {
   0% {
     transform: translateX(0);
   }
+
   19% {
     transform: translateX(350px);
   }
+
   23% {
     transform: translateX(365px);
   }
+
   62% {
     transform: translateX(365px);
   }
+
   67% {
     transform: translateX(395px);
   }
+
   100% {
     transform: translateX(calc(100vw + 240px));
   }
@@ -2064,7 +2084,8 @@ select.form-control {
 
 /* Inner row wraps the pill links */
 .popular-cities-pills-row {
-  display: contents; /* on PC, pills flow inline with the label */
+  display: contents;
+  /* on PC, pills flow inline with the label */
 }
 
 /* Liquid Frosted City Chips */
@@ -2306,7 +2327,8 @@ select.form-control {
 /* â”€â”€ Featured Doctors â€“ section header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .featured-section-header {
   display: flex;
-  align-items: flex-start;   /* button top-aligns with the heading block */
+  align-items: flex-start;
+  /* button top-aligns with the heading block */
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.75rem;
@@ -2334,12 +2356,10 @@ select.form-control {
   white-space: nowrap;
   color: var(--text-primary);
   /* Liquid Glass */
-  background: linear-gradient(
-    140deg,
-    rgba(255, 255, 255, 0.84) 0%,
-    rgba(255, 255, 255, 0.54) 55%,
-    rgba(255, 255, 255, 0.72) 100%
-  );
+  background: linear-gradient(140deg,
+      rgba(255, 255, 255, 0.84) 0%,
+      rgba(255, 255, 255, 0.54) 55%,
+      rgba(255, 255, 255, 0.72) 100%);
   backdrop-filter: blur(14px) saturate(170%);
   -webkit-backdrop-filter: blur(14px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.82);
@@ -2369,12 +2389,10 @@ select.form-control {
 }
 
 [data-theme="dark"] .featured-viewall-btn {
-  background: linear-gradient(
-    140deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.07) 55%,
-    rgba(255, 255, 255, 0.11) 100%
-  );
+  background: linear-gradient(140deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.07) 55%,
+      rgba(255, 255, 255, 0.11) 100%);
   border: 1px solid rgba(255, 255, 255, 0.20);
   color: var(--text-primary);
   box-shadow:
@@ -2392,8 +2410,15 @@ select.form-control {
 }
 
 /* PC: show long label, hide compact */
-.featured-viewall-long  { display: inline-flex; align-items: center; gap: 0.3rem; }
-.featured-viewall-short { display: none; }
+.featured-viewall-long {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.featured-viewall-short {
+  display: none;
+}
 
 /* Mobile (â‰¤ 600 px): swap to compact icon + "All" label */
 @media (max-width: 600px) {
@@ -2405,7 +2430,10 @@ select.form-control {
     display: block;
   }
 
-  .featured-viewall-long  { display: none; }
+  .featured-viewall-long {
+    display: none;
+  }
+
   .featured-viewall-short {
     display: inline-flex;
     align-items: center;
@@ -2609,7 +2637,8 @@ select.form-control {
 
 @media (max-width: 768px) {
   .featured-coverflow-shell {
-    overflow-x: hidden;    /* prevent side-cards from causing page scroll */
+    overflow-x: hidden;
+    /* prevent side-cards from causing page scroll */
   }
 
   .featured-coverflow-stage {
@@ -2667,15 +2696,29 @@ select.form-control {
   user-select: none;
   animation: swipeHintFade 2.6s ease 1.2s both;
 }
+
 .featured-coverflow-swipe-hint svg {
   flex-shrink: 0;
 }
 
 @keyframes swipeHintFade {
-  0%   { opacity: 0; transform: translateY(4px); }
-  25%  { opacity: 0.7; transform: translateY(0); }
-  75%  { opacity: 0.7; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  25% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+
+  75% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .doc-card-header {
@@ -4219,7 +4262,7 @@ select.form-control {
 }
 
 /* Better vertical rhythm for the auth card header */
-.auth-card-modern > div:first-child {
+.auth-card-modern>div:first-child {
   padding-bottom: 0.25rem;
 }
 
@@ -4232,6 +4275,7 @@ select.form-control {
   color: var(--text-muted);
   font-size: 0.82rem;
 }
+
 .auth-divider::before,
 .auth-divider::after {
   content: '';
@@ -4268,6 +4312,7 @@ select.form-control {
   cursor: pointer;
   transition: border-color 0.18s ease, background 0.18s ease, transform 0.15s ease;
 }
+
 .demo-account-chip:hover {
   border-color: var(--brand-red-border);
   background: var(--brand-red-light);
@@ -4301,6 +4346,7 @@ select.form-control {
   padding-top: 1.25rem;
   border-top: 1px solid var(--border-color);
 }
+
 .auth-trust-item {
   display: flex;
   align-items: center;
@@ -4317,6 +4363,7 @@ select.form-control {
   border-radius: 14px;
   padding: 0.3rem;
 }
+
 .auth-tab-btn {
   flex: 1;
   display: inline-flex;
@@ -4333,13 +4380,15 @@ select.form-control {
   background: transparent;
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
+
 .auth-tab-btn.active {
   background: var(--bg-card);
   color: var(--brand-red);
   box-shadow: 0 2px 10px -3px rgba(15, 23, 42, 0.1);
 }
+
 [data-theme="dark"] .auth-tab-btn.active {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #fca5a5;
 }
 
@@ -4354,9 +4403,11 @@ select.form-control {
   background: var(--bg-surface);
   transition: border-color 0.18s ease;
 }
+
 .avatar-upload-card:hover {
   border-color: var(--brand-red-border);
 }
+
 .avatar-preview-box {
   position: relative;
   width: 68px;
@@ -4367,15 +4418,17 @@ select.form-control {
   flex-shrink: 0;
   cursor: pointer;
 }
+
 .avatar-preview-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .avatar-preview-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.42);
+  background: rgba(0, 0, 0, 0.42);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4383,7 +4436,11 @@ select.form-control {
   opacity: 0;
   transition: opacity 0.18s ease;
 }
-.avatar-preview-box:hover .avatar-preview-overlay { opacity: 1; }
+
+.avatar-preview-box:hover .avatar-preview-overlay {
+  opacity: 1;
+}
+
 .avatar-upload-title {
   display: flex;
   align-items: center;
@@ -4392,11 +4449,13 @@ select.form-control {
   font-size: 0.88rem;
   margin-bottom: 0.25rem;
 }
+
 .avatar-upload-subtitle {
   font-size: 0.78rem;
   color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
+
 .avatar-upload-btn-wrap {
   display: flex;
   align-items: center;
@@ -4408,6 +4467,7 @@ select.form-control {
 .password-input-wrap {
   position: relative;
 }
+
 .password-toggle-btn {
   position: absolute;
   right: 0.75rem;
@@ -4422,7 +4482,10 @@ select.form-control {
   align-items: center;
   transition: color 0.15s ease;
 }
-.password-toggle-btn:hover { color: var(--text-primary); }
+
+.password-toggle-btn:hover {
+  color: var(--text-primary);
+}
 
 /* â”€â”€ Search page polish â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .search-results-header {
@@ -4446,6 +4509,7 @@ select.form-control {
   gap: 1.25rem;
   margin-bottom: 1.5rem;
 }
+
 .doc-detail-avatar {
   width: 92px;
   height: 92px;
@@ -4651,7 +4715,7 @@ select.form-control {
     gap: 1.25rem !important;
   }
 
-  .doctor-detail-grid > aside {
+  .doctor-detail-grid>aside {
     position: static !important;
   }
 
@@ -4683,7 +4747,7 @@ select.form-control {
   }
 
   /* â”€â”€ Appointment profile row â”€â”€ */
-  .appointment-item > div:first-child {
+  .appointment-item>div:first-child {
     min-width: unset !important;
     width: 100% !important;
   }
@@ -4741,18 +4805,18 @@ select.form-control {
   }
 
   /* Dashboard CTA button: full width */
-  .dashboard-header > a.btn,
-  .dashboard-header > div:last-child {
+  .dashboard-header>a.btn,
+  .dashboard-header>div:last-child {
     width: 100% !important;
   }
 
-  .dashboard-header > a.btn {
+  .dashboard-header>a.btn {
     display: flex !important;
     justify-content: center !important;
   }
 
   /* â”€â”€ Appointment item inner â”€â”€ */
-  .appointment-item > div:first-child {
+  .appointment-item>div:first-child {
     flex-direction: column !important;
     align-items: flex-start !important;
   }
@@ -4816,17 +4880,18 @@ select.form-control {
 
   /* Form control height â€” but NOT inside search boxes that have an icon offset */
   .form-control {
-    font-size: 16px !important; /* prevents iOS zoom */
+    font-size: 16px !important;
+    /* prevents iOS zoom */
     border-radius: 10px !important;
   }
 
   /* Only reduce padding on plain inputs (auth/dashboard), not icon-prefixed search inputs */
-  :not(.search-input-group) > .form-control {
+  :not(.search-input-group)>.form-control {
     padding: 0.6rem 0.75rem !important;
   }
 
   /* Search inputs keep their left padding so icon never overlaps text */
-  .search-input-group > .form-control,
+  .search-input-group>.form-control,
   .hero-search-card .form-control,
   .liquid-glass-search .form-control {
     padding-left: 2.85rem !important;
@@ -4841,7 +4906,7 @@ select.form-control {
     margin-top: 1rem !important;
   }
 
-  .popular-cities-pills > span {
+  .popular-cities-pills>span {
     font-size: 0.8rem !important;
     color: var(--text-secondary) !important;
   }
@@ -6218,6 +6283,7 @@ select.form-control {
 }
 
 @media (max-width: 900px) {
+
   /* Remove 3-bar drawer completely on mobile */
   .mobile-nav-toggle,
   .mobile-nav-backdrop,
@@ -6278,12 +6344,10 @@ select.form-control {
     padding: 6px;
     border-radius: 9999px;
     overflow: hidden;
-    background: linear-gradient(
-      160deg,
-      rgba(255, 255, 255, 0.20) 0%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.16) 100%
-    );
+    background: linear-gradient(160deg,
+        rgba(255, 255, 255, 0.20) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.16) 100%);
     backdrop-filter: blur(24px) saturate(220%) brightness(1.04);
     -webkit-backdrop-filter: blur(24px) saturate(220%) brightness(1.04);
     border: 1px solid rgba(255, 255, 255, 0.58);
@@ -6303,23 +6367,19 @@ select.form-control {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0) 45%,
-      rgba(255, 255, 255, 0.06) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0) 45%,
+        rgba(255, 255, 255, 0.06) 100%);
     pointer-events: none;
     z-index: 0;
   }
 
   [data-theme="dark"] .mobile-bottom-glass-nav {
-    background: linear-gradient(
-      160deg,
-      rgba(30, 35, 50, 0.26) 0%,
-      rgba(15, 18, 28, 0.16) 50%,
-      rgba(24, 28, 42, 0.22) 100%
-    );
+    background: linear-gradient(160deg,
+        rgba(30, 35, 50, 0.26) 0%,
+        rgba(15, 18, 28, 0.16) 50%,
+        rgba(24, 28, 42, 0.22) 100%);
     backdrop-filter: blur(24px) saturate(210%) brightness(1.06);
     -webkit-backdrop-filter: blur(24px) saturate(210%) brightness(1.06);
     border: 1px solid rgba(255, 255, 255, 0.20);
@@ -6332,12 +6392,10 @@ select.form-control {
   }
 
   [data-theme="dark"] .mobile-bottom-glass-nav::before {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0) 45%,
-      rgba(255, 255, 255, 0.03) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0) 45%,
+        rgba(255, 255, 255, 0.03) 100%);
   }
 
   .mobile-bottom-glass-track {
@@ -6356,12 +6414,10 @@ select.form-control {
     left: 0;
     height: 100%;
     border-radius: 9999px;
-    background: linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.52) 0%,
-      rgba(254, 226, 226, 0.28) 55%,
-      rgba(255, 255, 255, 0.36) 100%
-    );
+    background: linear-gradient(165deg,
+        rgba(255, 255, 255, 0.52) 0%,
+        rgba(254, 226, 226, 0.28) 55%,
+        rgba(255, 255, 255, 0.36) 100%);
     border: 1px solid rgba(255, 255, 255, 0.78);
     box-shadow:
       0 6px 18px rgba(220, 38, 38, 0.16),
@@ -6395,12 +6451,10 @@ select.form-control {
   }
 
   [data-theme="dark"] .mobile-bottom-glass-pill {
-    background: linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.24) 0%,
-      rgba(239, 68, 68, 0.26) 55%,
-      rgba(255, 255, 255, 0.14) 100%
-    );
+    background: linear-gradient(165deg,
+        rgba(255, 255, 255, 0.24) 0%,
+        rgba(239, 68, 68, 0.26) 55%,
+        rgba(255, 255, 255, 0.14) 100%);
     border: 1px solid rgba(255, 255, 255, 0.32);
     box-shadow:
       0 6px 20px rgba(239, 68, 68, 0.26),

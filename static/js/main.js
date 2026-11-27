@@ -21,7 +21,7 @@ function initTheme() {
   const toggleBtn = document.getElementById('themeToggleBtn');
   const storedTheme = localStorage.getItem('findmydoc-theme');
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+
   const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
   applyTheme(initialTheme);
 

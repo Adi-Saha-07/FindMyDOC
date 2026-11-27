@@ -21,7 +21,8 @@ from blueprints.appointments import appointments_bp
 csrf = CSRFProtect()
 
 def create_app(config_name=None):
-    """Application factory for MediConnect."""
+    """Application fac
+    tory for MediConnect."""
     if config_name is None:
         config_name = os.environ.get('FLASK_ENV', 'development')
 
